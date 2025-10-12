@@ -76,6 +76,7 @@ export default function Home() {
 	const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 	const [showDetailsModal, setShowDetailsModal] = useState(false);
 	const [showAuthModal, setShowAuthModal] = useState(false);
+	const [expandedRoomId, setExpandedRoomId] = useState<string | null>(null);
 	const socketRef = useRef<Socket | null>(null);
 
 	const plugin = useRef(
@@ -206,19 +207,26 @@ export default function Home() {
 	};
 
 	const handleRoomClick = (room: Room) => {
-		// Check if user is authenticated
+		// Check if user is authenticated for joining
 		if (status === 'unauthenticated') {
 			console.log('[Home] User not authenticated, showing auth modal');
 			setShowAuthModal(true);
 			return;
 		}
+		
+		// Toggle expanded state
+		setExpandedRoomId(expandedRoomId === room.id ? null : room.id);
 		setSelectedRoom(room);
-		setShowDetailsModal(true);
 	};
 
 	const handleJoinRoom = (roomId: string, password?: string) => {
 		console.log('[Home] Joining room:', roomId, password ? 'with password' : '');
 		router.push(`/game/${selectedRoom?.gameType}?roomId=${roomId}&mode=controller`);
+	};
+
+	const handleJoinRoomDirect = (room: Room) => {
+		console.log('[Home] Joining room directly:', room.id);
+		router.push(`/game/${room.gameType}?roomId=${room.id}&mode=controller`);
 	};
 
 	const handleAuthSuccess = () => {
@@ -265,16 +273,17 @@ export default function Home() {
 	const gamesArray = Object.entries(games);
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900">
-			{/* Active Rooms Bar */}
-			{rooms.length > 0 && (
-				<div className="sticky top-0 z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 shadow-xl">
-					<div className="max-w-7xl mx-auto px-4 py-4">
-						<div className="flex items-center justify-between mb-3">
-							<div className="flex items-center space-x-2">
-								<div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-								<h3 className="text-white font-bold">Active Rooms ({rooms.length})</h3>
-							</div>
+		<div className="min-h-screen bg-background">
+			{/* Active Rooms Bar - Always visible */}
+			<div className="sticky top-0 z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 shadow-xl">
+				<div className="max-w-7xl mx-auto px-4 py-4">
+					<div className="flex items-center justify-between mb-3">
+						<div className="flex items-center space-x-2">
+							<div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+							<h3 className="text-white font-bold">
+								{rooms.length > 0 ? `Active Rooms (${rooms.length})` : 'No active rooms'}
+							</h3>
+						</div>
 						<button
 							onClick={handleCreateRoomClick}
 							className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
@@ -282,32 +291,29 @@ export default function Home() {
 							<Plus className="w-4 h-4" />
 							<span>Create Room</span>
 						</button>
-						</div>
-						
-						{/* Rooms Horizontal Scroll */}
-						<div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800">
+					</div>
+					
+					{/* Rooms List - Always visible */}
+					{rooms.length > 0 ? (
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
 							{rooms.map((room, index) => (
 								<RoomCard 
 									key={room.id || (room as any).roomId || `room-${index}`} 
 									room={room} 
-									onClick={() => handleRoomClick(room)} 
+									onClick={() => handleRoomClick(room)}
+									isExpanded={expandedRoomId === room.id}
+									onJoin={handleJoinRoomDirect}
 								/>
 							))}
 						</div>
-					</div>
+					) : (
+						<div className="text-center py-8 text-gray-400">
+							<Gamepad2 className="w-12 h-12 mx-auto mb-2 opacity-50" />
+							<p>No rooms available. Create the first one!</p>
+						</div>
+					)}
 				</div>
-			)}
-
-			{/* Create Room Button - Fixed Position (when no rooms) */}
-			{rooms.length === 0 && (
-				<button
-					onClick={handleCreateRoomClick}
-					className="fixed top-6 right-6 z-50 flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl font-bold transition-all shadow-2xl hover:shadow-3xl hover:scale-105"
-				>
-					<Plus className="w-5 h-5" />
-					<span>Create Room</span>
-				</button>
-			)}
+			</div>
 
 			{/* Modals */}
 			<AuthModal
@@ -330,116 +336,170 @@ export default function Home() {
 				onJoin={handleJoinRoom}
 			/>
 
-			{/* Hero Section with Game Carousel */}
-			<div className="relative overflow-hidden">
+			{/* Hero Section - Full Width */}
+			<div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
 				{/* Animated background elements */}
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
-					<div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-					<div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+					<div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-bounce"></div>
+					<div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-bounce delay-1000"></div>
+					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
 				</div>
 
-				<div className="relative max-w-7xl mx-auto px-4 py-16 space-y-12">
-					{/* Header */}
-					<div className="text-center space-y-6">
-						<div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 rounded-full shadow-2xl animate-pulse">
-							<Gamepad2 className="w-12 h-12 text-white" />
-						</div>
-						<div>
-							<h1 className="text-6xl md:text-7xl font-bold text-white tracking-tight mb-4">
-								WEB3HUB
+				<div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-20 text-center">
+					{/* Main Hero Content */}
+					<div className="space-y-8">
+						<div className="space-y-6">
+							<div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-full shadow-2xl mb-8 animate-pulse">
+								<Gamepad2 className="w-16 h-16 text-white" />
+							</div>
+							
+							<h1 className="text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-none">
+								<span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+									WEB3HUB
+								</span>
 							</h1>
-							<p className="text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 font-semibold">
+							
+							<p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white/90 mb-8">
 								Turn any screen into a gaming arena
 							</p>
+							
+							<div className="max-w-4xl mx-auto">
+								<p className="text-xl md:text-2xl text-gray-200 leading-relaxed mb-4">
+									Your smartphone becomes a gamepad in 
+									<span className="text-cyan-400 font-bold"> 3 seconds</span>
+								</p>
+								<p className="text-lg md:text-xl text-gray-300 font-medium">
+									<span className="text-white font-bold">No downloads. No installations.</span> Just scan and play.
+								</p>
+							</div>
 						</div>
-						<p className="text-gray-300 max-w-3xl mx-auto leading-relaxed">
-							Your smartphone becomes a gamepad in 3 seconds.
-							<br />
-							<span className=" font-semibold">
-								No downloads. No installations. Just scan and play.
-							</span>
+
+						{/* Value Props */}
+						<div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-16">
+							<div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+								<QrCode className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
+								<h3 className="text-xl font-bold text-white mb-2">Instant Connection</h3>
+								<p className="text-gray-300">Scan QR code with your phone camera and start playing immediately</p>
+							</div>
+							<div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+								<Users className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+								<h3 className="text-xl font-bold text-white mb-2">Up to 10 Players</h3>
+								<p className="text-gray-300">Play with friends and family on one screen simultaneously</p>
+							</div>
+							<div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+								<Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+								<h3 className="text-xl font-bold text-white mb-2">Zero Latency</h3>
+								<p className="text-gray-300">WebSocket technology ensures responsive controls like real gamepad</p>
+							</div>
+						</div>
+
+						{/* CTA Buttons */}
+						<div className="space-y-6 mt-16">
+							<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+								<Button
+									onClick={handleCreateRoomClick}
+									className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 hover:from-cyan-400 hover:via-blue-400 hover:to-purple-400 text-white font-bold py-6 px-12 text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-2xl hover:scale-105"
+								>
+									<Play className="w-6 h-6 mr-3" />
+									Create Game Room
+								</Button>
+								<Button
+									onClick={() => {
+										document.getElementById('games-section')?.scrollIntoView({ behavior: 'smooth' });
+									}}
+									variant="outline"
+									className="border-white/30 text-white hover:bg-white/10 font-bold py-6 px-12 text-xl rounded-2xl backdrop-blur-xl"
+								>
+									<Target className="w-6 h-6 mr-3" />
+									Browse Games
+								</Button>
+							</div>
+							
+							<div className="flex flex-wrap justify-center items-center gap-4 text-sm">
+								<Badge className="bg-green-500/20 text-green-400 border-green-500/30 px-4 py-2">
+									<CheckCircle2 className="w-4 h-4 mr-2" />
+									100% Free
+								</Badge>
+								<Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 px-4 py-2">
+									<CheckCircle2 className="w-4 h-4 mr-2" />
+									No Registration
+								</Badge>
+								<Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 px-4 py-2">
+									<CheckCircle2 className="w-4 h-4 mr-2" />
+									Works on Any Device
+								</Badge>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Games Section */}
+			<div id="games-section" className="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+				<div className="max-w-7xl mx-auto px-4">
+					<div className="text-center mb-16">
+						<Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 px-6 py-3 text-base mb-6">
+							<Sparkles className="w-5 h-5 mr-2" />
+							Choose Your Game
+						</Badge>
+						<h2 className="text-5xl font-bold text-white mb-4">Available Games</h2>
+						<p className="text-xl text-gray-300 max-w-3xl mx-auto">
+							Each game features unique controls optimized for mobile devices
 						</p>
 					</div>
 
-					{/* Games Carousel */}
-					<div className="space-y-6">
-						<div className="text-center">
-							<Badge className="bg-white/10 text-white border-white/20 px-6 py-2 text-base mb-4">
-								<Sparkles className="w-4 h-4 mr-2" />
-								Choose a game
-							</Badge>
-						</div>
-						<Carousel
-							plugins={[plugin.current]}
-							opts={{
-								align: 'center',
-								loop: true,
-							}}
-							className="w-full max-w-6xl mx-auto"
-						>
-							<CarouselContent className="-ml-4">
-								{gamesArray.map(([gameType, gameInfo], index) => (
-									<CarouselItem
-										key={gameType}
-										className="pl-4 md:basis-1/2 lg:basis-1/3"
-									>
-										<div className="p-2">
-											<Card className="bg-gray-800/70 border-gray-700 backdrop-blur-xl hover:bg-gray-800/90 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-gray-600 h-full">
-												<CardHeader>
-													<div className="flex items-center justify-between mb-4">
-														<div
-															className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${getGameGradient(
-																index
-															)} rounded-2xl shadow-lg transform hover:rotate-6 transition-transform`}
-														>
-															{getGameIcon(gameType)}
-														</div>
-														<Badge
-															variant="secondary"
-															className="bg-green-500/20 text-green-400 border-green-500/30"
-														>
-															<Zap className="w-3 h-3 mr-1" />
-															Quick game
-														</Badge>
-													</div>
-													<CardTitle className="text-2xl text-white mb-2 font-bold">
-														{gameInfo.name}
-													</CardTitle>
-													<CardDescription className="text-gray-300 text-sm">
-														{gameInfo.description}
-													</CardDescription>
-												</CardHeader>
-												<CardContent>
-													<div className="flex items-center space-x-4 text-sm">
-														<div className="flex items-center space-x-2 bg-gray-700/50 px-3 py-2 rounded-lg">
-															<Users className="w-4 h-4 text-blue-400" />
-															<span className="text-white font-medium">
-																{gameInfo.minPlayers}-{gameInfo.maxPlayers}{' '}
-																players
-															</span>
-														</div>
-														<div className="text-3xl">{gameInfo.icon}</div>
-													</div>
-												</CardContent>
-												<CardFooter>
-													<Button
-														onClick={() => startGame(gameType)}
-														className={`w-full bg-gradient-to-r ${getGameGradient(
-															index
-														)} hover:opacity-90 text-white font-bold py-6 text-lg shadow-xl hover:shadow-2xl transition-all duration-200`}
-													>
-														<Play className="w-5 h-5 mr-2" />
-														Start game
-													</Button>
-												</CardFooter>
-											</Card>
+					{/* Games Grid */}
+					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+						{gamesArray.map(([gameType, gameInfo], index) => (
+							<Card key={gameType} className="bg-gray-800/80 border-gray-700 backdrop-blur-xl hover:bg-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-gray-600 h-full">
+								<CardHeader>
+									<div className="flex items-center justify-between mb-4">
+										<div
+											className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${getGameGradient(
+												index
+											)} rounded-2xl shadow-lg transform hover:rotate-6 transition-transform`}
+										>
+											{getGameIcon(gameType)}
 										</div>
-									</CarouselItem>
-								))}
-							</CarouselContent>
-							<CarouselPrevious className="bg-gray-800/90 border-gray-700 text-white hover:bg-gray-700 hover:text-white -left-12" />
-							<CarouselNext className="bg-gray-800/90 border-gray-700 text-white hover:bg-gray-700 hover:text-white -right-12" />
-						</Carousel>
+										<Badge
+											variant="secondary"
+											className="bg-green-500/20 text-green-400 border-green-500/30"
+										>
+											<Zap className="w-3 h-3 mr-1" />
+											Quick Start
+										</Badge>
+									</div>
+									<CardTitle className="text-2xl text-white mb-2 font-bold">
+										{gameInfo.name}
+									</CardTitle>
+									<CardDescription className="text-gray-300 text-sm leading-relaxed">
+										{gameInfo.description}
+									</CardDescription>
+								</CardHeader>
+								<CardContent>
+									<div className="flex items-center space-x-4 text-sm">
+										<div className="flex items-center space-x-2 bg-gray-700/50 px-3 py-2 rounded-lg">
+											<Users className="w-4 h-4 text-blue-400" />
+											<span className="text-white font-medium">
+												{gameInfo.minPlayers}-{gameInfo.maxPlayers} players
+											</span>
+										</div>
+										<div className="text-3xl">{gameInfo.icon}</div>
+									</div>
+								</CardContent>
+								<CardFooter>
+									<Button
+										onClick={() => startGame(gameType)}
+										className={`w-full bg-gradient-to-r ${getGameGradient(
+											index
+										)} hover:opacity-90 text-white font-bold py-4 text-base shadow-xl hover:shadow-2xl transition-all duration-200`}
+									>
+										<Play className="w-5 h-5 mr-2" />
+										Start Game
+									</Button>
+								</CardFooter>
+							</Card>
+						))}
 					</div>
 				</div>
 			</div>

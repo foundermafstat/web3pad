@@ -21,6 +21,7 @@ export interface RoomPlayer {
 	isHost: boolean;
 	isReady: boolean;
 	joinedAt: number;
+	color?: string;
 }
 
 export interface CreateRoomData {
