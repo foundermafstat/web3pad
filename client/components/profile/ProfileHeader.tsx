@@ -39,6 +39,8 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 								src={user.avatar}
 								alt={user.displayName}
 								className="w-32 h-32 rounded-full border-4 border-background object-cover"
+								crossOrigin="anonymous"
+								referrerPolicy="no-referrer"
 							/>
 						) : (
 							<div className="w-32 h-32 rounded-full border-4 border-background bg-primary text-primary-foreground flex items-center justify-center text-4xl font-bold">

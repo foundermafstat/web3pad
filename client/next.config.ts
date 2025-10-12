@@ -11,6 +11,26 @@ const nextConfig: NextConfig = {
 		// Allows production deployment even with TS errors
 		ignoreBuildErrors: true,
 	},
+	images: {
+		// Allow external images from OAuth providers
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'lh3.googleusercontent.com',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'avatars.githubusercontent.com',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: '*.googleusercontent.com',
+				pathname: '/**',
+			},
+		],
+	},
 };
 
 export default nextConfig;

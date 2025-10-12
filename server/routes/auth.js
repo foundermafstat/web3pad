@@ -147,16 +147,29 @@ router.post('/oauth', async (req, res) => {
 				},
 			});
 
-			console.log(`[Auth] OAuth user created: ${username} (${provider})`);
+			console.log(`[Auth] OAuth user created: ${username} (${provider}) with avatar: ${image ? 'yes' : 'no'}`);
 		} else {
-			// Update avatar if provided
-			if (image && !user.avatar) {
+			// Always update avatar and displayName if provided (OAuth data may change)
+			const updateData = {};
+			
+			if (image) {
+				updateData.avatar = image;
+			}
+			
+			if (name && name !== user.displayName) {
+				updateData.displayName = name;
+			}
+			
+			// Update user if there are changes
+			if (Object.keys(updateData).length > 0) {
 				user = await prisma.user.update({
 					where: { id: user.id },
-					data: { avatar: image },
+					data: updateData,
 				});
+				console.log(`[Auth] OAuth user updated: ${user.username} (${provider})`, updateData);
+			} else {
+				console.log(`[Auth] OAuth user logged in: ${user.username} (${provider}) - no updates needed`);
 			}
-			console.log(`[Auth] OAuth user logged in: ${user.username} (${provider})`);
 		}
 
 		// Generate JWT token

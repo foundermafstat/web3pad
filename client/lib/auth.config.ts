@@ -59,6 +59,13 @@ export const authConfig: NextAuthConfig = {
 			// OAuth sign in
 			if (account?.provider === 'google' || account?.provider === 'github') {
 				try {
+					console.log('[NextAuth signIn] OAuth user:', {
+						email: user.email,
+						name: user.name,
+						image: user.image,
+						provider: account.provider,
+					});
+
 					// Register/login OAuth user on server
 					const response = await fetch(
 						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/oauth`,
@@ -81,9 +88,12 @@ export const authConfig: NextAuthConfig = {
 					}
 
 					const serverUser = await response.json();
+					console.log('[NextAuth signIn] Server user data:', serverUser);
+					
 					// Merge server user data
 					user.id = serverUser.id;
 					user.username = serverUser.username;
+					user.image = serverUser.avatar || user.image; // Use server avatar
 					
 					return true;
 				} catch (error) {
@@ -99,10 +109,12 @@ export const authConfig: NextAuthConfig = {
 				token.id = user.id;
 				token.username = (user as any).username;
 				token.email = user.email;
+				token.picture = user.image; // Store avatar in token
 				console.log('[NextAuth JWT] User data:', {
 					id: user.id,
 					username: (user as any).username,
 					email: user.email,
+					avatar: user.image,
 				});
 			}
 			return token;
@@ -111,10 +123,12 @@ export const authConfig: NextAuthConfig = {
 			if (session.user) {
 				session.user.id = token.id as string;
 				(session.user as any).username = token.username;
+				session.user.image = token.picture as string; // Set avatar from token
 				console.log('[NextAuth Session] Session user:', {
 					id: session.user.id,
 					username: (session.user as any).username,
 					email: session.user.email,
+					avatar: session.user.image,
 				});
 			}
 			return session;
