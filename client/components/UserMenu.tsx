@@ -54,7 +54,7 @@ export function UserMenu({ user }: UserMenuProps) {
 			{/* Avatar button */}
 			<button
 				onClick={() => setIsOpen(!isOpen)}
-				className="flex items-center gap-2 rounded-full hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+				className="flex items-center gap-2 rounded-sm hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 				aria-label="User menu"
 			>
 				{user.image ? (
@@ -64,12 +64,16 @@ export function UserMenu({ user }: UserMenuProps) {
 						className="w-7 h-7 md:w-10 md:h-10 rounded-sm object-cover"
 						crossOrigin="anonymous"
 						referrerPolicy="no-referrer"
+						onError={(e) => {
+							const target = e.target as HTMLImageElement;
+							target.style.display = 'none';
+							target.nextElementSibling?.classList.remove('hidden');
+						}}
 					/>
-				) : (
-					<div className="w-7 h-7 md:w-10 md:h-10 rounded-sm bg-primary text-primary-foreground flex items-center justify-center text-xs md:text-sm font-medium">
-						{getInitials()}
-					</div>
-				)}
+				) : null}
+				<div className={`w-7 h-7 md:w-10 md:h-10 rounded-sm bg-primary text-primary-foreground flex items-center justify-center text-xs md:text-sm font-medium ${user.image ? 'hidden' : ''}`}>
+					{getInitials()}
+				</div>
 			</button>
 
 			{/* Dropdown menu */}
@@ -84,12 +88,16 @@ export function UserMenu({ user }: UserMenuProps) {
 									className="w-12 h-12 rounded-sm object-cover"
 									crossOrigin="anonymous"
 									referrerPolicy="no-referrer"
+									onError={(e) => {
+										const target = e.target as HTMLImageElement;
+										target.style.display = 'none';
+										target.nextElementSibling?.classList.remove('hidden');
+									}}
 								/>
-							) : (
-								<div className="w-12 h-12 rounded-sm bg-primary text-primary-foreground flex items-center justify-center text-base font-medium">
-									{getInitials()}
-								</div>
-							)}
+							) : null}
+							<div className={`w-12 h-12 rounded-sm bg-primary text-primary-foreground flex items-center justify-center text-base font-medium ${user.image ? 'hidden' : ''}`}>
+								{getInitials()}
+							</div>
 							<div className="flex-1 min-w-0">
 								{user.name && (
 									<p className="text-sm font-medium text-foreground truncate">

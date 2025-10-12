@@ -466,7 +466,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 					</div>
 					<div className="text-white text-right">
 						<div className="text-sm text-gray-400">
-							Раунд {gameState.currentRound}/{gameState.totalRounds}
+							Round {gameState.currentRound}/{gameState.totalRounds}
 						</div>
 						<div className="text-2xl font-bold flex items-center gap-2">
 							<Clock size={24} />

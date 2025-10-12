@@ -214,13 +214,17 @@ function PodiumCard({ player, position, color }: any) {
 				<img
 					src={player.avatar}
 					alt={player.displayName}
-					className="w-16 h-16 rounded-full mx-auto mb-3 border-2 border-white"
+					className="w-16 h-16 rounded-sm mx-auto mb-3 border-2 border-white"
+					onError={(e) => {
+						const target = e.target as HTMLImageElement;
+						target.style.display = 'none';
+						target.nextElementSibling?.classList.remove('hidden');
+					}}
 				/>
-			) : (
-				<div className="w-16 h-16 rounded-full mx-auto mb-3 border-2 border-white bg-white/20 flex items-center justify-center text-2xl font-bold">
-					{player.displayName[0]}
-				</div>
-			)}
+			) : null}
+			<div className={`w-16 h-16 rounded-sm mx-auto mb-3 border-2 border-white bg-white/20 flex items-center justify-center text-2xl font-bold ${player.avatar ? 'hidden' : ''}`}>
+				{player.displayName[0]}
+			</div>
 			<div className="font-bold text-lg mb-1">{player.displayName}</div>
 			<div className="text-sm opacity-90 mb-2">@{player.username}</div>
 			<div className="text-2xl font-bold">{player.totalScore.toLocaleString()}</div>
@@ -245,13 +249,17 @@ function LeaderboardRow({ player }: { player: LeaderboardEntry }) {
 				<img
 					src={player.avatar}
 					alt={player.displayName}
-					className="w-12 h-12 rounded-full object-cover"
+					className="w-12 h-12 rounded-sm object-cover"
+					onError={(e) => {
+						const target = e.target as HTMLImageElement;
+						target.style.display = 'none';
+						target.nextElementSibling?.classList.remove('hidden');
+					}}
 				/>
-			) : (
-				<div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
-					{player.displayName[0]}
-				</div>
-			)}
+			) : null}
+			<div className={`w-12 h-12 rounded-sm bg-primary text-primary-foreground flex items-center justify-center font-bold ${player.avatar ? 'hidden' : ''}`}>
+				{player.displayName[0]}
+			</div>
 
 			{/* Player Info */}
 			<div className="flex-1 min-w-0">

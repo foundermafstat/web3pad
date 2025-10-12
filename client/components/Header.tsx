@@ -14,14 +14,26 @@ export async function Header() {
 				{/* Logo */}
 				<Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
 					<ThemeLogo
-						width={90}
-						height={30}
+						width={78}
+						height={52}
 						className="object-contain"
 					/>
 				</Link>
 
 				{/* Navigation */}
 				<nav className="flex items-center gap-4 md:gap-6">
+					<Link
+						href="/games"
+						className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+					>
+						Games
+					</Link>
+					<Link
+						href="/players"
+						className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+					>
+						Players
+					</Link>
 					<Link
 						href="/leaderboard"
 						className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"

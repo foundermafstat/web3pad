@@ -38,15 +38,19 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 							<img
 								src={user.avatar}
 								alt={user.displayName}
-								className="w-32 h-32 rounded-full border-4 border-background object-cover"
+								className="w-32 h-32 rounded-lg border-4 border-background object-cover"
 								crossOrigin="anonymous"
 								referrerPolicy="no-referrer"
+								onError={(e) => {
+									const target = e.target as HTMLImageElement;
+									target.style.display = 'none';
+									target.nextElementSibling?.classList.remove('hidden');
+								}}
 							/>
-						) : (
-							<div className="w-32 h-32 rounded-full border-4 border-background bg-primary text-primary-foreground flex items-center justify-center text-4xl font-bold">
-								{user.displayName[0].toUpperCase()}
-							</div>
-						)}
+						) : null}
+						<div className={`w-32 h-32 rounded-lg border-4 border-background bg-primary text-primary-foreground flex items-center justify-center text-4xl font-bold ${user.avatar ? 'hidden' : ''}`}>
+							{user.displayName[0].toUpperCase()}
+						</div>
 						<div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground rounded-full w-10 h-10 flex items-center justify-center font-bold border-2 border-background">
 							{user.level}
 						</div>

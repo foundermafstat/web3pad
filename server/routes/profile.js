@@ -116,6 +116,66 @@ router.get('/profile/:username', async (req, res) => {
 	}
 });
 
+// Get list of all players
+router.get('/players/list', async (req, res) => {
+	try {
+		const { limit = 100 } = req.query;
+
+		const users = await prisma.user.findMany({
+			select: {
+				id: true,
+				username: true,
+				displayName: true,
+				avatar: true,
+				level: true,
+				experience: true,
+				coins: true,
+				createdAt: true,
+				playerStats: {
+					select: {
+						totalScore: true,
+						gamesPlayed: true,
+						gamesWon: true,
+					},
+				},
+			},
+			take: parseInt(limit),
+			orderBy: {
+				level: 'desc',
+			},
+		});
+
+		const players = users.map((user) => {
+			const totalScore = user.playerStats.reduce((sum, s) => sum + s.totalScore, 0);
+			const totalGames = user.playerStats.reduce((sum, s) => sum + s.gamesPlayed, 0);
+			const totalWins = user.playerStats.reduce((sum, s) => sum + s.gamesWon, 0);
+			const winRate = totalGames > 0 ? Math.round((totalWins / totalGames) * 100) : 0;
+
+			return {
+				id: user.id,
+				username: user.username,
+				displayName: user.displayName,
+				avatar: user.avatar,
+				level: user.level,
+				experience: user.experience,
+				coins: user.coins,
+				createdAt: user.createdAt,
+				stats: {
+					totalGames,
+					totalWins,
+					totalScore,
+					winRate,
+				},
+			};
+		});
+
+		res.json({ players, total: players.length });
+	} catch (error) {
+		console.error('Players list fetch error:', error);
+		res.status(500).json({ error: 'Failed to fetch players list' });
+	}
+});
+
 // Get leaderboard
 router.get('/leaderboard', async (req, res) => {
 	try {

@@ -254,8 +254,8 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 			<div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center p-4">
 				<div className="text-center">
 					<div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
-					<p className="text-white text-lg">Подключение к игре...</p>
-					<p className="text-gray-300 text-sm mt-2">Комната: {gameId}</p>
+					<p className="text-white text-lg">Connecting to game...</p>
+					<p className="text-gray-300 text-sm mt-2">Room: {gameId}</p>
 				</div>
 			</div>
 		);
@@ -266,12 +266,12 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 			<div className="min-h-screen bg-gradient-to-br from-red-900 to-red-700 flex items-center justify-center p-4">
 				<div className="text-center">
 					<WifiOff className="w-12 h-12 text-white mx-auto mb-4" />
-					<p className="text-white text-lg">Соединение потеряно</p>
+					<p className="text-white text-lg">Connection lost</p>
 					<button
 						onClick={() => window.location.reload()}
 						className="mt-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors"
 					>
-						Повторить подключение
+						Retry connection
 					</button>
 				</div>
 			</div>
@@ -287,13 +287,13 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							<Gamepad2 className="w-8 h-8 text-white" />
 						</div>
 						<h1 className="text-2xl font-bold text-white mb-2">
-							Присоединиться к гонке
+							Join the race
 						</h1>
-						<p className="text-gray-300">Введите имя игрока</p>
+						<p className="text-gray-300">Enter player name</p>
 
 						<div className="flex items-center justify-center space-x-2 mt-4">
 							<Wifi className="w-4 h-4 text-green-400" />
-							<span className="text-green-400 text-sm">Подключено</span>
+							<span className="text-green-400 text-sm">Connected</span>
 						</div>
 					</div>
 
@@ -303,7 +303,7 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							value={playerName}
 							onChange={(e) => setPlayerName(e.target.value)}
 							onKeyPress={(e) => e.key === 'Enter' && joinGame()}
-							placeholder="Ваше имя"
+							placeholder="Your name"
 							className="w-full bg-white/20 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
 							maxLength={20}
 							autoFocus
@@ -313,7 +313,7 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							disabled={!playerName.trim() || !connected}
 							className="w-full mt-4 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 disabled:from-gray-500 disabled:to-gray-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
 						>
-							{connected ? 'Присоединиться' : 'Подключение...'}
+							{connected ? 'Join' : 'Connecting...'}
 						</button>
 					</div>
 				</div>
@@ -379,7 +379,7 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 				{/* Steering */}
 				<div className="mb-6">
 					<div className="text-center mb-2">
-						<span className="text-gray-400 text-sm">Рулевое управление</span>
+						<span className="text-gray-400 text-sm">Steering control</span>
 					</div>
 					<div
 						ref={steeringRef}
@@ -394,8 +394,8 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 						></div>
 					</div>
 					<div className="flex justify-between mt-1 text-xs text-gray-500">
-						<span>← Влево</span>
-						<span>Вправо →</span>
+						<span>← Left</span>
+						<span>Right →</span>
 					</div>
 				</div>
 
@@ -411,7 +411,7 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							className="w-full h-32 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-2xl text-white font-bold shadow-lg active:scale-95 transition-all flex flex-col items-center justify-center border-4 border-green-400/50"
 						>
 							<span className="text-4xl mb-2">⬆️</span>
-							<span>ГАЗ</span>
+							<span>GAS</span>
 						</button>
 					</div>
 					<div className="text-center">
@@ -424,7 +424,7 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							className="w-full h-32 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-2xl text-white font-bold shadow-lg active:scale-95 transition-all flex flex-col items-center justify-center border-4 border-red-400/50"
 						>
 							<span className="text-4xl mb-2">⬇️</span>
-							<span>ТОРМОЗ</span>
+							<span>BRAKE</span>
 						</button>
 					</div>
 				</div>
@@ -433,7 +433,7 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 			{/* Instructions */}
 			<div className="p-4 bg-black/30 backdrop-blur-lg">
 				<p className="text-gray-400 text-sm text-center">
-					Рулите свайпом • Газ и тормоз кнопками • Проезжайте через чекпоинты
+					Steer by swiping • Gas and brake with buttons • Drive through checkpoints
 				</p>
 			</div>
 		</div>

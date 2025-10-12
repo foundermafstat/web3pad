@@ -1,4 +1,5 @@
-import { Calendar, Trophy, Target } from 'lucide-react';
+import { Calendar, Trophy, Target, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 
 interface Game {
 	id: string;
@@ -46,7 +47,10 @@ function MatchCard({ game }: { game: Game }) {
 	const isWin = game.rank === 1;
 
 	return (
-		<div className="bg-card border border-border rounded-lg p-4 hover:shadow-lg transition-all">
+		<Link 
+			href={`/game-session/${game.sessionId}`}
+			className="block bg-card border border-border rounded-lg p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
+		>
 			<div className="flex items-center gap-4">
 				{/* Rank Badge */}
 				<div
@@ -62,7 +66,9 @@ function MatchCard({ game }: { game: Game }) {
 				{/* Game Info */}
 				<div className="flex-1">
 					<div className="flex items-center gap-2 mb-1">
-						<h4 className="font-bold text-lg">{game.gameType}</h4>
+						<h4 className="font-bold text-lg group-hover:text-primary transition-colors">
+							{game.gameType}
+						</h4>
 						{isWin && (
 							<span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-xs font-medium rounded">
 								Victory
@@ -78,14 +84,17 @@ function MatchCard({ game }: { game: Game }) {
 				</div>
 
 				{/* Score */}
-				<div className="text-right">
-					<div className="text-2xl font-bold text-foreground">
-						{game.score.toLocaleString()}
+				<div className="text-right flex items-center gap-3">
+					<div>
+						<div className="text-2xl font-bold text-foreground">
+							{game.score.toLocaleString()}
+						</div>
+						<div className="text-xs text-muted-foreground">points</div>
 					</div>
-					<div className="text-xs text-muted-foreground">points</div>
+					<ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 }
 

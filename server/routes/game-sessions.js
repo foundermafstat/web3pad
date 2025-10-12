@@ -5,7 +5,7 @@ import GameSessionManager from '../lib/game-session-manager.js';
 const router = express.Router();
 
 // Start a game session
-router.post('/sessions/start', async (req, res) => {
+router.post('/game-sessions/sessions/start', async (req, res) => {
 	try {
 		const { roomId, gameType, hostId } = req.body;
 
@@ -27,7 +27,7 @@ router.post('/sessions/start', async (req, res) => {
 });
 
 // Complete a game session
-router.post('/sessions/complete', async (req, res) => {
+router.post('/game-sessions/sessions/complete', async (req, res) => {
 	try {
 		const { sessionId, results, gameData } = req.body;
 
@@ -57,7 +57,7 @@ router.post('/sessions/complete', async (req, res) => {
 });
 
 // Get session details
-router.get('/sessions/:sessionId', async (req, res) => {
+router.get('/game-sessions/sessions/:sessionId', async (req, res) => {
 	try {
 		const { sessionId } = req.params;
 
@@ -65,7 +65,11 @@ router.get('/sessions/:sessionId', async (req, res) => {
 			where: { id: sessionId },
 			include: {
 				gameType: true,
-				results: true,
+				results: {
+					orderBy: {
+						rank: 'asc'
+					}
+				},
 				gameRoom: true,
 			},
 		});
@@ -77,6 +81,48 @@ router.get('/sessions/:sessionId', async (req, res) => {
 		res.json(session);
 	} catch (error) {
 		console.error('Error fetching session:', error);
+		res.status(500).json({ error: 'Internal server error' });
+	}
+});
+
+// Get list of game sessions
+router.get('/game-sessions/list', async (req, res) => {
+	try {
+		const { limit = 50, gameType = 'all' } = req.query;
+		
+		const where = gameType !== 'all' 
+			? {
+				gameType: {
+					code: gameType
+				}
+			}
+			: {};
+
+		const sessions = await prisma.gameSession.findMany({
+			where,
+			include: {
+				gameType: true,
+				results: {
+					take: 3,
+					orderBy: {
+						score: 'desc'
+					}
+				},
+				_count: {
+					select: {
+						results: true
+					}
+				}
+			},
+			orderBy: {
+				startedAt: 'desc'
+			},
+			take: parseInt(limit)
+		});
+
+		res.json({ games: sessions, total: sessions.length });
+	} catch (error) {
+		console.error('Error fetching game sessions list:', error);
 		res.status(500).json({ error: 'Internal server error' });
 	}
 });
