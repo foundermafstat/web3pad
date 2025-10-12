@@ -1,0 +1,38 @@
+// Room types for the application
+
+export interface Room {
+	id: string;
+	roomId?: string; // Optional fallback ID
+	name: string;
+	gameType: string;
+	hostId: string;
+	hostName: string;
+	maxPlayers: number;
+	currentPlayers: number;
+	hasPassword: boolean;
+	status: 'waiting' | 'playing' | 'finished';
+	createdAt: number;
+	players?: RoomPlayer[]; // Optional array of players
+}
+
+export interface RoomPlayer {
+	id: string;
+	name: string;
+	isHost: boolean;
+	isReady: boolean;
+	joinedAt: number;
+}
+
+export interface CreateRoomData {
+	name: string;
+	gameType: string;
+	maxPlayers: number;
+	password?: string;
+}
+
+export interface JoinRoomData {
+	roomId: string;
+	playerName: string;
+	password?: string;
+}
+
