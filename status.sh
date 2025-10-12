@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# OSG Status Check Script
+# W3H Status Check Script
 # Quick status overview of the application
 
 echo "============================================"
-echo "🎮 OSG Application Status"
+echo "🎮 W3H Application Status"
 echo "============================================"
 echo ""
 

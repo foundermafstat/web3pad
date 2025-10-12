@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# OSG Game Server Deployment Script
+# W3H Game Server Deployment Script
 # For Ubuntu 24 with PM2
 
 echo "🚀 Starting deployment..."

@@ -1,4 +1,4 @@
-// Prisma schema for OSG (One Screen Games)
+// Prisma schema for W3H (Web3Hub)
 generator client {
   provider = "prisma-client-js"
 }

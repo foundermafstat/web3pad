@@ -172,16 +172,16 @@ pm2 status
 pm2 logs
 
 # View specific app logs
-pm2 logs osg-server
-pm2 logs osg-client
+pm2 logs W3H-server
+pm2 logs W3H-client
 
 # Monitor
 pm2 monit
 
 # Restart applications
 pm2 restart all
-pm2 restart osg-server
-pm2 restart osg-client
+pm2 restart W3H-server
+pm2 restart W3H-client
 
 # Stop applications
 pm2 stop all

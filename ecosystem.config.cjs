@@ -1,5 +1,5 @@
 /**
- * PM2 Configuration for OSG Game Server
+ * PM2 Configuration for W3H Game Server
  * 
  * Usage:
  *   pm2 start ecosystem.config.cjs
@@ -12,7 +12,7 @@
 module.exports = {
 	apps: [
 		{
-			name: 'osg-server',
+			name: 'W3H-server',
 			script: './server/server.js',
 			instances: 1,
 			exec_mode: 'fork',
@@ -29,7 +29,7 @@ module.exports = {
 			merge_logs: true,
 		},
 		{
-			name: 'osg-client',
+			name: 'W3H-client',
 			script: 'npm',
 			args: 'start',
 			cwd: './client',

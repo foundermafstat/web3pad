@@ -346,7 +346,7 @@ export default function Home() {
 						</div>
 						<div>
 							<h1 className="text-6xl md:text-7xl font-bold text-white tracking-tight mb-4">
-								One Screen Games
+								WEB3HUB
 							</h1>
 							<p className="text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 font-semibold">
 								Turn any screen into a gaming arena
@@ -822,7 +822,7 @@ export default function Home() {
 					<div className="text-center space-y-4">
 						<h2 className="text-4xl font-bold text-white">Why choose us?</h2>
 						<p className="text-gray-300 text-lg max-w-2xl mx-auto">
-							Technical advantages of the One Screen Games platform
+							Technical advantages of the Web3Hub platform
 						</p>
 					</div>
 
@@ -1099,7 +1099,7 @@ export default function Home() {
 					<div className="space-y-4">
 						<div className="flex items-center justify-center space-x-2 text-gray-400">
 							<Gamepad2 className="w-5 h-5" />
-							<span className="font-medium">One Screen Games</span>
+							<span className="font-medium">Web3Hub</span>
 						</div>
 						<p className="text-gray-500 text-sm">
 							Technologies: React, Next.js, PixiJS, Socket.IO, TypeScript

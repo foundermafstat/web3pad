@@ -409,6 +409,6 @@ io.on('connection', (socket) => {
 });
 
 server.listen(PORT, () => {
-	console.log(`OSG server running on port ${PORT}`);
+	console.log(`W3H server running on port ${PORT}`);
 	console.log(`Available game types:`, Object.keys(GAME_TYPES));
 });

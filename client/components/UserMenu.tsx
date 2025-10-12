@@ -61,12 +61,12 @@ export function UserMenu({ user }: UserMenuProps) {
 					<img
 						src={user.image}
 						alt={user.name || 'User'}
-						className="w-7 h-7 md:w-10 md:h-10 rounded-full object-cover"
+						className="w-7 h-7 md:w-10 md:h-10 rounded-sm object-cover"
 						crossOrigin="anonymous"
 						referrerPolicy="no-referrer"
 					/>
 				) : (
-					<div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs md:text-sm font-medium">
+					<div className="w-7 h-7 md:w-10 md:h-10 rounded-sm bg-primary text-primary-foreground flex items-center justify-center text-xs md:text-sm font-medium">
 						{getInitials()}
 					</div>
 				)}
@@ -81,12 +81,12 @@ export function UserMenu({ user }: UserMenuProps) {
 								<img
 									src={user.image}
 									alt={user.name || 'User'}
-									className="w-12 h-12 rounded-full object-cover"
+									className="w-12 h-12 rounded-sm object-cover"
 									crossOrigin="anonymous"
 									referrerPolicy="no-referrer"
 								/>
 							) : (
-								<div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-base font-medium">
+								<div className="w-12 h-12 rounded-sm bg-primary text-primary-foreground flex items-center justify-center text-base font-medium">
 									{getInitials()}
 								</div>
 							)}

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# OSG Update Script
+# W3H Update Script
 # Pull latest changes and redeploy
 
-echo "🔄 Updating OSG application..."
+echo "🔄 Updating W3H application..."
 
 # Colors
 GREEN='\033[0;32m'

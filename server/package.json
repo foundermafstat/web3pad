@@ -1,7 +1,7 @@
 {
-  "name": "osg-server",
+  "name": "W3H-server",
   "version": "1.0.0",
-  "description": "One Screen Games - Game Server",
+  "description": "Web3Hub - Game Server",
   "type": "module",
   "main": "server.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "multiplayer",
     "socket.io"
   ],
-  "author": "OSG Team",
+  "author": "W3H Team",
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.1.0",

@@ -10,7 +10,7 @@ const tektur = Tektur({
 });
 
 export const metadata: Metadata = {
-	title: 'OSG - One Screen Games',
+	title: 'W3H - Web3Hub',
 	description:
 		'Transform any screen into an instant multiplayer arena. Your phone becomes the controller. No downloads. No installations. Just scan and play.',
 	keywords: [
@@ -22,40 +22,43 @@ export const metadata: Metadata = {
 		'instant gaming',
 		'no download games',
 	],
-	authors: [{ name: 'OSG Team' }],
+	authors: [{ name: 'W3H Team' }],
 	icons: {
-		icon: '/logo-osg.jpg',
-		shortcut: '/logo-osg.jpg',
-		apple: '/logo-osg.jpg',
+		icon: '/w3h-icon.jpg',
+		shortcut: '/w3h-icon.jpg',
+		apple: '/w3h-icon.jpg',
 	},
 	openGraph: {
-		title: 'OSG - One Screen Games',
+		title: 'W3H - Web3Hub',
 		description:
 			'Turn any screen into an instant multiplayer arena. Your phone becomes the controller.',
-		images: ['/logo-osg.jpg'],
+		images: ['/logo-w3h.jpg'],
 		type: 'website',
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'OSG - One Screen Games',
+		title: 'W3H - Web3Hub',
 		description:
 			'Turn any screen into an instant multiplayer arena. Your phone becomes the controller.',
-		images: ['/logo-osg.jpg'],
+		images: ['/logo-w3h.jpg'],
 	},
 };
 
 import { Providers } from './providers';
 import { Header } from '@/components/Header';
+import { auth } from '@/lib/auth';
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const session = await auth();
+	
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${tektur.variable} antialiased`} suppressHydrationWarning>
-				<Providers>
+				<Providers session={session}>
 					<Header />
 					{children}
 				</Providers>
