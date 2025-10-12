@@ -159,7 +159,7 @@ export class QuizGame extends BaseGame {
 		];
 	}
 
-	addPlayer(playerId, playerName) {
+	addPlayer(playerId, playerName, userId = null) {
 		if (this.gameStarted) {
 			throw new Error('Game already started');
 		}
@@ -174,6 +174,7 @@ export class QuizGame extends BaseGame {
 		this.colorIndex++;
 
 		const player = new QuizPlayer(playerId, playerName, color, avatar);
+		player.userId = userId; // Store userId for database tracking
 		this.players.set(playerId, player);
 
 		return player.getPlayerData();
@@ -213,6 +214,12 @@ export class QuizGame extends BaseGame {
 		this.gameStarted = true;
 		this.currentRound = 0;
 		this.gameFinished = false;
+		
+		// Start session tracking in database
+		this.startSession().catch(err => 
+			console.error('[QuizGame] Error starting session:', err)
+		);
+		
 		this.startNextRound();
 	}
 
@@ -299,6 +306,12 @@ export class QuizGame extends BaseGame {
 		this.winners = Array.from(this.players.values())
 			.filter((p) => p.score === maxScore)
 			.map((p) => p.id);
+
+		// Save session results to database
+		const results = this.prepareResults();
+		this.completeSession(results).catch(err =>
+			console.error('[QuizGame] Error completing session:', err)
+		);
 	}
 
 	update(deltaTime) {

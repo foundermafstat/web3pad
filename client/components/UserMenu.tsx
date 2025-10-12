@@ -108,11 +108,7 @@ export function UserMenu({ user }: UserMenuProps) {
 					<div className="p-2">
 						<Link
 							href={`/profile/${encodeURIComponent(user.username || user.email?.split('@')[0] || user.id)}`}
-							onClick={() => {
-								console.log('[UserMenu] Navigating to profile with username:', user.username || user.email?.split('@')[0] || user.id);
-								console.log('[UserMenu] User object:', { username: user.username, email: user.email, id: user.id });
-								setIsOpen(false);
-							}}
+							onClick={() => setIsOpen(false)}
 							className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
 						>
 							<svg

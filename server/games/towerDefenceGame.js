@@ -214,12 +214,14 @@ export class TowerDefenceGame extends BaseGame {
 		);
 	}
 
-	addPlayer(playerId, playerName) {
+	addPlayer(playerId, playerName, userId = null) {
 		const player = {
 			id: playerId,
 			name: playerName,
+			userId: userId, // Store userId for database tracking
 			role: 'commander', // All players are commanders
 			isActive: true,
+			score: 0,
 		};
 
 		this.players.set(playerId, player);

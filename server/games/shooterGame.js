@@ -407,7 +407,7 @@ export class ShooterGame extends BaseGame {
 		});
 	}
 
-	addPlayer(playerId, playerName) {
+	addPlayer(playerId, playerName, userId = null) {
 		const color = this.playerColors[this.colorIndex % this.playerColors.length];
 		this.colorIndex++;
 
@@ -419,6 +419,7 @@ export class ShooterGame extends BaseGame {
 			this.playerSize,
 			color
 		);
+		player.userId = userId; // Store userId for database tracking
 
 		this.players.set(playerId, player);
 		return player.getPlayerData();

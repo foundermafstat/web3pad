@@ -3,29 +3,10 @@ import prisma from '../lib/prisma.js';
 
 const router = express.Router();
 
-// Debug endpoint to list all users
-router.get('/debug/users', async (req, res) => {
-	try {
-		const users = await prisma.user.findMany({
-			select: {
-				id: true,
-				username: true,
-				email: true,
-				displayName: true,
-			},
-		});
-		res.json({ users, count: users.length });
-	} catch (error) {
-		console.error('[Debug] Error listing users:', error);
-		res.status(500).json({ error: 'Failed to list users' });
-	}
-});
-
 // Get user profile by username or ID
 router.get('/profile/:username', async (req, res) => {
 	try {
 		const { username } = req.params;
-		console.log('[Profile API] Looking for user:', username);
 
 		// Try to find user by username first, then by ID
 		let user = await prisma.user.findUnique({
@@ -40,14 +21,10 @@ router.get('/profile/:username', async (req, res) => {
 				coins: true,
 				createdAt: true,
 			},
-		}).catch((err) => {
-			console.error('[Profile API] Error finding by username:', err.message);
-			return null;
-		});
+		}).catch(() => null);
 
 		// If not found by username, try to find by ID
 		if (!user) {
-			console.log('[Profile API] User not found by username, trying by ID...');
 			user = await prisma.user.findUnique({
 				where: { id: username },
 				select: {
@@ -60,23 +37,12 @@ router.get('/profile/:username', async (req, res) => {
 					coins: true,
 					createdAt: true,
 				},
-			}).catch((err) => {
-				console.error('[Profile API] Error finding by ID:', err.message);
-				return null;
-			});
+			}).catch(() => null);
 		}
 
 		if (!user) {
-			console.log('[Profile API] User not found in database');
-			// List all users for debugging
-			const allUsers = await prisma.user.findMany({
-				select: { id: true, username: true, email: true },
-			});
-			console.log('[Profile API] Available users:', allUsers);
 			return res.status(404).json({ error: 'User not found' });
 		}
-
-		console.log('[Profile API] User found:', user.username);
 
 		// Get player statistics
 		const stats = await prisma.playerStats.findMany({

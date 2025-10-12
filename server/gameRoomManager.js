@@ -1,4 +1,5 @@
 import { createGame, GAME_TYPES } from './games/index.js';
+import GameSessionManager from './lib/game-session-manager.js';
 
 // Менеджер игровых комнат
 export class GameRoomManager {
@@ -40,10 +41,20 @@ export class GameRoomManager {
 			createdAt: Date.now(),
 		});
 
+		// Save room to database if user is authenticated
+		if (roomInfo.hostUserId) {
+			GameSessionManager.createGameRoom(
+				roomId,
+				gameType,
+				roomInfo.hostUserId,
+				config
+			).catch(err => console.error('[GameRoomManager] Error creating room in DB:', err));
+		}
+
 		// Запустить игровой цикл для этой комнаты
 		this.startGameLoop(roomId);
 
-		console.log(`Created room ${roomId} (${roomInfo.name}) with game type ${gameType}`);
+		console.log(`[GameRoomManager] Created room ${roomId} (${roomInfo.name}) with game type ${gameType}`);
 		return game;
 	}
 
@@ -106,10 +117,19 @@ export class GameRoomManager {
 		room.sockets.add(socket);
 		this.playerToRoom.set(socket.id, roomId);
 
-		// Добавляем игрока в игру
-		const playerData = room.game.addPlayer(socket.id, playerName);
+		// Get userId from socket authentication (if available)
+		const userId = socket.user?.userId || null;
 
-		console.log(`Player ${playerName} (${socket.id}) joined room ${roomId}`);
+		// Добавляем игрока в игру
+		const playerData = room.game.addPlayer(socket.id, playerName, userId);
+
+		// Update room player count in database
+		if (room.info.hostUserId) {
+			GameSessionManager.updateRoomPlayerCount(roomId, room.game.players.size)
+				.catch(err => console.error('[GameRoomManager] Error updating player count:', err));
+		}
+
+		console.log(`[GameRoomManager] Player ${playerName} (${socket.id}) joined room ${roomId}, userId: ${userId || 'guest'}`);
 		return { room, playerData };
 	}
 

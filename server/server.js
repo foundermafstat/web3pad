@@ -8,6 +8,7 @@ import { GameRoomManager } from './gameRoomManager.js';
 import { GAME_TYPES, GAME_INFO } from './games/index.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
+import gameSessionRoutes from './routes/game-sessions.js';
 import prisma from './lib/prisma.js';
 import { socketAuthMiddleware } from './middleware/auth.js';
 
@@ -59,6 +60,9 @@ app.use('/api/auth', authRoutes);
 
 // Profile and leaderboard routes
 app.use('/api', profileRoutes);
+
+// Game session routes
+app.use('/api', gameSessionRoutes);
 
 // API endpoints
 app.get('/api/games', (req, res) => {

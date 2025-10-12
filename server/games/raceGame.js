@@ -125,7 +125,7 @@ export class RaceGame extends BaseGame {
 		this.colorIndex = 0;
 	}
 
-	addPlayer(playerId, playerName) {
+	addPlayer(playerId, playerName, userId = null) {
 		const color = this.playerColors[this.colorIndex % this.playerColors.length];
 		this.colorIndex++;
 
@@ -136,6 +136,10 @@ export class RaceGame extends BaseGame {
 			this.trackHeight,
 			color
 		);
+		player.userId = userId; // Store userId for database tracking
+		player.score = 0; // Initialize score
+		player.lapTime = null; // Time to complete lap
+		player.startTime = Date.now();
 
 		this.players.set(playerId, player);
 		return player.getPlayerData();
