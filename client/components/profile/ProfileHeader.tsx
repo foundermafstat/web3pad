@@ -95,7 +95,7 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 						<StatCard
 							icon={<Star className="w-5 h-5" />}
 							label="Total Score"
-							value={stats.totalScore.toLocaleString()}
+							value={stats.totalScore.toLocaleString('en-US')}
 							color="purple"
 						/>
 						<StatCard

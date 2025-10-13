@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { X, Mail, Lock, User, Github, Chrome } from 'lucide-react';
+import { X, Mail, Lock, User, Github, Chrome, Wallet } from 'lucide-react';
+import { MetaMaskAuth } from './auth/MetaMaskAuth';
 
 interface AuthModalProps {
 	isOpen: boolean;
@@ -11,7 +12,7 @@ interface AuthModalProps {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => {
-	const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+	const [mode, setMode] = useState<'signin' | 'signup' | 'metamask'>('signin');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
@@ -139,10 +140,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 
 					<div className="text-center">
 						<h2 className="text-2xl font-bold text-white mb-2">
-							{mode === 'signin' ? 'Sign In' : 'Create Account'}
+							{mode === 'metamask' ? 'Crypto Wallet' : mode === 'signin' ? 'Sign In' : 'Create Account'}
 						</h2>
 						<p className="text-blue-100 text-sm">
-							{mode === 'signin'
+							{mode === 'metamask'
+								? 'Connect with your crypto wallet'
+								: mode === 'signin'
 								? 'Welcome back! Sign in to continue'
 								: 'Join now to save your progress'}
 						</p>
@@ -150,47 +153,76 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 				</div>
 
 				<div className="p-6 space-y-6">
-					{/* Error Message */}
-					{error && (
-						<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">
-							{error}
+					{mode === 'metamask' ? (
+						<div>
+							<MetaMaskAuth onClose={onClose} />
+							
+							{/* Back to other options */}
+							<div className="mt-6 text-center">
+								<button
+									onClick={() => setMode('signin')}
+									className="text-sm text-gray-400 hover:text-white transition-colors"
+								>
+									← Back to other sign in options
+								</button>
+							</div>
 						</div>
+					) : (
+						<>
+							{/* Error Message */}
+							{error && (
+								<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">
+									{error}
+								</div>
+							)}
+
+							{/* OAuth Buttons */}
+							<div className="space-y-3">
+								<button
+									onClick={() => handleOAuthSignIn('google')}
+									disabled={loading}
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+								>
+									<Chrome className="w-5 h-5" />
+									<span>Continue with Google</span>
+								</button>
+
+								<button
+									onClick={() => handleOAuthSignIn('github')}
+									disabled={loading}
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-gray-700"
+								>
+									<Github className="w-5 h-5" />
+									<span>Continue with GitHub</span>
+								</button>
+								
+								<button
+									onClick={() => setMode('metamask')}
+									disabled={loading}
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+								>
+									<Wallet className="w-5 h-5" />
+									<span>Continue with MetaMask</span>
+								</button>
+							</div>
+						</>
 					)}
 
-					{/* OAuth Buttons */}
-					<div className="space-y-3">
-						<button
-							onClick={() => handleOAuthSignIn('google')}
-							disabled={loading}
-							className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-						>
-							<Chrome className="w-5 h-5" />
-							<span>Continue with Google</span>
-						</button>
+					{mode !== 'metamask' && (
+						<>
+							{/* Divider */}
+							<div className="relative">
+								<div className="absolute inset-0 flex items-center">
+									<div className="w-full border-t border-gray-700"></div>
+								</div>
+								<div className="relative flex justify-center text-sm">
+									<span className="px-4 bg-gray-800 text-gray-400">
+										Or continue with email
+									</span>
+								</div>
+							</div>
 
-						<button
-							onClick={() => handleOAuthSignIn('github')}
-							disabled={loading}
-							className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-gray-700"
-						>
-							<Github className="w-5 h-5" />
-							<span>Continue with GitHub</span>
-						</button>
-					</div>
-
-					{/* Divider */}
-					<div className="relative">
-						<div className="absolute inset-0 flex items-center">
-							<div className="w-full border-t border-gray-700"></div>
-						</div>
-						<div className="relative flex justify-center text-sm">
-							<span className="px-4 bg-gray-800 text-gray-400">
-								Or continue with email
-							</span>
-						</div>
-					</div>
-
-					{/* Email Form */}
+							{/* Email Form */}
 					<form onSubmit={mode === 'signin' ? handleEmailSignIn : handleEmailSignUp} className="space-y-4">
 						{mode === 'signup' && (
 							<>
@@ -291,28 +323,30 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 						</button>
 					</form>
 
-					{/* Toggle Mode */}
-					<div className="text-center">
-						<button
-							onClick={() => {
-								setMode(mode === 'signin' ? 'signup' : 'signin');
-								setError('');
-							}}
-							className="text-sm text-gray-400 hover:text-white transition-colors"
-						>
-							{mode === 'signin' ? (
-								<>
-									Don't have an account?{' '}
-									<span className="text-blue-400 font-semibold">Sign up</span>
-								</>
-							) : (
-								<>
-									Already have an account?{' '}
-									<span className="text-blue-400 font-semibold">Sign in</span>
-								</>
-							)}
-						</button>
-					</div>
+							{/* Toggle Mode */}
+							<div className="text-center">
+								<button
+									onClick={() => {
+										setMode(mode === 'signin' ? 'signup' : 'signin');
+										setError('');
+									}}
+									className="text-sm text-gray-400 hover:text-white transition-colors"
+								>
+									{mode === 'signin' ? (
+										<>
+											Don't have an account?{' '}
+											<span className="text-blue-400 font-semibold">Sign up</span>
+										</>
+									) : (
+										<>
+											Already have an account?{' '}
+											<span className="text-blue-400 font-semibold">Sign in</span>
+										</>
+									)}
+								</button>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

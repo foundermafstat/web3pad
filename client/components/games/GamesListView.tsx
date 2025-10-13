@@ -219,7 +219,7 @@ function GameCard({ game }: { game: GameSession }) {
 									Top: {topPlayer.playerName}
 								</div>
 								<div className="text-xl font-bold text-foreground">
-									{topPlayer.score.toLocaleString()}
+									{topPlayer.score.toLocaleString('en-US')}
 								</div>
 							</>
 						)}

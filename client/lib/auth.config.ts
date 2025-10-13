@@ -2,6 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
 import GitHub from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
+import { isValidAddress } from './metamask';
 
 export const authConfig: NextAuthConfig = {
 	providers: [
@@ -49,6 +50,58 @@ export const authConfig: NextAuthConfig = {
 				}
 			},
 		}),
+		Credentials({
+			id: 'metamask',
+			name: 'MetaMask',
+			credentials: {
+				walletAddress: { label: 'Wallet Address', type: 'text' },
+				signature: { label: 'Signature', type: 'text' },
+				message: { label: 'Message', type: 'text' },
+			},
+			async authorize(credentials) {
+				if (!credentials?.walletAddress || !credentials?.signature || !credentials?.message) {
+					return null;
+				}
+
+				// Validate wallet address format
+				if (!isValidAddress(credentials.walletAddress)) {
+					return null;
+				}
+
+				try {
+					// Verify signature on server
+					const response = await fetch(
+						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/metamask`,
+						{
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({
+								walletAddress: credentials.walletAddress,
+								signature: credentials.signature,
+								message: credentials.message,
+							}),
+						}
+					);
+
+					if (!response.ok) {
+						return null;
+					}
+
+					const user = await response.json();
+					return {
+						id: user.id,
+						email: user.email,
+						name: user.displayName,
+						username: user.username,
+						image: user.avatar,
+						walletAddress: user.walletAddress,
+					};
+				} catch (error) {
+					console.error('MetaMask auth error:', error);
+					return null;
+				}
+			},
+		}),
 	],
 	pages: {
 		signIn: '/auth/signin',
@@ -56,6 +109,11 @@ export const authConfig: NextAuthConfig = {
 	},
 	callbacks: {
 		async signIn({ user, account, profile }) {
+			// MetaMask sign in - already handled in authorize
+			if (account?.provider === 'metamask') {
+				return true;
+			}
+			
 			// OAuth sign in
 			if (account?.provider === 'google' || account?.provider === 'github') {
 				try {
@@ -102,6 +160,7 @@ export const authConfig: NextAuthConfig = {
 				token.username = (user as any).username;
 				token.email = user.email;
 				token.picture = user.image; // Store avatar in token
+				token.walletAddress = (user as any).walletAddress; // Store wallet address
 			}
 			return token;
 		},
@@ -110,6 +169,7 @@ export const authConfig: NextAuthConfig = {
 				session.user.id = token.id as string;
 				(session.user as any).username = token.username;
 				session.user.image = token.picture as string; // Set avatar from token
+				(session.user as any).walletAddress = token.walletAddress as string; // Set wallet address
 			}
 			return session;
 		},

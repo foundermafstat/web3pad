@@ -54,7 +54,7 @@ export function StatsTab({ stats }: StatsTabProps) {
 				<StatCard
 					icon={<Target className="w-6 h-6" />}
 					title="Total Score"
-					value={stats.overall.totalScore.toLocaleString()}
+					value={stats.overall.totalScore.toLocaleString('en-US')}
 					subtitle="All-time points"
 					gradient="from-purple-500 to-pink-500"
 				/>
@@ -128,8 +128,8 @@ function GameStatCard({ stat, gameIndex }: any) {
 			<div className="grid grid-cols-2 gap-4">
 				<StatItem label="Wins" value={stat.gamesWon} />
 				<StatItem label="Win Rate" value={`${stat.winRate}%`} />
-				<StatItem label="High Score" value={stat.highestScore.toLocaleString()} />
-				<StatItem label="Avg Score" value={Math.round(stat.averageScore).toLocaleString()} />
+				<StatItem label="High Score" value={stat.highestScore.toLocaleString('en-US')} />
+				<StatItem label="Avg Score" value={Math.round(stat.averageScore).toLocaleString('en-US')} />
 				{stat.totalKills !== undefined && (
 					<StatItem label="Total Kills" value={stat.totalKills} />
 				)}

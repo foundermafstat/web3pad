@@ -87,7 +87,7 @@ function MatchCard({ game }: { game: Game }) {
 				<div className="text-right flex items-center gap-3">
 					<div>
 						<div className="text-2xl font-bold text-foreground">
-							{game.score.toLocaleString()}
+							{game.score.toLocaleString('en-US')}
 						</div>
 						<div className="text-xs text-muted-foreground">points</div>
 					</div>

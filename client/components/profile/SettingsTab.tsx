@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Upload, User, Mail, Shield } from 'lucide-react';
+import { WalletConnection } from '../WalletConnection';
 
 interface SettingsTabProps {
 	user: {
@@ -10,18 +11,61 @@ interface SettingsTabProps {
 		username: string;
 		displayName: string;
 		avatar?: string;
+		walletAddress?: string | null;
 	};
 }
 
 export function SettingsTab({ user }: SettingsTabProps) {
 	const [displayName, setDisplayName] = useState(user.displayName);
 	const [loading, setLoading] = useState(false);
+	const [walletAddress, setWalletAddress] = useState(user.walletAddress);
 
 	const handleSave = async () => {
 		setLoading(true);
 		// TODO: Implement save functionality
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 		setLoading(false);
+	};
+
+	const handleWalletConnect = async (address: string) => {
+		try {
+			const response = await fetch('/api/profile/wallet', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ walletAddress: address }),
+			});
+
+			if (!response.ok) {
+				const error = await response.json();
+				throw new Error(error.error || 'Failed to connect wallet');
+			}
+
+			const data = await response.json();
+			setWalletAddress(data.user.walletAddress);
+		} catch (error) {
+			console.error('Error connecting wallet:', error);
+			throw error; // Re-throw to let the component handle the error
+		}
+	};
+
+	const handleWalletDisconnect = async () => {
+		try {
+			const response = await fetch('/api/profile/wallet', {
+				method: 'DELETE',
+			});
+
+			if (!response.ok) {
+				const error = await response.json();
+				throw new Error(error.error || 'Failed to disconnect wallet');
+			}
+
+			setWalletAddress(null);
+		} catch (error) {
+			console.error('Error disconnecting wallet:', error);
+			throw error; // Re-throw to let the component handle the error
+		}
 	};
 
 	return (
@@ -103,6 +147,13 @@ export function SettingsTab({ user }: SettingsTabProps) {
 					</Button>
 				</div>
 			</div>
+
+			{/* Crypto Wallet Section */}
+			<WalletConnection
+				currentWalletAddress={walletAddress}
+				onWalletConnect={handleWalletConnect}
+				onWalletDisconnect={handleWalletDisconnect}
+			/>
 
 			{/* Save Button */}
 			<Button onClick={handleSave} disabled={loading} className="w-full" size="lg">

@@ -138,7 +138,7 @@ export function LeaderboardView() {
 					<StatCard
 						icon={<Medal className="w-5 h-5" />}
 						label="Top Score"
-						value={leaderboard.rankings[0]?.totalScore.toLocaleString() || 0}
+						value={leaderboard.rankings[0]?.totalScore.toLocaleString('en-US') || 0}
 					/>
 				</div>
 			)}
@@ -227,7 +227,7 @@ function PodiumCard({ player, position, color }: any) {
 			</div>
 			<div className="font-bold text-lg mb-1">{player.displayName}</div>
 			<div className="text-sm opacity-90 mb-2">@{player.username}</div>
-			<div className="text-2xl font-bold">{player.totalScore.toLocaleString()}</div>
+			<div className="text-2xl font-bold">{player.totalScore.toLocaleString('en-US')}</div>
 			<div className="text-xs opacity-75">points</div>
 		</Link>
 	);
@@ -286,7 +286,7 @@ function LeaderboardRow({ player }: { player: LeaderboardEntry }) {
 			{/* Score */}
 			<div className="text-right">
 				<div className="text-2xl font-bold text-foreground">
-					{player.totalScore.toLocaleString()}
+					{player.totalScore.toLocaleString('en-US')}
 				</div>
 				<div className="text-xs text-muted-foreground">points</div>
 			</div>

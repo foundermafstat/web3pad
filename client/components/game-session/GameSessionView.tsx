@@ -125,7 +125,7 @@ export function GameSessionView({ session }: GameSessionViewProps) {
 				<StatCard
 					icon={<Trophy className="w-5 h-5" />}
 					label="High Score"
-					value={sortedResults[0]?.score.toLocaleString() || 0}
+					value={sortedResults[0]?.score.toLocaleString('en-US') || 0}
 					color="text-yellow-500"
 				/>
 			</div>
@@ -268,7 +268,7 @@ function PodiumCard({ result, position, gameType }: { result: GameResult; positi
 				)}
 			</div>
 			<div className="font-bold text-lg mb-1 truncate">{result.playerName}</div>
-			<div className="text-2xl font-bold">{result.score.toLocaleString()}</div>
+			<div className="text-2xl font-bold">{result.score.toLocaleString('en-US')}</div>
 			<div className="text-xs opacity-75">points</div>
 			{gameType === 'shooter' && result.kills !== null && (
 				<div className="text-xs opacity-75 mt-1">
@@ -304,7 +304,7 @@ function ResultRow({ result, index, gameType }: { result: GameResult; index: num
 				</div>
 			</td>
 			<td className="px-4 py-4 text-right">
-				<div className="text-xl font-bold">{result.score.toLocaleString()}</div>
+				<div className="text-xl font-bold">{result.score.toLocaleString('en-US')}</div>
 			</td>
 			{gameType === 'shooter' && (
 				<>

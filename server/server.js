@@ -9,6 +9,8 @@ import { GAME_TYPES, GAME_INFO } from './games/index.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import gameSessionRoutes from './routes/game-sessions.js';
+import metaMaskAuthRoutes from './routes/metamask-auth.js';
+import walletRoutes from './routes/wallet.js';
 import prisma from './lib/prisma.js';
 import { socketAuthMiddleware } from './middleware/auth.js';
 
@@ -57,9 +59,13 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', metaMaskAuthRoutes);
 
 // Profile and leaderboard routes
 app.use('/api', profileRoutes);
+
+// Wallet routes
+app.use('/api/profile', walletRoutes);
 
 // Game session routes
 app.use('/api', gameSessionRoutes);
