@@ -446,7 +446,7 @@ const MobileController: React.FC<MobileControllerProps> = ({
 							<Gamepad2 className="w-8 h-8 text-white" />
 						</div>
 						<h1 className="text-2xl font-bold text-white mb-2">
-							Join in Web3Hub
+							Join in Web3Pad
 						</h1>
 						<p className="text-gray-300">Enter your player name</p>
 

@@ -29,7 +29,7 @@ export default function HeroSection({ onCreateRoomClick }: HeroSectionProps) {
 						
 						<h1 className="text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-none">
 							<span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-								WEB3HUB
+								Web3Pad
 							</span>
 						</h1>
 						

@@ -22,8 +22,8 @@ export function ThemeLogo({ width, height, className }: ThemeLogoProps) {
 		// Return a default logo during SSR
 		return (
 			<Image
-				src="/w3h-logo-black.png"
-				alt="W3H"
+				src="/W3P-logo-black.png"
+				alt="W3P"
 				width={width}
 				height={height}
 				className={className}
@@ -33,12 +33,12 @@ export function ThemeLogo({ width, height, className }: ThemeLogoProps) {
 	}
 
 	const currentTheme = resolvedTheme || theme;
-	const logoSrc = currentTheme === 'dark' ? '/w3h-logo-white.png' : '/w3h-logo-black.png';
+	const logoSrc = currentTheme === 'dark' ? '/W3P-logo-white.png' : '/W3P-logo-black.png';
 
 	return (
 		<Image
 			src={logoSrc}
-			alt="W3H"
+			alt="W3P"
 			width={width}
 			height={height}
 			className={className}

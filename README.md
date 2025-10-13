@@ -1,4 +1,4 @@
-# 🎮 W3H - Web3Hub
+# 🎮 W3P - Web3Pad
 
 **Turn any screen into an instant multiplayer gaming arena. Your smartphone is your controller.**
 
@@ -6,7 +6,7 @@ No downloads. No installations. No hassle. Just scan, play, and compete with fri
 
 ---
 
-## ✨ What Makes W3H Special?
+## ✨ What Makes W3P Special?
 
 🎯 **Zero Setup** - No apps to install. Works directly in your browser.  
 📱 **Phone = Controller** - Scan QR code and your phone becomes a gamepad instantly.  
@@ -139,7 +139,7 @@ ipconfig
 ### Project Structure
 
 ```
-W3H/
+W3P/
 ├── server/                    # Node.js + Socket.io server
 │   ├── server.js             # Main server file
 │   ├── gameRoomManager.js    # Room management

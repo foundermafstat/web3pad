@@ -10,7 +10,7 @@ export default function KeyFeaturesSection() {
 			<div className="text-center space-y-4">
 				<h2 className="text-4xl font-bold text-white">Why choose us?</h2>
 				<p className="text-gray-300 text-lg max-w-2xl mx-auto">
-					Technical advantages of the Web3Hub platform
+					Technical advantages of the Web3Pad platform
 				</p>
 			</div>
 

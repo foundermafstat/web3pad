@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# W3H Game Server Deployment Script
+# W3P Game Server Deployment Script
 # For Ubuntu 24 with PM2
 
 echo "🚀 Starting deployment..."

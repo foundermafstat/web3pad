@@ -1,7 +1,7 @@
 {
-  "name": "W3H-server",
+  "name": "W3P-server",
   "version": "1.0.0",
-  "description": "Web3Hub - Game Server",
+  "description": "Web3Pad - Game Server",
   "type": "module",
   "main": "server.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "multiplayer",
     "socket.io"
   ],
-  "author": "W3H Team",
+  "author": "W3P Team",
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.1.0",

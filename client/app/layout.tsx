@@ -10,7 +10,7 @@ const tektur = Tektur({
 });
 
 export const metadata: Metadata = {
-	title: 'W3H - Web3Hub',
+	title: 'W3P - Web3Pad',
 	description:
 		'Transform any screen into an instant multiplayer arena. Your phone becomes the controller. No downloads. No installations. Just scan and play.',
 	keywords: [
@@ -22,25 +22,25 @@ export const metadata: Metadata = {
 		'instant gaming',
 		'no download games',
 	],
-	authors: [{ name: 'W3H Team' }],
+	authors: [{ name: 'W3P Team' }],
 	icons: {
-		icon: '/w3h-icon.jpg',
-		shortcut: '/w3h-icon.jpg',
-		apple: '/w3h-icon.jpg',
+		icon: '/W3P-icon.jpg',
+		shortcut: '/W3P-icon.jpg',
+		apple: '/W3P-icon.jpg',
 	},
 	openGraph: {
-		title: 'W3H - Web3Hub',
+		title: 'W3P - Web3Pad',
 		description:
 			'Turn any screen into an instant multiplayer arena. Your phone becomes the controller.',
-		images: ['/logo-w3h.jpg'],
+		images: ['/logo-W3P.jpg'],
 		type: 'website',
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'W3H - Web3Hub',
+		title: 'W3P - Web3Pad',
 		description:
 			'Turn any screen into an instant multiplayer arena. Your phone becomes the controller.',
-		images: ['/logo-w3h.jpg'],
+		images: ['/logo-W3P.jpg'],
 	},
 };
 

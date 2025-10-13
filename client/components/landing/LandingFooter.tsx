@@ -9,7 +9,7 @@ export default function LandingFooter() {
 			<div className="space-y-4">
 				<div className="flex items-center justify-center space-x-2 text-gray-400">
 					<Gamepad2 className="w-5 h-5" />
-					<span className="font-medium">Web3Hub</span>
+					<span className="font-medium">Web3Pad</span>
 				</div>
 				<p className="text-gray-500 text-sm">
 					Technologies: React, Next.js, PixiJS, Socket.IO, TypeScript

@@ -1,4 +1,4 @@
-// Prisma schema for W3H (Web3Hub)
+// Prisma schema for W3P (Web3Pad)
 generator client {
   provider = "prisma-client-js"
 }

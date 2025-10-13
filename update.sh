@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# W3H Update Script
+# W3P Update Script
 # Pull latest changes and redeploy
 
-echo "🔄 Updating W3H application..."
+echo "🔄 Updating W3P application..."
 
 # Colors
 GREEN='\033[0;32m'

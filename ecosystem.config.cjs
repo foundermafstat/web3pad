@@ -1,5 +1,5 @@
 /**
- * PM2 Configuration for W3H Game Server
+ * PM2 Configuration for W3P Game Server
  * 
  * Usage:
  *   pm2 start ecosystem.config.cjs
@@ -12,7 +12,7 @@
 module.exports = {
 	apps: [
 		{
-			name: 'W3H-server',
+			name: 'W3P-server',
 			script: './server/server.js',
 			instances: 1,
 			exec_mode: 'fork',
@@ -29,7 +29,7 @@ module.exports = {
 			merge_logs: true,
 		},
 		{
-			name: 'W3H-client',
+			name: 'W3P-client',
 			script: 'npm',
 			args: 'start',
 			cwd: './client',

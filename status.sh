@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# W3H Status Check Script
+# W3P Status Check Script
 # Quick status overview of the application
 
 echo "============================================"
-echo "🎮 W3H Application Status"
+echo "🎮 W3P Application Status"
 echo "============================================"
 echo ""
 

@@ -47,7 +47,7 @@ export function MetaMaskAuth({ onClose, redirectUrl }: MetaMaskAuthProps) {
 
 		try {
 			// Create a message to sign for authentication
-			const message = `Sign in to Web3Hub\n\nWallet: ${account}\nTimestamp: ${Date.now()}`;
+			const message = `Sign in to Web3Pad\n\nWallet: ${account}\nTimestamp: ${Date.now()}`;
 			
 			// Sign the message
 			const signature = await signMessage(message);
