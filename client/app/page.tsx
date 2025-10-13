@@ -11,7 +11,7 @@ import AuthModal from '@/components/AuthModal';
 import { Room } from '@/types/room';
 import {
 	ActiveRoomsBar,
-	HeroSection,
+	GameVideoSlider,
 	GamesSection,
 	HowItWorksSection,
 	TechnologySection,
@@ -237,7 +237,11 @@ export default function Home() {
 			/>
 
 			{/* Landing Page Sections */}
-			<HeroSection onCreateRoomClick={handleCreateRoomClick} />
+			<GameVideoSlider 
+				games={games} 
+				onCreateRoomClick={handleCreateRoomClick}
+				onPlayGame={startGame}
+			/>
 			<GamesSection games={games} startGame={startGame} />
 			
 			<div className="max-w-7xl mx-auto px-4 py-20 space-y-24">
