@@ -28,6 +28,12 @@ export const metadata: Metadata = {
 		shortcut: '/w3h-icon.jpg',
 		apple: '/w3h-icon.jpg',
 	},
+	manifest: '/manifest.json',
+	appleWebApp: {
+		capable: true,
+		statusBarStyle: 'black-translucent',
+		title: 'W3P',
+	},
 	openGraph: {
 		title: 'W3P - Web3Pad',
 		description:
@@ -47,6 +53,8 @@ export const metadata: Metadata = {
 import { Providers } from './providers';
 import { Header } from '@/components/Header';
 import { auth } from '@/lib/auth';
+import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
+import { PWAStatus } from '@/components/PWAStatus';
 
 export default async function RootLayout({
 	children,
@@ -57,10 +65,18 @@ export default async function RootLayout({
 	
 	return (
 		<html lang="en" suppressHydrationWarning>
+			<head>
+				<meta name="theme-color" content="#000000" />
+				<meta name="mobile-web-app-capable" content="yes" />
+				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+			</head>
 			<body className={`${tektur.variable} antialiased`} suppressHydrationWarning>
 				<Providers session={session}>
 					<Header />
 					{children}
+					<PWAInstallPrompt />
+					<PWAStatus />
 				</Providers>
 			</body>
 		</html>

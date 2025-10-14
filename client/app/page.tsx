@@ -23,6 +23,7 @@ import {
 	GameInfo,
 	CreateRoomData,
 } from '@/components/landing';
+import { AllGamesPreloader } from '@/components/GamePreloader';
 
 export default function Home() {
 	const router = useRouter();
@@ -206,6 +207,9 @@ export default function Home() {
 
 	return (
 		<div className="min-h-screen bg-background">
+			{/* Preload game resources in background */}
+			<AllGamesPreloader />
+			
 			{/* Active Rooms Bar */}
 			<ActiveRoomsBar
 				rooms={rooms}

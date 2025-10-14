@@ -2,7 +2,8 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
+import { registerServiceWorker } from '@/lib/sw-register';
 
 interface ProvidersProps {
 	children: ReactNode;
@@ -10,6 +11,11 @@ interface ProvidersProps {
 }
 
 export function Providers({ children, session }: ProvidersProps) {
+	useEffect(() => {
+		// Register Service Worker on mount
+		registerServiceWorker();
+	}, []);
+
 	return (
 		<SessionProvider session={session}>
 			<ThemeProvider
