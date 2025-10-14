@@ -31,6 +31,56 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	webpack: (config, { isServer, dev }) => {
+		// Fix for @stacks/connect module loading issues
+		if (!isServer) {
+			config.resolve.fallback = {
+				...config.resolve.fallback,
+				fs: false,
+				net: false,
+				tls: false,
+				crypto: false,
+				stream: false,
+				util: false,
+				url: false,
+				assert: false,
+				http: false,
+				https: false,
+				os: false,
+				buffer: false,
+			};
+		}
+		
+		// Handle @stacks/connect modules
+		config.externals = config.externals || [];
+		if (isServer) {
+			config.externals.push('@stacks/connect');
+		}
+		
+		// Optimize chunks for @stacks/connect
+		if (!isServer) {
+			config.optimization = {
+				...config.optimization,
+				splitChunks: {
+					...config.optimization.splitChunks,
+					cacheGroups: {
+						...config.optimization.splitChunks.cacheGroups,
+						stacks: {
+							test: /[\\/]node_modules[\\/]@stacks[\\/]/,
+							name: 'stacks',
+							chunks: 'all',
+							priority: 10,
+						},
+					},
+				},
+			};
+		}
+		
+		return config;
+	},
+	experimental: {
+		esmExternals: false,
+	},
 };
 
 export default nextConfig;

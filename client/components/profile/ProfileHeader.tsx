@@ -1,4 +1,4 @@
-import { Trophy, Star, Target, TrendingUp } from 'lucide-react';
+import { Trophy, Star, Target, TrendingUp, Layers, Wallet } from 'lucide-react';
 
 interface ProfileHeaderProps {
 	user: {
@@ -9,6 +9,9 @@ interface ProfileHeaderProps {
 		experience: number;
 		coins: number;
 		createdAt: string;
+		walletAddress?: string | null;
+		stacksAddress?: string | null;
+		stacksConnected?: boolean;
 	};
 	stats: {
 		totalGamesPlayed: number;
@@ -60,6 +63,22 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 					<div className="flex-1">
 						<h1 className="text-3xl font-bold text-foreground">{user.displayName}</h1>
 						<p className="text-muted-foreground">@{user.username}</p>
+						
+						{/* Wallet Connection Badges */}
+						<div className="flex items-center gap-2 mt-2">
+							{user.walletAddress && (
+								<div className="flex items-center gap-1 px-2 py-1 bg-orange-500/10 border border-orange-500/30 rounded-full">
+									<Wallet className="w-3 h-3 text-orange-400" />
+									<span className="text-orange-400 text-xs font-medium">MetaMask</span>
+								</div>
+							)}
+							{user.stacksConnected && (
+								<div className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 border border-purple-500/30 rounded-full">
+									<Layers className="w-3 h-3 text-purple-400" />
+									<span className="text-purple-400 text-xs font-medium">Stacks</span>
+								</div>
+							)}
+						</div>
 
 						{/* XP Progress Bar */}
 						<div className="mt-3 max-w-md">

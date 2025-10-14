@@ -24,15 +24,15 @@ export const metadata: Metadata = {
 	],
 	authors: [{ name: 'W3P Team' }],
 	icons: {
-		icon: '/W3P-icon.jpg',
-		shortcut: '/W3P-icon.jpg',
-		apple: '/W3P-icon.jpg',
+		icon: '/w3h-icon.jpg',
+		shortcut: '/w3h-icon.jpg',
+		apple: '/w3h-icon.jpg',
 	},
 	openGraph: {
 		title: 'W3P - Web3Pad',
 		description:
 			'Turn any screen into an instant multiplayer arena. Your phone becomes the controller.',
-		images: ['/logo-W3P.jpg'],
+		images: ['/w3h-logo.jpg'],
 		type: 'website',
 	},
 	twitter: {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 		title: 'W3P - Web3Pad',
 		description:
 			'Turn any screen into an instant multiplayer arena. Your phone becomes the controller.',
-		images: ['/logo-W3P.jpg'],
+		images: ['/w3h-logo.jpg'],
 	},
 };
 

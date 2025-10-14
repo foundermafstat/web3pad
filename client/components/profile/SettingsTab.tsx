@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
-import { Upload, User, Mail, Shield } from 'lucide-react';
+import { Upload, User, Mail, Shield, Layers, CheckCircle } from 'lucide-react';
 import { WalletConnection } from '../WalletConnection';
+import { OfficialStacksConnector } from '../OfficialStacksConnector';
 
 interface SettingsTabProps {
 	user: {
@@ -12,6 +13,8 @@ interface SettingsTabProps {
 		displayName: string;
 		avatar?: string;
 		walletAddress?: string | null;
+		stacksAddress?: string | null;
+		stacksConnected?: boolean;
 	};
 }
 
@@ -19,6 +22,8 @@ export function SettingsTab({ user }: SettingsTabProps) {
 	const [displayName, setDisplayName] = useState(user.displayName);
 	const [loading, setLoading] = useState(false);
 	const [walletAddress, setWalletAddress] = useState(user.walletAddress);
+	const [stacksAddress, setStacksAddress] = useState(user.stacksAddress);
+	const [stacksConnected, setStacksConnected] = useState(user.stacksConnected || false);
 
 	const handleSave = async () => {
 		setLoading(true);
@@ -67,6 +72,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
 			throw error; // Re-throw to let the component handle the error
 		}
 	};
+
 
 	return (
 		<div className="max-w-2xl space-y-6">
@@ -154,6 +160,29 @@ export function SettingsTab({ user }: SettingsTabProps) {
 				onWalletConnect={handleWalletConnect}
 				onWalletDisconnect={handleWalletDisconnect}
 			/>
+
+			{/* Stacks Wallet Section */}
+			<div className="bg-card border border-border rounded-lg p-6">
+				<h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+					<Layers className="w-5 h-5" />
+					Stacks Blockchain
+				</h3>
+
+				<div className="space-y-4">
+					<p className="text-muted-foreground text-sm">
+						Connect your Leather or other Stacks wallet to access Stacks blockchain features and Bitcoin Layer 2 functionality.
+					</p>
+					<OfficialStacksConnector 
+						user={user}
+						onSuccess={(updatedUser) => {
+							setStacksAddress(updatedUser.stacksAddress);
+							setStacksConnected(updatedUser.stacksConnected);
+						}}
+						disabled={loading}
+					/>
+				</div>
+			</div>
+
 
 			{/* Save Button */}
 			<Button onClick={handleSave} disabled={loading} className="w-full" size="lg">

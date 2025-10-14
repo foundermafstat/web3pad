@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { X, Mail, Lock, User, Github, Chrome, Wallet } from 'lucide-react';
+import { X, Mail, Lock, User, Github, Chrome, Wallet, Layers } from 'lucide-react';
 import { MetaMaskAuth } from './auth/MetaMaskAuth';
 
 interface AuthModalProps {
@@ -204,6 +204,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 									<Wallet className="w-5 h-5" />
 									<span>Continue with MetaMask</span>
 								</button>
+								
 							</div>
 						</>
 					)}
