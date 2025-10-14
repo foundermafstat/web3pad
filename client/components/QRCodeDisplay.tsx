@@ -35,12 +35,12 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url }) => {
 			<div className="inline-block p-4 bg-white rounded-xl shadow-lg">
 				<canvas ref={canvasRef} />
 			</div>
-			<p className="text-gray-300 text-sm mt-3">
+			{/* <p className="text-gray-300 text-sm mt-3">
 				Scan with mobile device to join
 			</p>
 			<div className="mt-2 p-2 bg-gray-700/50 rounded-lg">
 				<p className="text-gray-400 text-xs break-all">{url}</p>
-			</div>
+			</div> */}
 		</div>
 	);
 };

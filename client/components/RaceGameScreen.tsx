@@ -3,9 +3,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import { io, Socket } from 'socket.io-client';
-import QRCodeDisplay from './QRCodeDisplay';
-import { ArrowLeft, Users, Flag, QrCode, X, Wifi, WifiOff } from 'lucide-react';
+import { ArrowLeft, Users, QrCode, Wifi, WifiOff } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
+import dynamic from 'next/dynamic';
+
+const GameQRSheet = dynamic(
+	() => import('./GameQRSheet').then((mod) => ({ default: mod.GameQRSheet })),
+	{ ssr: false }
+);
 
 interface Player {
 	id: string;
@@ -483,56 +488,14 @@ const RaceGameScreen: React.FC<RaceGameScreenProps> = ({
 				/>
 			</div>
 
-			{showQRPopup && (
-				<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-					<div className="bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4 border border-gray-700">
-						<div className="flex items-center justify-between mb-6">
-							<h2 className="text-xl font-bold text-white">Connect Players</h2>
-							<button
-								onClick={() => setShowQRPopup(false)}
-								className="text-gray-400 hover:text-white transition-colors"
-							>
-								<X className="w-6 h-6" />
-							</button>
-						</div>
-
-						<QRCodeDisplay url={controllerUrl} />
-
-						{connectedPlayers.length > 0 && (
-							<div className="mt-6">
-								<h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-									<Flag className="w-5 h-5 mr-2" />
-									Leaderboard
-								</h3>
-								<div className="space-y-2 max-h-48 overflow-y-auto">
-									{sortedPlayers.map((player, index) => (
-										<div
-											key={player.id}
-											className="flex items-center justify-between p-2 rounded-lg bg-gray-700/50"
-										>
-											<div className="flex items-center space-x-2">
-												<span className="text-white font-bold w-6">
-													{index + 1}.
-												</span>
-												<div
-													className="w-3 h-3 rounded-full"
-													style={{ backgroundColor: player.color }}
-												/>
-												<span className="text-white text-sm font-medium">
-													{player.name}
-												</span>
-											</div>
-											<div className="text-xs text-yellow-400">
-												Lap {player.lap}
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
-						)}
-					</div>
-				</div>
-			)}
+			{/* QR Code Sheet */}
+			<GameQRSheet
+				isOpen={showQRPopup}
+				onClose={() => setShowQRPopup(false)}
+				controllerUrl={controllerUrl}
+				players={connectedPlayers}
+				gameType={gameType}
+			/>
 		</div>
 	);
 };

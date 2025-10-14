@@ -9,13 +9,16 @@ import {
 	ArrowLeft,
 	Users,
 	Zap,
-	Flag,
 	QrCode,
-	X,
 	Wifi,
 	WifiOff,
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
+
+const GameQRSheet = dynamic(
+	() => import('@/components/GameQRSheet').then((mod) => ({ default: mod.GameQRSheet })),
+	{ ssr: false }
+);
 
 // Dynamic imports to prevent SSR issues
 const GameScreen = dynamic(() => import('@/components/GameScreen'), {
@@ -129,13 +132,6 @@ const TestGyroMobileController = dynamic(
 	}
 );
 
-// Dynamic import only for QR code component (non-critical)
-const QRCodeDisplay = dynamic(
-	() => import('@/components/QRCodeDisplay'),
-	{
-		ssr: false,
-	}
-);
 
 interface PageProps {
 	params: Promise<{ gameType: string }>;
@@ -836,10 +832,6 @@ export default function GamePage({ params }: PageProps) {
 		);
 	}
 
-	const sortedPlayers = [...connectedPlayers].sort(
-		(a, b) => (b.lap || 0) - (a.lap || 0)
-	);
-
 	return (
 		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden">
 			{/* Header */}
@@ -898,76 +890,14 @@ export default function GamePage({ params }: PageProps) {
 				/>
 			</div>
 
-			{/* QR Code Popup */}
-			{showQRPopup && QRCodeDisplay && (
-				<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-					<div className="bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4 border border-gray-700">
-						<div className="flex items-center justify-between mb-6">
-							<h2 className="text-xl font-bold text-white">Connect Players</h2>
-							<button
-								onClick={() => setShowQRPopup(false)}
-								className="text-gray-400 hover:text-white transition-colors"
-							>
-								<X className="w-6 h-6" />
-							</button>
-						</div>
-
-						<QRCodeDisplay url={controllerUrl} />
-
-						{connectedPlayers.length > 0 && (
-							<div className="mt-6">
-								<h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-									{resolvedParams.gameType === 'race' && (
-										<Flag className="w-5 h-5 mr-2" />
-									)}
-									{resolvedParams.gameType === 'race'
-										? 'Leaderboard'
-										: `Players (${connectedPlayers.length})`}
-								</h3>
-								<div className="space-y-2 max-h-48 overflow-y-auto">
-									{(resolvedParams.gameType === 'race'
-										? sortedPlayers
-										: connectedPlayers
-									).map((player, index) => (
-										<div
-											key={player.id}
-											className={`flex items-center justify-between p-2 rounded-lg ${
-												player.alive
-													? 'bg-green-900/20 border border-green-700/50'
-													: 'bg-red-900/20 border border-red-700/50'
-											}`}
-										>
-											<div className="flex items-center space-x-2">
-												{resolvedParams.gameType === 'race' && (
-													<span className="text-white font-bold w-6">
-														{index + 1}.
-													</span>
-												)}
-												<div
-													className="w-3 h-3 rounded-full"
-													style={{ backgroundColor: player.color }}
-												/>
-												<span className="text-white text-sm font-medium">
-													{player.name}
-												</span>
-											</div>
-											{resolvedParams.gameType === 'race' ? (
-												<div className="text-xs text-yellow-400">
-													Lap {player.lap || 0}
-												</div>
-											) : (
-												<div className="text-xs text-gray-400">
-													{player.kills || 0}K/{player.deaths || 0}D
-												</div>
-											)}
-										</div>
-									))}
-								</div>
-							</div>
-						)}
-					</div>
-				</div>
-			)}
+			{/* QR Code Sheet */}
+			<GameQRSheet
+				isOpen={showQRPopup}
+				onClose={() => setShowQRPopup(false)}
+				controllerUrl={controllerUrl}
+				players={connectedPlayers}
+				gameType={resolvedParams.gameType}
+			/>
 		</div>
 	);
 }

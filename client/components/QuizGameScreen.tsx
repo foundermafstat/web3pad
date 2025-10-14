@@ -2,18 +2,22 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import QRCodeDisplay from './QRCodeDisplay';
 import {
 	ArrowLeft,
 	Users,
 	QrCode,
-	X,
 	Wifi,
 	WifiOff,
 	Trophy,
 	Clock,
 } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
+import dynamic from 'next/dynamic';
+
+const GameQRSheet = dynamic(
+	() => import('./GameQRSheet').then((mod) => ({ default: mod.GameQRSheet })),
+	{ ssr: false }
+);
 
 interface Player {
 	id: string;
@@ -152,7 +156,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 					)}
 				</div>
 
-				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl w-full">
+				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl w-full">
 					{players.map((player) => (
 						<div
 							key={player.id}
@@ -263,7 +267,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 
 				{/* Question area */}
 				<div className="flex-1 flex items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-					<div className="max-w-6xl w-full">
+					<div className="max-w-7xl w-full">
 						<div className="bg-white rounded-3xl p-12 shadow-2xl">
 							<h2 className="text-5xl font-bold text-gray-900 text-center leading-tight">
 								{question?.text}
@@ -303,7 +307,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 
 				{/* Correct answer */}
 				<div className="flex-1 flex flex-col items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-					<div className="max-w-6xl w-full mb-8">
+					<div className="max-w-7xl w-full mb-8">
 						<div className="bg-white rounded-3xl p-8 shadow-2xl mb-8">
 							<h3 className="text-3xl font-bold text-gray-900 text-center mb-4">
 								{question?.text}
@@ -522,23 +526,14 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 			{/* Game content */}
 			<div className="absolute inset-0 pt-[50px]">{renderContent()}</div>
 
-			{/* QR Code Popup */}
-			{showQRPopup && (
-				<div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-					<div className="bg-white rounded-2xl p-8 max-w-md relative">
-						<button
-							onClick={() => setShowQRPopup(false)}
-							className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-						>
-							<X size={24} />
-						</button>
-						<h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
-							Scan to connect
-						</h2>
-						<QRCodeDisplay url={controllerUrl} />
-					</div>
-				</div>
-			)}
+			{/* QR Code Sheet */}
+			<GameQRSheet
+				isOpen={showQRPopup}
+				onClose={() => setShowQRPopup(false)}
+				controllerUrl={controllerUrl}
+				players={players}
+				gameType={gameType}
+			/>
 		</div>
 	);
 };

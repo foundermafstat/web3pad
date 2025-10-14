@@ -3,9 +3,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import { io, Socket } from 'socket.io-client';
-import QRCodeDisplay from './QRCodeDisplay';
-import { ArrowLeft, Users, Zap, QrCode, X, Wifi, WifiOff } from 'lucide-react';
+import { ArrowLeft, Users, Zap, QrCode, Wifi, WifiOff } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
+import dynamic from 'next/dynamic';
+
+const GameQRSheet = dynamic(
+	() => import('./GameQRSheet').then((mod) => ({ default: mod.GameQRSheet })),
+	{ ssr: false }
+);
 
 interface Player {
 	id: string;
@@ -1146,87 +1151,14 @@ const GameScreen: React.FC<GameScreenProps> = ({
 				/>
 			</div>
 
-			{/* QR Code Popup */}
-			{showQRPopup && (
-				<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-					<div className="bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4 border border-gray-700">
-						<div className="flex items-center justify-between mb-6">
-							<h2 className="text-xl font-bold text-white">Connect Players</h2>
-							<button
-								onClick={() => setShowQRPopup(false)}
-								className="text-gray-400 hover:text-white transition-colors"
-							>
-								<X className="w-6 h-6" />
-							</button>
-						</div>
-
-						<QRCodeDisplay url={controllerUrl} />
-
-						<div className="mt-6 space-y-3">
-							<h3 className="text-lg font-semibold text-white">Game Objects</h3>
-							<div className="grid grid-cols-2 gap-2 text-sm">
-								<div className="flex items-center space-x-2">
-									<div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-									<span className="text-gray-300">Teleporter</span>
-								</div>
-								<div className="flex items-center space-x-2">
-									<div
-										className="w-3 h-3 bg-orange-500"
-										style={{
-											clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-										}}
-									></div>
-									<span className="text-gray-300">Speed Boost</span>
-								</div>
-								<div className="flex items-center space-x-2">
-									<div className="w-3 h-3 bg-blue-500"></div>
-									<span className="text-gray-300">Shield</span>
-								</div>
-								<div className="flex items-center space-x-2">
-									<div className="w-3 h-3 bg-red-500 rounded-full"></div>
-									<span className="text-gray-300">Bouncer</span>
-								</div>
-							</div>
-						</div>
-
-						{connectedPlayers.length > 0 && (
-							<div className="mt-6">
-								<h3 className="text-lg font-semibold text-white mb-3">
-									Players ({connectedPlayers.length})
-								</h3>
-								<div className="space-y-2 max-h-32 overflow-y-auto">
-									{connectedPlayers.map((player) => (
-										<div
-											key={player.id}
-											className={`flex items-center justify-between p-2 rounded-lg ${
-												player.alive
-													? 'bg-green-900/20 border border-green-700/50'
-													: 'bg-red-900/20 border border-red-700/50'
-											}`}
-										>
-											<div className="flex items-center space-x-2">
-												<div
-													className="w-3 h-3 rounded-full"
-													style={{ backgroundColor: player.color }}
-												/>
-												<span className="text-white text-sm font-medium">
-													{player.name}
-												</span>
-												{player.isMoving && (
-													<div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-												)}
-											</div>
-											<div className="text-xs text-gray-400">
-												{player.kills}K/{player.deaths}D
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
-						)}
-					</div>
-				</div>
-			)}
+			{/* QR Code Sheet */}
+			<GameQRSheet
+				isOpen={showQRPopup}
+				onClose={() => setShowQRPopup(false)}
+				controllerUrl={controllerUrl}
+				players={connectedPlayers}
+				gameType={gameType}
+			/>
 		</div>
 	);
 };

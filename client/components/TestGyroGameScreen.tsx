@@ -7,11 +7,15 @@ import {
 	ArrowLeft,
 	Users,
 	QrCode,
-	X,
 	Wifi,
 	WifiOff,
 } from 'lucide-react';
-import QRCodeDisplay from './QRCodeDisplay';
+import dynamic from 'next/dynamic';
+
+const GameQRSheet = dynamic(
+	() => import('./GameQRSheet').then((mod) => ({ default: mod.GameQRSheet })),
+	{ ssr: false }
+);
 
 interface TestGyroGameScreenProps {
 	gameId: string;
@@ -443,31 +447,14 @@ const TestGyroGameScreen: React.FC<TestGyroGameScreenProps> = ({
 				</div>
 			</div>
 
-			{/* QR Code Popup */}
-			{showQRPopup && (
-				<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-					<div className="bg-gray-800 rounded-2xl p-6 max-w-sm w-full relative">
-						<button
-							onClick={() => setShowQRPopup(false)}
-							className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
-						>
-							<X className="w-6 h-6" />
-						</button>
-
-						<h3 className="text-white text-xl font-bold mb-4 text-center">
-							Join Game
-						</h3>
-
-						{controllerUrl ? (
-							<QRCodeDisplay url={controllerUrl} />
-						) : (
-							<p className="text-gray-400 text-center">
-								Generating QR code...
-							</p>
-						)}
-					</div>
-				</div>
-			)}
+			{/* QR Code Sheet */}
+			<GameQRSheet
+				isOpen={showQRPopup}
+				onClose={() => setShowQRPopup(false)}
+				controllerUrl={controllerUrl}
+				players={connectedPlayers}
+				gameType={gameType}
+			/>
 		</div>
 	);
 };

@@ -60,7 +60,7 @@ export function LeaderboardView() {
 	};
 
 	return (
-		<div className="container mx-auto px-4 py-8 max-w-6xl">
+		<div className="container mx-auto px-4 py-8 max-w-7xl">
 			{/* Header */}
 			<div className="text-center mb-8">
 				<div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 mb-4">

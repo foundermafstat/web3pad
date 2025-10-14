@@ -10,7 +10,6 @@ import {
 	Heart,
 	Coins,
 	Waves as WavesIcon,
-	X,
 	Wifi,
 	WifiOff,
 	QrCode,
@@ -18,7 +17,10 @@ import {
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-const QRCodeDisplay = dynamic(() => import('./QRCodeDisplay'), { ssr: false });
+const GameQRSheet = dynamic(
+	() => import('./GameQRSheet').then((mod) => ({ default: mod.GameQRSheet })),
+	{ ssr: false }
+);
 
 interface TowerDefenceGameScreenProps {
 	gameId: string;
@@ -514,25 +516,14 @@ export default function TowerDefenceGameScreen({
 				</div>
 			)}
 
-			{/* QR Code Popup */}
-			{showQRPopup && QRCodeDisplay && (
-				<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-					<div className="bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4 border border-gray-700">
-						<div className="flex items-center justify-between mb-6">
-							<h2 className="text-xl font-bold text-white">
-								Connect Controllers
-							</h2>
-							<button
-								onClick={() => setShowQRPopup(false)}
-								className="text-gray-400 hover:text-white transition-colors"
-							>
-								<X className="w-6 h-6" />
-							</button>
-						</div>
-						<QRCodeDisplay url={controllerUrl} />
-					</div>
-				</div>
-			)}
+			{/* QR Code Sheet */}
+			<GameQRSheet
+				isOpen={showQRPopup}
+				onClose={() => setShowQRPopup(false)}
+				controllerUrl={controllerUrl}
+				players={gameState?.players || []}
+				gameType={gameType}
+			/>
 
 			{/* Game Over */}
 			{gameState?.gameOver && (
