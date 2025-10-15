@@ -29,6 +29,7 @@ import {
 	Star,
 	Play
 } from 'lucide-react';
+import { ThemeLogo } from './ThemeLogo';
 
 // Games for navigation
 const games: { title: string; href: string; description: string; icon: React.ComponentType<{ className?: string }> }[] = [
@@ -109,21 +110,24 @@ export function DesktopNavigation() {
 										className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none select-none focus:shadow-md"
 										href="/about"
 									>
-										<Globe className="w-8 h-8 mb-2 text-primary" />
-										<div className="mt-4 mb-2 text-lg font-medium">
-											OSG Platform
+										<div className="text-primary">
+											<ThemeLogo width={60} height={39} />
+										</div>
+										
+										<div className="mt-2 mb-2 text-lg font-medium">
+											WEB3PAD
 										</div>
 										<p className="text-muted-foreground text-sm leading-tight">
-											Revolutionary gaming platform with mobile controller technology
+											Revolutionary WEB3 gaming platform with mobile controller technology
 										</p>
 									</Link>
 								</NavigationMenuLink>
 							</li>
-							<ListItem href="/about" title="Project Overview" icon={Info}>
-								Learn more about our unique platform and cutting-edge technologies
+							<ListItem href="/about" title="WEB3 integration" icon={Info}>
+								Collect NFTs, results are saved on the blockchain, play and earn rewards							
 							</ListItem>
 							<ListItem href="/about/controller" title="Controller Mechanics" icon={Smartphone}>
-								How your smartphone transforms into a professional game controller
+								How your smartphone transforms into a professional game controller. Control your game with your phone.
 							</ListItem>
 						</ul>
 					</NavigationMenuContent>
@@ -148,24 +152,21 @@ export function DesktopNavigation() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 
-				{/* Quick Actions - Simple Links */}
-				<NavigationMenuItem>
-					<NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-						<Link href="/games">Play Now</Link>
-					</NavigationMenuLink>
-				</NavigationMenuItem>
-
 				{/* Community - List Layout */}
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>Community</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<ul className="grid w-[300px] gap-4 p-4">
+						<ul className="grid w-[250px] gap-2">
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="/leaderboard" className="flex items-center gap-3 p-2 rounded-md hover:bg-accent">
-										<Crown className="w-5 h-5 text-yellow-500" />
+									<Link href="/leaderboard" className="flex gap-2 rounded-md hover:bg-accent">
+										
 										<div>
-											<div className="font-medium">Leaderboard</div>
+											<div className="flex">
+												<Crown className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">Leaderboard</div>
+											</div>
+											
 											<div className="text-muted-foreground text-sm">
 												Game rankings and top players
 											</div>
@@ -175,10 +176,13 @@ export function DesktopNavigation() {
 							</li>
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="/players" className="flex items-center gap-3 p-2 rounded-md hover:bg-accent">
-										<Users className="w-5 h-5 text-blue-500" />
+									<Link href="/players" className="flex gap-2 rounded-md hover:bg-accent">
+										
 										<div>
-											<div className="font-medium">All Players</div>
+											<div className="flex">
+												<Users className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">All Players</div>
+											</div>
 											<div className="text-muted-foreground text-sm">
 												Browse community members
 											</div>
@@ -188,10 +192,13 @@ export function DesktopNavigation() {
 							</li>
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="/achievements" className="flex items-center gap-3 p-2 rounded-md hover:bg-accent">
-										<Medal className="w-5 h-5 text-purple-500" />
+									<Link href="/achievements" className="flex gap-2 rounded-md hover:bg-accent">
+										
 										<div>
-											<div className="font-medium">Achievements</div>
+											<div className="flex">
+												<Medal className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">Achievements</div>
+											</div>
 											<div className="text-muted-foreground text-sm">
 												Unlock rewards and badges
 											</div>
@@ -207,31 +214,56 @@ export function DesktopNavigation() {
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>History</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<ul className="grid w-[200px] gap-4 p-4">
+						<ul className="grid w-[200px] gap-2">
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="/games/history" className="flex items-center gap-2 p-2 rounded-md hover:bg-accent">
-										<History className="w-4 h-4" />
-										Game Sessions
+									<Link href="/games/history" className="flex gap-2 rounded-md hover:bg-accent">
+										<div>
+											<div className="flex">
+												<History className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">Game Sessions</div>
+											</div>
+											
+											<div className="text-muted-foreground text-sm">
+												View ended game sessions
+											</div>
+										</div>
+										
 									</Link>
 								</NavigationMenuLink>
 							</li>
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="/profile" className="flex items-center gap-2 p-2 rounded-md hover:bg-accent">
-										<Star className="w-4 h-4" />
-										My Achievements
+									<Link href="/profile" className="flex gap-2 rounded-md hover:bg-accent">
+										<div>
+											<div className="flex">
+												<Star className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">My Achievements</div>
+											</div>
+											
+											<div className="text-muted-foreground text-sm">
+												View your achievements
+											</div>
+										</div>
 									</Link>
 								</NavigationMenuLink>
 							</li>
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="/settings" className="flex items-center gap-2 p-2 rounded-md hover:bg-accent">
-										<Settings className="w-4 h-4" />
-										Settings
+									<Link href="/settings" className="flex gap-2 rounded-md hover:bg-accent">
+										<div>
+											<div className="flex">
+												<Settings className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">Settings</div>
+											</div>
+											
+											<div className="text-muted-foreground text-sm">
+												View your settings
+											</div>
+										</div>
 									</Link>
 								</NavigationMenuLink>
-							</li>
+							</li>				
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>

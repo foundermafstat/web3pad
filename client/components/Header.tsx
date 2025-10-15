@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { UserMenu } from './UserMenu';
 import { HeaderAuthButton } from './HeaderAuthButton';
 import { ThemeLogo } from './ThemeLogo';
-import { ThemeToggle } from './ThemeToggle';
 import { MobileNavigation } from './MobileNavigation';
 import { DesktopNavigation } from './DesktopNavigation';
 
@@ -32,7 +31,6 @@ export async function Header() {
 
 				{/* Auth section */}
 				<div className="flex items-center gap-2">
-					<ThemeToggle />
 					{session?.user ? (
 						<UserMenu user={session.user} />
 					) : (

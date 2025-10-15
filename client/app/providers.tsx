@@ -20,8 +20,9 @@ export function Providers({ children, session }: ProvidersProps) {
 		<SessionProvider session={session}>
 			<ThemeProvider
 				attribute="class"
-				defaultTheme="light"
-				enableSystem
+				defaultTheme="dark"
+				forcedTheme="dark"
+				enableSystem={false}
 				disableTransitionOnChange
 			>
 				{children}

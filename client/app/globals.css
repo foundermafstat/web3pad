@@ -67,40 +67,6 @@ h1, h2, h3, h4, h5, h6 {
 
 :root {
 	--radius: 0.65rem;
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.141 0.005 285.823);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.141 0.005 285.823);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.141 0.005 285.823);
-	--primary: oklch(0.67 0.2231 142.93);
-	--primary-foreground: oklch(0.982 0.018 155.826);
-	--secondary: oklch(0.967 0.001 286.375);
-	--secondary-foreground: oklch(0.21 0.006 285.885);
-	--muted: oklch(0.967 0.001 286.375);
-	--muted-foreground: oklch(0.552 0.016 285.938);
-	--accent: oklch(0.967 0.001 286.375);
-	--accent-foreground: oklch(0.21 0.006 285.885);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.92 0.004 286.32);
-	--input: oklch(0.92 0.004 286.32);
-	--ring: oklch(0.87 0.2893 142.92);
-	--chart-1: oklch(0.646 0.222 41.116);
-	--chart-2: oklch(0.6 0.118 184.704);
-	--chart-3: oklch(0.398 0.07 227.392);
-	--chart-4: oklch(0.828 0.189 84.429);
-	--chart-5: oklch(0.769 0.188 70.08);
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.141 0.005 285.823);
-	--sidebar-primary: oklch(0.87 0.2893 142.92);
-	--sidebar-primary-foreground: oklch(0.982 0.018 155.826);
-	--sidebar-accent: oklch(0.967 0.001 286.375);
-	--sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-	--sidebar-border: oklch(0.92 0.004 286.32);
-	--sidebar-ring: oklch(0.87 0.2893 142.92);
-  }
-  
-  .dark {
 	--background: oklch(0.141 0.005 285.823);
 	--foreground: oklch(0.985 0 0);
 	--card: oklch(0.21 0.006 285.885);
@@ -213,16 +179,16 @@ h1, h2, h3, h4, h5, h6 {
 	animation: zoom-in-95 0.2s ease-out;
 }
 
-/* Dark theme gradients */
-.dark .gradient-primary {
+/* Theme gradients */
+.gradient-primary {
 	background: linear-gradient(135deg, oklch(0.85 0.2 90), oklch(0.8 0.18 95));
 }
 
-.dark .gradient-secondary {
+.gradient-secondary {
 	background: linear-gradient(135deg, oklch(0.75 0.15 160), oklch(0.8 0.18 95));
 }
 
-.dark .gradient-accent {
+.gradient-accent {
 	background: linear-gradient(135deg, oklch(0.8 0.18 120), oklch(0.85 0.2 90));
 }
 
@@ -230,13 +196,67 @@ h1, h2, h3, h4, h5, h6 {
 .glass-header {
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
-	background: rgba(255, 255, 255, 0.08);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.dark .glass-header {
 	background: rgba(34, 34, 34, 0.8);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* W3P Logo Styles */
+.w3p-logo {
+	display: inline-block;
+	vertical-align: middle;
+	transition: all 0.2s ease;
+	color: var(--foreground);
+}
+
+.w3p-logo:hover {
+	opacity: 0.8;
+	transform: scale(1.02);
+}
+
+/* Logo size variations */
+.w3p-logo-xs {
+	width: 40px;
+	height: 26px;
+}
+
+.w3p-logo-sm {
+	width: 60px;
+	height: 39px;
+}
+
+.w3p-logo-md {
+	width: 78px;
+	height: 52px;
+}
+
+.w3p-logo-lg {
+	width: 120px;
+	height: 78px;
+}
+
+.w3p-logo-xl {
+	width: 156px;
+	height: 104px;
+}
+
+/* Logo color variations */
+.w3p-logo-primary {
+	color: var(--primary);
+}
+
+.w3p-logo-accent {
+	color: var(--accent-foreground);
+}
+
+.w3p-logo-muted {
+	color: var(--muted-foreground);
+}
+
+.w3p-logo-white {
+	color: white;
+}
+
+.w3p-logo-black {
+	color: black;
 }

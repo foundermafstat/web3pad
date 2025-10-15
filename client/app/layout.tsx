@@ -64,7 +64,7 @@ export default async function RootLayout({
 	const session = await auth();
 	
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" className="dark" suppressHydrationWarning>
 			<head>
 				<meta name="theme-color" content="#000000" />
 				<meta name="mobile-web-app-capable" content="yes" />
