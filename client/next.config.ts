@@ -58,6 +58,8 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	// Fix multiple lockfiles warning - use root directory as workspace root
+	outputFileTracingRoot: '../',
 	webpack: (config, { isServer, dev }) => {
 		// Fix for @stacks/connect module loading issues
 		if (!isServer) {
@@ -104,9 +106,6 @@ const nextConfig: NextConfig = {
 		}
 		
 		return config;
-	},
-	experimental: {
-		esmExternals: false,
 	},
 };
 

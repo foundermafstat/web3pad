@@ -4,6 +4,8 @@ import { UserMenu } from './UserMenu';
 import { HeaderAuthButton } from './HeaderAuthButton';
 import { ThemeLogo } from './ThemeLogo';
 import { ThemeToggle } from './ThemeToggle';
+import { MobileNavigation } from './MobileNavigation';
+import { DesktopNavigation } from './DesktopNavigation';
 
 export async function Header() {
 	const session = await auth();
@@ -20,27 +22,13 @@ export async function Header() {
 					/>
 				</Link>
 
-				{/* Navigation */}
-				<nav className="flex items-center gap-4 md:gap-6">
-					<Link
-						href="/games"
-						className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-					>
-						Games
-					</Link>
-					<Link
-						href="/players"
-						className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-					>
-						Players
-					</Link>
-					<Link
-						href="/leaderboard"
-						className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-					>
-						Leaderboard
-					</Link>
-				</nav>
+				{/* Navigation Menu */}
+				<DesktopNavigation />
+
+				{/* Mobile Navigation */}
+				<div className="md:hidden">
+					<MobileNavigation />
+				</div>
 
 				{/* Auth section */}
 				<div className="flex items-center gap-2">

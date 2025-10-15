@@ -139,7 +139,7 @@ export function WalletConnection({
 					</div>
 				)}
 
-				{/* Current Linked Wallet - показывается только когда кошелек подключен И адрес есть в БД */}
+				{/* Current Linked Wallet - shown only when wallet is connected AND address is in DB */}
 				{isWalletLinked && isConnected && (
 					<div className="bg-muted/50 rounded-lg p-4 space-y-3">
 						<div className="flex items-center justify-between">

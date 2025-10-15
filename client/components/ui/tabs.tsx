@@ -9,6 +9,14 @@ interface TabsContextValue {
 
 const TabsContext = React.createContext<TabsContextValue | undefined>(undefined);
 
+const useTabsContext = () => {
+	const context = React.useContext(TabsContext);
+	if (!context) {
+		throw new Error('Tabs components must be used within a Tabs provider');
+	}
+	return context;
+};
+
 interface TabsProps {
 	value: string;
 	onValueChange: (value: string) => void;
@@ -17,8 +25,13 @@ interface TabsProps {
 }
 
 export function Tabs({ value, onValueChange, children, className = '' }: TabsProps) {
+	const contextValue = React.useMemo(
+		() => ({ value, onValueChange }),
+		[value, onValueChange]
+	);
+
 	return (
-		<TabsContext.Provider value={{ value, onValueChange }}>
+		<TabsContext.Provider value={contextValue}>
 			<div className={className}>{children}</div>
 		</TabsContext.Provider>
 	);
@@ -47,19 +60,19 @@ interface TabsTriggerProps {
 }
 
 export function TabsTrigger({ value, children, className = '' }: TabsTriggerProps) {
-	const context = React.useContext(TabsContext);
-	if (!context) {
-		throw new Error('TabsTrigger must be used within Tabs');
-	}
-
+	const context = useTabsContext();
 	const isActive = context.value === value;
+
+	const handleClick = React.useCallback(() => {
+		context.onValueChange(value);
+	}, [context, value]);
 
 	return (
 		<button
 			type="button"
 			role="tab"
 			aria-selected={isActive}
-			onClick={() => context.onValueChange(value)}
+			onClick={handleClick}
 			className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
 				isActive
 					? 'bg-background text-foreground shadow-sm'
@@ -78,10 +91,7 @@ interface TabsContentProps {
 }
 
 export function TabsContent({ value, children, className = '' }: TabsContentProps) {
-	const context = React.useContext(TabsContext);
-	if (!context) {
-		throw new Error('TabsContent must be used within Tabs');
-	}
+	const context = useTabsContext();
 
 	if (context.value !== value) {
 		return null;

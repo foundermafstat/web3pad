@@ -12,6 +12,7 @@ import gameSessionRoutes from './routes/game-sessions.js';
 import metaMaskAuthRoutes from './routes/metamask-auth.js';
 import walletRoutes from './routes/wallet.js';
 import stacksAuthRoutes from './routes/stacks-auth.js';
+import gamesRoutes from './routes/games.js';
 import prisma from './lib/prisma.js';
 import { socketAuthMiddleware } from './middleware/auth.js';
 
@@ -72,10 +73,8 @@ app.use('/api/profile', walletRoutes);
 // Game session routes
 app.use('/api', gameSessionRoutes);
 
-// API endpoints
-app.get('/api/games', (req, res) => {
-	res.json(GAME_INFO);
-});
+// Games routes
+app.use('/api/games', gamesRoutes);
 
 app.get('/api/rooms', (req, res) => {
 	const rooms = roomManager.getActiveRooms();

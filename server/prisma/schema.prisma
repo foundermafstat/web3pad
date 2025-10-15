@@ -43,12 +43,27 @@ model GameType {
   id              String   @id @default(cuid())
   code            String   @unique // 'shooter', 'race', 'towerdefence', 'quiz', 'gyrotest'
   name            String
-  description     String
+  shortDescription String
+  fullDescription String
   icon            String
+  images          String[] // Array of image URLs
+  videos          String[] // Array of video URLs
+  category        String[] // Categories like ['action', 'multiplayer', 'mobile']
+  gameType        String   @default("web2") // 'web2' or 'web3'
   minPlayers      Int      @default(1)
   maxPlayers      Int      @default(10)
   difficulty      String   @default("medium") // easy, medium, hard
+  estimatedDuration Int?   // estimated game duration in minutes
+  controls        String[] // control types like ['gyroscope', 'touch', 'buttons']
+  
+  // Extended game information
+  features        Json?    // Key features of the game
+  howToPlay       Json?    // Step-by-step instructions
+  tips            Json?    // Pro tips for players
+  
   isActive        Boolean  @default(true)
+  isFeatured      Boolean  @default(false)
+  sortOrder       Int?     // for custom ordering
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   
@@ -56,9 +71,35 @@ model GameType {
   gameContent     GameContent[]
   gameSessions    GameSession[]
   gameRooms       GameRoom[]
+  gameAchievements GameAchievement[]
   
   @@index([code])
+  @@index([gameType])
+  @@index([category])
+  @@index([isActive])
   @@map("game_types")
+}
+
+// Game-specific achievements
+model GameAchievement {
+  id              String   @id @default(cuid())
+  gameTypeId      String
+  code            String   @unique
+  title           String
+  description     String
+  icon            String?
+  points          Int      @default(10)
+  criteria        Json     // conditions to unlock
+  sortOrder       Int?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  
+  // Relations
+  gameType        GameType @relation(fields: [gameTypeId], references: [id], onDelete: Cascade)
+  
+  @@index([gameTypeId])
+  @@index([code])
+  @@map("game_achievements")
 }
 
 // Game content - questions, levels, configurations
