@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Gamepad2, Plus, Layers } from 'lucide-react';
 import { Room } from '@/types/room';
 import RoomCard from '@/components/RoomCard';
-import { Web3AuthButton } from '@/components/Web3AuthButton';
+import { StacksWalletAuth } from '@/components/auth/StacksWalletAuth';
 
 interface ActiveRoomsBarProps {
 	rooms: Room[];
@@ -70,9 +70,10 @@ export default function ActiveRoomsBar({
 							</button>
 						) : (
 							<div className="relative">
-								<Web3AuthButton 
+								<StacksWalletAuth 
 									onSuccess={handleWeb3Success}
 									onError={handleWeb3Error}
+									className="border-0 shadow-none bg-transparent"
 								/>
 								<button
 									onClick={() => setShowWeb3Auth(false)}

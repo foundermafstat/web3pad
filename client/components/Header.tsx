@@ -5,7 +5,6 @@ import { HeaderAuthButton } from './HeaderAuthButton';
 import { ThemeLogo } from './ThemeLogo';
 import { MobileNavigation } from './MobileNavigation';
 import { DesktopNavigation } from './DesktopNavigation';
-import { StacksConnectionStatus } from './StacksConnectionStatus';
 
 export async function Header() {
 	const session = await auth();
@@ -32,9 +31,6 @@ export async function Header() {
 
 				{/* Auth section */}
 				<div className="flex items-center gap-4">
-					{/* Stacks Connection Status */}
-					<StacksConnectionStatus />
-					
 					{session?.user ? (
 						<UserMenu user={session.user} />
 					) : (

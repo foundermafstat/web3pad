@@ -96,7 +96,6 @@ export async function getUserFromRequest(req) {
 				username: true,
 				displayName: true,
 				avatar: true,
-				walletAddress: true,
 				stacksAddress: true,
 				stacksConnected: true,
 				level: true,

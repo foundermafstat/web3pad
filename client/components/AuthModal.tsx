@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { X, Mail, Lock, User, Github, Chrome, Wallet, Layers } from 'lucide-react';
-import { Web3AuthButton } from './Web3AuthButton';
+import { StacksWalletAuth } from './auth/StacksWalletAuth';
 
 interface AuthModalProps {
 	isOpen: boolean;
@@ -155,7 +155,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 				<div className="p-6 space-y-6">
 					{mode === 'web3' ? (
 						<div>
-							<Web3AuthButton 
+							<StacksWalletAuth 
 								onSuccess={onSuccess}
 								onError={setError}
 							/>

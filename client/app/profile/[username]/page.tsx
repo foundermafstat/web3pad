@@ -8,14 +8,23 @@ interface ProfilePageProps {
 
 async function getProfile(username: string) {
 	try {
-		const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/profile/${username}`;
+		const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001';
+		const url = `${serverUrl}/api/profile/${username}`;
+		
+		console.log('[Profile] Fetching profile from:', url);
+		
 		const response = await fetch(url, { cache: 'no-store' });
 
+		console.log('[Profile] Response status:', response.status);
+
 		if (!response.ok) {
+			console.error('[Profile] Response not OK:', response.status, response.statusText);
 			return null;
 		}
 
-		return await response.json();
+		const data = await response.json();
+		console.log('[Profile] Profile data received:', !!data);
+		return data;
 	} catch (error) {
 		console.error('[Profile] Failed to fetch profile:', error);
 		return null;

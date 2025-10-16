@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Upload, User, Mail, Shield, Layers, CheckCircle } from 'lucide-react';
 import { WalletConnection } from '../WalletConnection';
-import { OfficialStacksConnector } from '../OfficialStacksConnector';
+import { StacksWalletAuth } from '../auth/StacksWalletAuth';
 
 interface SettingsTabProps {
 	user: {
@@ -172,13 +172,14 @@ export function SettingsTab({ user }: SettingsTabProps) {
 					<p className="text-muted-foreground text-sm">
 						Connect your Leather or other Stacks wallet to access Stacks blockchain features and Bitcoin Layer 2 functionality.
 					</p>
-					<OfficialStacksConnector 
-						user={user}
-						onSuccess={(updatedUser) => {
-							setStacksAddress(updatedUser.stacksAddress);
-							setStacksConnected(updatedUser.stacksConnected);
+					<StacksWalletAuth 
+						onSuccess={() => {
+							// Refresh the page to update user data
+							window.location.reload();
 						}}
-						disabled={loading}
+						onError={(error) => {
+							console.error('Wallet connection error:', error);
+						}}
 					/>
 				</div>
 			</div>

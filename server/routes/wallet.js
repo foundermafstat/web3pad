@@ -47,7 +47,7 @@ router.post('/wallet', async (req, res) => {
                 id: true,
                 username: true,
                 displayName: true,
-                walletAddress: true,
+                stacksAddress: true,
             },
         });
 
@@ -82,7 +82,7 @@ router.delete('/wallet', async (req, res) => {
                 id: true,
                 username: true,
                 displayName: true,
-                walletAddress: true,
+                stacksAddress: true,
             },
         });
 

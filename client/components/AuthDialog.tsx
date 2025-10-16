@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import { SignInForm } from './SignInForm';
 import { SignUpForm } from './SignUpForm';
-import { Web3AuthButton } from './Web3AuthButton';
+import { StacksWalletAuth } from './auth/StacksWalletAuth';
 import { useWalletCheck } from '@/hooks/useWalletCheck';
 import { formatAddress } from '@/lib/leather';
 
@@ -78,7 +78,7 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
 								<p className="text-xs text-purple-600 mb-3">
 									{formatAddress(walletInfo.address!)}
 								</p>
-								<Web3AuthButton 
+								<StacksWalletAuth 
 									onSuccess={handleWeb3Success}
 									onError={handleWeb3Error}
 								/>

@@ -70,9 +70,16 @@ export const authConfig: NextAuthConfig = {
 				}
 
 				try {
+					console.log('[NextAuth] Attempting leather authentication...', {
+						walletAddress: credentials.walletAddress,
+						hasSignature: !!credentials.signature,
+						messageLength: credentials.message?.length
+					});
+
 					// Verify signature on server
+					const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001';
 					const response = await fetch(
-						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/leather`,
+						`${serverUrl}/api/auth/leather`,
 						{
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
@@ -84,21 +91,31 @@ export const authConfig: NextAuthConfig = {
 						}
 					);
 
+					console.log('[NextAuth] Server response status:', response.status);
+
 					if (!response.ok) {
+						const errorText = await response.text();
+						console.error('[NextAuth] Server error:', errorText);
 						return null;
 					}
 
 					const user = await response.json();
+					console.log('[NextAuth] User data received:', {
+						id: user.id,
+						email: user.email,
+						username: user.username
+					});
+
 					return {
 						id: user.id,
 						email: user.email,
 						name: user.displayName,
 						username: user.username,
 						image: user.avatar,
-						walletAddress: user.stacksAddress,
+						walletAddress: user.walletAddress,
 					};
 				} catch (error) {
-					console.error('Leather auth error:', error);
+					console.error('[NextAuth] Leather auth error:', error);
 					return null;
 				}
 			},

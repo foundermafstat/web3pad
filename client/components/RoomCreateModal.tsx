@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { X, Users, Lock, Unlock, Gamepad2, Layers } from 'lucide-react';
-import { Web3AuthButton } from './Web3AuthButton';
+import { StacksWalletAuth } from './auth/StacksWalletAuth';
 
 interface RoomCreateModalProps {
 	isOpen: boolean;
@@ -296,7 +296,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 							</button>
 						) : (
 							<div className="space-y-4">
-								<Web3AuthButton 
+								<StacksWalletAuth 
 									onSuccess={handleWeb3Success}
 									onError={handleWeb3Error}
 								/>
