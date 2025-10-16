@@ -172,29 +172,29 @@ const RegistryInterface: React.FC<RegistryInterfaceProps> = ({ onModuleSelect })
       </div>
 
       {/* Registry Stats */}
-      <div className="px-6 py-4 bg-muted/50 border-b border-border">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="text-center">
+      <div className="px-6 py-4 border-b border-border">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-foreground">{modules.length}</div>
-            <div className="text-sm text-muted-foreground">Total Modules</div>
+            <div className="text-xs text-muted-foreground">Total Modules</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-green-500">
               {modules.filter(m => m.isActive).length}
             </div>
-            <div className="text-sm text-muted-foreground">Active</div>
+            <div className="text-xs text-muted-foreground">Active</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-primary">
               {new Set(modules.map(m => m.category)).size}
             </div>
-            <div className="text-sm text-muted-foreground">Categories</div>
+            <div className="text-xs text-muted-foreground">Categories</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-purple-500">
               {modules.reduce((sum, m) => sum + m.maxPlayers, 0)}
             </div>
-            <div className="text-sm text-muted-foreground">Max Players</div>
+            <div className="text-xs text-muted-foreground">Max Players</div>
           </div>
         </div>
       </div>

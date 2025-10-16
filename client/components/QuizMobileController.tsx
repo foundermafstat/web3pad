@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { Brain, Trophy, Wifi, WifiOff, CheckCircle, Clock } from 'lucide-react';
+import { Brain, Trophy, Wifi, WifiOff, CheckCircle, Clock, Medal, Award, Gamepad2, CheckCircle2, XCircle, SkipForward } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
 import BlockchainAddressModal from './BlockchainAddressModal';
 import BlockchainStatus from './BlockchainStatus';
@@ -341,7 +341,9 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 				<div className="text-center">
 					{isWinner && (
 						<>
-							<div className="text-9xl mb-6 animate-bounce">🏆</div>
+							<div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/50 text-primary mb-6 animate-bounce">
+								<Trophy className="w-12 h-12" />
+							</div>
 							<h1 className="text-6xl font-bold text-yellow-300 mb-4">
 								Victory!
 							</h1>
@@ -349,8 +351,8 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 					)}
 					{!isWinner && rank !== undefined && (
 						<>
-							<div className="text-9xl mb-6">
-								{rank === 1 ? '🥈' : rank === 2 ? '🥉' : '🎮'}
+							<div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/50 text-primary mb-6">
+								{rank === 1 ? <Medal className="w-12 h-12" /> : rank === 2 ? <Award className="w-12 h-12" /> : <Gamepad2 className="w-12 h-12" />}
 							</div>
 							<h1 className="text-5xl font-bold text-white mb-4">
 								{rank + 1}
@@ -435,8 +437,8 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 
 				{/* Results */}
 				<div className="flex-1 flex flex-col items-center justify-center p-6">
-					<div className={`text-9xl mb-6 ${isCorrect ? 'animate-bounce' : ''}`}>
-						{isCorrect ? '✅' : answered ? '❌' : '⏭️'}
+					<div className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/50 text-primary mb-6 ${isCorrect ? 'animate-bounce' : ''}`}>
+						{isCorrect ? <CheckCircle2 className="w-12 h-12" /> : answered ? <XCircle className="w-12 h-12" /> : <SkipForward className="w-12 h-12" />}
 					</div>
 					<h1
 						className={`text-5xl font-bold mb-4 ${

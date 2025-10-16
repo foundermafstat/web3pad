@@ -191,7 +191,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
   return (
     <div className="bg-card rounded-lg shadow-lg">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-border">
+      <div className="px-6 py-4 border-b border-border ">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-foreground">Contract Management</h2>
@@ -212,7 +212,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       </div>
 
       {/* Network Info */}
-      <div className="px-6 py-4 bg-muted/50 border-b border-border">
+      <div className="px-6 py-4 bg-card border-b border-border">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
             <span className="font-medium text-foreground">Network:</span>

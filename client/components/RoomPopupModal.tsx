@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { X, Users, Lock, Play, Gamepad2, Monitor, Clock } from 'lucide-react';
+import { X, Users, Lock, Play, Gamepad2, Monitor, Clock, Target, Car, Castle, Brain, Smartphone } from 'lucide-react';
 import { Room } from '@/types/room';
 
 interface RoomPopupModalProps {
@@ -12,12 +12,12 @@ interface RoomPopupModalProps {
 	triggerElement?: HTMLElement | null;
 }
 
-const GAME_ICONS: Record<string, string> = {
-	shooter: '🎯',
-	race: '🏎️',
-	towerdefence: '🏰',
-	quiz: '🧠',
-	gyrotest: '📱',
+const GAME_ICONS: Record<string, React.ReactNode> = {
+	shooter: <Target className="w-4 h-4" />,
+	race: <Car className="w-4 h-4" />,
+	towerdefence: <Castle className="w-4 h-4" />,
+	quiz: <Brain className="w-4 h-4" />,
+	gyrotest: <Smartphone className="w-4 h-4" />,
 };
 
 const GAME_NAMES: Record<string, string> = {
@@ -37,7 +37,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 }) => {
 	if (!isOpen || !room) return null;
 
-	const gameIcon = GAME_ICONS[room.gameType] || '🎮';
+	const gameIcon = GAME_ICONS[room.gameType] || <Gamepad2 className="w-4 h-4" />;
 	const gameName = GAME_NAMES[room.gameType] || room.gameType;
 
 	// Calculate position based on trigger element
@@ -159,7 +159,9 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 				{/* Header */}
 				<div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 flex items-center justify-between border-b border-gray-700 rounded-t-2xl">
 					<div className="flex items-center space-x-3">
-						<div className="text-3xl">{gameIcon}</div>
+						<div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary/50 text-primary">
+							{gameIcon}
+						</div>
 						<div>
 							<h2 className="text-xl font-bold text-white">{room.name}</h2>
 							<p className="text-blue-100 text-sm">{gameName}</p>
@@ -178,7 +180,9 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 					<div className="bg-gray-800/50 rounded-md p-4">
 						<div className="space-y-3">
 							<div className="flex items-center space-x-3">
-								<div className="text-3xl">{gameIcon}</div>
+								<div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary/50 text-primary">
+									{gameIcon}
+								</div>
 								<div>
 									<div className="text-gray-400 text-sm">Game Type</div>
 									<div className="text-white font-medium">{gameName}</div>

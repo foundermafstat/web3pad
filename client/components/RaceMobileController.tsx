@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { Gamepad2, Flag, Trophy, Wifi, WifiOff, Gauge } from 'lucide-react';
+import { Gamepad2, Flag, Trophy, Wifi, WifiOff, Gauge, ChevronUp, ChevronDown } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
 
 interface RaceMobileControllerProps {
@@ -410,7 +410,9 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							onMouseUp={handleAcceleratorEnd}
 							className="w-full h-32 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-2xl text-white font-bold shadow-lg active:scale-95 transition-all flex flex-col items-center justify-center border-4 border-green-400/50"
 						>
-							<span className="text-4xl mb-2">⬆️</span>
+							<div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/50 text-primary mb-2">
+								<ChevronUp className="w-6 h-6" />
+							</div>
 							<span>GAS</span>
 						</button>
 					</div>
@@ -423,7 +425,9 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 							onMouseUp={handleBrakeEnd}
 							className="w-full h-32 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-2xl text-white font-bold shadow-lg active:scale-95 transition-all flex flex-col items-center justify-center border-4 border-red-400/50"
 						>
-							<span className="text-4xl mb-2">⬇️</span>
+							<div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/50 text-primary mb-2">
+								<ChevronDown className="w-6 h-6" />
+							</div>
 							<span>BRAKE</span>
 						</button>
 					</div>

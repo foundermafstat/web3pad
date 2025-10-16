@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Users, Lock, Unlock, Gamepad2, Layers } from 'lucide-react';
+import { X, Users, Lock, Unlock, Gamepad2, Layers, Target, Car, Castle, Brain, Smartphone } from 'lucide-react';
 import { StacksWalletAuth } from './auth/StacksWalletAuth';
 
 interface RoomCreateModalProps {
@@ -19,11 +19,11 @@ interface CreateRoomData {
 }
 
 const GAME_TYPES = [
-	{ id: 'shooter', name: 'Battle Arena', icon: '🎯', color: 'from-red-500 to-orange-500' },
-	{ id: 'race', name: 'Race Track', icon: '🏎️', color: 'from-blue-500 to-cyan-500' },
-	{ id: 'towerdefence', name: 'Tower Defence', icon: '🏰', color: 'from-purple-500 to-pink-500' },
-	{ id: 'quiz', name: 'Quiz Battle', icon: '🧠', color: 'from-green-500 to-emerald-500' },
-	{ id: 'gyrotest', name: 'Gyro Test', icon: '📱', color: 'from-indigo-500 to-violet-500' },
+	{ id: 'shooter', name: 'Battle Arena', icon: <Target className="w-4 h-4" />, color: 'from-red-500 to-orange-500' },
+	{ id: 'race', name: 'Race Track', icon: <Car className="w-4 h-4" />, color: 'from-blue-500 to-cyan-500' },
+	{ id: 'towerdefence', name: 'Tower Defence', icon: <Castle className="w-4 h-4" />, color: 'from-purple-500 to-pink-500' },
+	{ id: 'quiz', name: 'Quiz Battle', icon: <Brain className="w-4 h-4" />, color: 'from-green-500 to-emerald-500' },
+	{ id: 'gyrotest', name: 'Gyro Test', icon: <Smartphone className="w-4 h-4" />, color: 'from-indigo-500 to-violet-500' },
 ];
 
 const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
@@ -173,7 +173,9 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 									}`}
 								>
 									<div className="text-center">
-										<div className="text-3xl mb-2">{game.icon}</div>
+										<div className="inline-flex items-center justify-center w-12 h-12 rounded-md bg-primary/50 text-primary mb-2">
+											{game.icon}
+										</div>
 										<div className="text-sm font-medium text-white">
 											{game.name}
 										</div>

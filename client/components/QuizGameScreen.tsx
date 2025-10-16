@@ -10,6 +10,7 @@ import {
 	WifiOff,
 	Trophy,
 	Clock,
+	PartyPopper,
 } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
 import dynamic from 'next/dynamic';
@@ -398,14 +399,26 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 				</div>
 
 				<div className="relative z-10 flex flex-col items-center justify-center h-full p-8">
-					<h1 className="text-7xl font-bold text-white mb-8 animate-bounce">
-						🎉 Game Over! 🎉
+					<h1 className="text-7xl font-bold text-white mb-8 animate-bounce flex items-center gap-4">
+						<div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/50 text-primary">
+							<PartyPopper className="w-8 h-8" />
+						</div>
+						Game Over!
+						<div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/50 text-primary">
+							<PartyPopper className="w-8 h-8" />
+						</div>
 					</h1>
 
 					{/* Winner(s) */}
 					<div className="mb-12">
-						<h2 className="text-5xl font-bold text-yellow-300 text-center mb-6">
-							🏆 {winners.length > 1 ? 'Winners' : 'Winner'} 🏆
+						<h2 className="text-5xl font-bold text-yellow-300 text-center mb-6 flex items-center justify-center gap-4">
+							<div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/50 text-primary">
+								<Trophy className="w-6 h-6" />
+							</div>
+							{winners.length > 1 ? 'Winners' : 'Winner'}
+							<div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/50 text-primary">
+								<Trophy className="w-6 h-6" />
+							</div>
 						</h2>
 						<div className="flex gap-6 justify-center">
 							{winners.map((winner) => (

@@ -7,7 +7,8 @@ import {
 	Gamepad2, 
 	Users, 
 	Zap, 
-	Shield, 
+	Shield,
+	Gamepad2 as GamepadIcon, 
 	Globe,
 	ArrowRight,
 	Play,
@@ -22,7 +23,12 @@ export default function AboutPage() {
 				{/* Hero Section */}
 				<div className="text-center mb-16">
 					<Badge variant="outline" className="mb-4">
-						🎮 Online Gaming Platform
+						<div className="inline-flex items-center gap-2">
+							<div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary">
+								<GamepadIcon className="w-4 h-4" />
+							</div>
+							Online Gaming Platform
+						</div>
 					</Badge>
 					<h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
 						W3P Platform

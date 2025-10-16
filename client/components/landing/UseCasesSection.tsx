@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, PartyPopper } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function UseCasesSection() {
@@ -106,7 +106,9 @@ export default function UseCasesSection() {
 				<Card className="bg-gradient-to-br from-orange-900/30 to-red-900/30 border-orange-700/50 backdrop-blur-lg">
 					<CardHeader>
 						<CardTitle className="text-2xl text-white font-bold flex items-center">
-							<span className="text-3xl mr-3">🎪</span>
+							<div className="inline-flex items-center justify-center w-12 h-12 rounded-md bg-primary/50 text-primary mr-3">
+								<PartyPopper className="w-6 h-6" />
+							</div>
 							Interactive zones
 						</CardTitle>
 					</CardHeader>

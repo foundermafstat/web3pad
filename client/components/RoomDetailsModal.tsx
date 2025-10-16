@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Users, Lock, Play, Clock, User, Crown, CheckCircle, Circle } from 'lucide-react';
+import { X, Users, Lock, Play, Clock, User, Crown, CheckCircle, Circle, Target, Car, Castle, Brain, Smartphone, Gamepad2 } from 'lucide-react';
 import { Room } from '../types/room';
 
 interface RoomDetailsModalProps {
@@ -11,12 +11,12 @@ interface RoomDetailsModalProps {
 	onJoin: (roomId: string, password?: string) => void;
 }
 
-const GAME_ICONS: Record<string, string> = {
-	shooter: '🎯',
-	race: '🏎️',
-	towerdefence: '🏰',
-	quiz: '🧠',
-	gyrotest: '📱',
+const GAME_ICONS: Record<string, React.ReactNode> = {
+	shooter: <Target className="w-4 h-4" />,
+	race: <Car className="w-4 h-4" />,
+	towerdefence: <Castle className="w-4 h-4" />,
+	quiz: <Brain className="w-4 h-4" />,
+	gyrotest: <Smartphone className="w-4 h-4" />,
 };
 
 const GAME_NAMES: Record<string, string> = {
@@ -46,7 +46,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 
 	if (!isOpen || !room) return null;
 
-	const gameIcon = GAME_ICONS[room.gameType] || '🎮';
+	const gameIcon = GAME_ICONS[room.gameType] || <Gamepad2 className="w-4 h-4" />;
 	const gameName = GAME_NAMES[room.gameType] || room.gameType;
 	const gameDescription = GAME_DESCRIPTIONS[room.gameType] || 'No description available';
 
@@ -108,7 +108,9 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 					</button>
 
 					<div className="flex items-start space-x-4">
-						<div className="text-6xl">{gameIcon}</div>
+						<div className="inline-flex items-center justify-center w-16 h-16 rounded-md bg-primary/50 text-primary">
+							{gameIcon}
+						</div>
 						<div className="flex-1">
 							<h2 className="text-3xl font-bold text-white mb-2">{room.name}</h2>
 							<p className="text-blue-100 text-sm mb-3">{gameDescription}</p>

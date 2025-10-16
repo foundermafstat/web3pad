@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { ClipboardList, BookOpen, Gamepad2, Image, Coins } from 'lucide-react';
 import ContractManager from '@/components/contracts/ContractManager';
 import RegistryInterface from '@/components/contracts/RegistryInterface';
 import ShooterGameInterface from '@/components/contracts/ShooterGameInterface';
@@ -132,16 +133,16 @@ const ContractsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-card shadow-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-12">
-          <div className="flex items-center justify-between h-16">
+      <div className="bg-card border border-border rounded-md mb-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-6 lg:pt-16">
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-foreground">Contract Management</h1>
               {blockchainStatus && (
-                <div className={`ml-4 px-3 py-1 rounded-full text-xs font-medium ${
+                <div className={`ml-4 px-3 py-1 rounded-full text-xs font-medium border ${
                   blockchainStatus.enabled 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
+                    ? 'bg-green-500/10 text-green-500 border-green-500/20' 
+                    : 'bg-red-500/10 text-red-500 border-red-500/20'
                 }`}>
                   {blockchainStatus.enabled ? 'Blockchain Connected' : 'Blockchain Disconnected'}
                 </div>
@@ -150,7 +151,7 @@ const ContractsPage: React.FC = () => {
             <div className="flex items-center space-x-4">
               {session && (
                 <div className="text-sm text-muted-foreground">
-                  Connected as: <span className="font-medium">{session.user?.email}</span>
+                  Connected as: <span className="font-medium text-foreground">{session.user?.email}</span>
                 </div>
               )}
             </div>
@@ -159,15 +160,15 @@ const ContractsPage: React.FC = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-card border-b border-border">
+      <div className="bg-card border border-border rounded-md mb-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-8">
             {[
-              { id: 'overview', name: 'Overview', icon: '📋' },
-              { id: 'registry', name: 'Registry', icon: '📚' },
-              { id: 'game', name: 'Shooter Game', icon: '🎮' },
-              { id: 'nft', name: 'NFT', icon: '🖼️' },
-              { id: 'ft', name: 'FT Tokens', icon: '🪙' }
+              { id: 'overview', name: 'Overview', icon: <ClipboardList className="w-4 h-4" /> },
+              { id: 'registry', name: 'Registry', icon: <BookOpen className="w-4 h-4" /> },
+              { id: 'game', name: 'Shooter Game', icon: <Gamepad2 className="w-4 h-4" /> },
+              { id: 'nft', name: 'NFT', icon: <Image className="w-4 h-4" /> },
+              { id: 'ft', name: 'FT Tokens', icon: <Coins className="w-4 h-4" /> }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -178,7 +179,13 @@ const ContractsPage: React.FC = () => {
                     : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 }`}
               >
-                <span className="mr-2">{tab.icon}</span>
+                <span className={`mr-2 inline-flex items-center justify-center w-6 h-6 rounded-md ${
+                  activeTab === tab.id
+                    ? 'bg-primary/50 text-primary'
+                    : 'bg-muted text-muted-foreground'
+                }`}>
+                  {tab.icon}
+                </span>
                 {tab.name}
               </button>
             ))}
@@ -187,7 +194,7 @@ const ContractsPage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Blockchain Status Banner */}
         {blockchainStatus && !blockchainStatus.enabled && (
           <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
@@ -212,72 +219,80 @@ const ContractsPage: React.FC = () => {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Network Information */}
-              <div className="bg-card rounded-lg shadow-lg p-6">
+              <div className="bg-card border border-border rounded-md p-6">
                 <h2 className="text-xl font-bold text-foreground mb-4">Network Information</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary">{networkInfo.network}</div>
-                  <div className="text-sm text-muted-foreground">Network</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-500">{networkInfo.deployedContracts}</div>
-                  <div className="text-sm text-muted-foreground">Deployed Contracts</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-500">{networkInfo.totalCost}</div>
-                  <div className="text-sm text-muted-foreground">Total Cost (STX)</div>
-                </div>
-                <div className="text-center">
-                  <div className={`text-3xl font-bold ${
-                    networkInfo.status === 'Live' || networkInfo.status === 'Connected' 
-                      ? 'text-green-500' 
-                      : networkInfo.status === 'Disconnected' 
-                      ? 'text-red-500' 
-                      : 'text-yellow-500'
-                  }`}>
-                    {networkInfo.status}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="bg-card border border-border rounded-md p-4">
+                    <div className="text-2xl font-bold text-primary">{networkInfo.network}</div>
+                    <div className="text-xs text-muted-foreground">Network</div>
                   </div>
-                  <div className="text-sm text-muted-foreground">All Contracts Status</div>
+                  <div className="bg-card border border-border rounded-md p-4">
+                    <div className="text-2xl font-bold text-green-500">{networkInfo.deployedContracts}</div>
+                    <div className="text-xs text-muted-foreground">Deployed Contracts</div>
+                  </div>
+                  <div className="bg-card border border-border rounded-md p-4">
+                    <div className="text-2xl font-bold text-purple-500">{networkInfo.totalCost}</div>
+                    <div className="text-xs text-muted-foreground">Total Cost (STX)</div>
+                  </div>
+                  <div className="bg-card border border-border rounded-md p-4">
+                    <div className={`text-2xl font-bold ${
+                      networkInfo.status === 'Live' || networkInfo.status === 'Connected' 
+                        ? 'text-green-500' 
+                        : networkInfo.status === 'Disconnected' 
+                        ? 'text-red-500' 
+                        : 'text-yellow-500'
+                    }`}>
+                      {networkInfo.status}
+                    </div>
+                    <div className="text-xs text-muted-foreground">All Contracts Status</div>
+                  </div>
                 </div>
-              </div>
               </div>
 
               {/* Contract Manager */}
               <ContractManager onContractSelect={handleContractSelect} />
 
               {/* Quick Actions */}
-              <div className="bg-card rounded-lg shadow-lg p-6">
+              <div className="bg-card border border-border rounded-md p-6">
                 <h2 className="text-xl font-bold text-foreground mb-4">Quick Actions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <button
                     onClick={() => setActiveTab('registry')}
-                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
+                    className="p-4 border border-border rounded-md hover:border-primary hover:bg-accent transition-colors text-left"
                   >
-                    <div className="text-2xl mb-2">📚</div>
+                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary mb-2">
+                      <BookOpen className="w-4 h-4" />
+                    </div>
                     <h3 className="font-semibold text-foreground">Registry</h3>
                     <p className="text-sm text-muted-foreground">Manage game modules</p>
                   </button>
                   <button
                     onClick={() => setActiveTab('game')}
-                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
+                    className="p-4 border border-border rounded-md hover:border-primary hover:bg-accent transition-colors text-left"
                   >
-                    <div className="text-2xl mb-2">🎮</div>
+                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary mb-2">
+                      <Gamepad2 className="w-4 h-4" />
+                    </div>
                     <h3 className="font-semibold text-foreground">Shooter Game</h3>
                     <p className="text-sm text-muted-foreground">Game sessions and results</p>
                   </button>
                   <button
                     onClick={() => setActiveTab('nft')}
-                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
+                    className="p-4 border border-border rounded-md hover:border-primary hover:bg-accent transition-colors text-left"
                   >
-                    <div className="text-2xl mb-2">🖼️</div>
+                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary mb-2">
+                      <Image className="w-4 h-4" />
+                    </div>
                     <h3 className="font-semibold text-foreground">NFT</h3>
                     <p className="text-sm text-muted-foreground">Create and manage NFTs</p>
                   </button>
                   <button
                     onClick={() => setActiveTab('ft')}
-                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
+                    className="p-4 border border-border rounded-md hover:border-primary hover:bg-accent transition-colors text-left"
                   >
-                    <div className="text-2xl mb-2">🪙</div>
+                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary mb-2">
+                      <Coins className="w-4 h-4" />
+                    </div>
                     <h3 className="font-semibold text-foreground">FT Tokens</h3>
                     <p className="text-sm text-muted-foreground">Tokens and transfers</p>
                   </button>

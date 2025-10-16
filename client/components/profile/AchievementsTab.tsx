@@ -1,4 +1,4 @@
-import { Award, Lock } from 'lucide-react';
+import { Award, Lock, Trophy } from 'lucide-react';
 
 interface Achievement {
 	id: string;
@@ -96,7 +96,9 @@ function AchievementCard({ achievement, unlocked }: { achievement: Achievement; 
 					}`}
 				>
 					{unlocked ? (
-						achievement.icon || '🏆'
+						<div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary">
+							<Trophy className="w-4 h-4" />
+						</div>
 					) : (
 						<Lock className="w-6 h-6 text-muted-foreground" />
 					)}

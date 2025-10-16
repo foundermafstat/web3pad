@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Users, Lock, Play, Clock, Gamepad2, Monitor } from 'lucide-react';
+import { Users, Lock, Play, Clock, Gamepad2, Monitor, Target, Car, Castle, Brain, Smartphone } from 'lucide-react';
 import { Room } from '../types/room';
 import RoomDropdownMenu from './RoomDropdownMenu';
 
@@ -20,12 +20,12 @@ const GAME_COLORS: Record<string, string> = {
 	gyrotest: 'from-indigo-500/20 to-violet-500/20 border-indigo-500/30 hover:border-indigo-500/50',
 };
 
-const GAME_ICONS: Record<string, string> = {
-	shooter: '🎯',
-	race: '🏎️',
-	towerdefence: '🏰',
-	quiz: '🧠',
-	gyrotest: '📱',
+const GAME_ICONS: Record<string, React.ReactNode> = {
+	shooter: <Target className="w-4 h-4" />,
+	race: <Car className="w-4 h-4" />,
+	towerdefence: <Castle className="w-4 h-4" />,
+	quiz: <Brain className="w-4 h-4" />,
+	gyrotest: <Smartphone className="w-4 h-4" />,
 };
 
 const GAME_NAMES: Record<string, string> = {
@@ -38,7 +38,7 @@ const GAME_NAMES: Record<string, string> = {
 
 const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, onJoin, isMobile = false }) => {
 	const colorClass = GAME_COLORS[room.gameType] || 'from-gray-500/20 to-gray-600/20 border-gray-500/30';
-	const gameIcon = GAME_ICONS[room.gameType] || '🎮';
+	const gameIcon = GAME_ICONS[room.gameType] || <Gamepad2 className="w-4 h-4" />;
 	const gameName = GAME_NAMES[room.gameType] || room.gameType;
 
 	const getStatusColor = () => {
@@ -73,7 +73,9 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, onJoin, isMobile = f
 			<RoomDropdownMenu room={room} onJoin={onJoin || (() => {})}>
 				<div className="relative group w-[120px] h-[80px] bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-md p-2 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-105 flex flex-col items-center justify-between text-center cursor-pointer">
 					{/* Game Icon */}
-					<div className="text-2xl">{gameIcon}</div>
+					<div className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary">
+						{gameIcon}
+					</div>
 					
 					{/* Room Name */}
 					<div className="text-xs font-bold text-foreground truncate w-full">
@@ -100,7 +102,9 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, onJoin, isMobile = f
 				<div className="flex items-center justify-between">
 					{/* Left: Game Info */}
 					<div className="flex items-center space-x-3 flex-1 min-w-0">
-						<div className="text-2xl flex-shrink-0">{gameIcon}</div>
+						<div className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary/50 text-primary">
+							{gameIcon}
+						</div>
 						<div className="flex-1 min-w-0 text-left">
 							<div className="text-sm font-bold text-foreground truncate">{room.name}</div>
 							<div className="text-xs text-muted-foreground">{gameName}</div>

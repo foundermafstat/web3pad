@@ -249,29 +249,29 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
       {playerAddress && (
         <>
           {/* Stats */}
-          <div className="px-6 py-4 bg-muted/50 border-b border-border">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="text-center">
+          <div className="px-6 py-4 border-b border-border">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-card border border-border rounded-md p-4">
                 <div className="text-2xl font-bold text-foreground">{sessions.length}</div>
-                <div className="text-sm text-muted-foreground">Total Sessions</div>
+                <div className="text-xs text-muted-foreground">Total Sessions</div>
               </div>
-              <div className="text-center">
+              <div className="bg-card border border-border rounded-md p-4">
                 <div className="text-2xl font-bold text-green-500">
                   {sessions.filter(s => s.status === 'active').length}
                 </div>
-                <div className="text-sm text-muted-foreground">Active</div>
+                <div className="text-xs text-muted-foreground">Active</div>
               </div>
-              <div className="text-center">
+              <div className="bg-card border border-border rounded-md p-4">
                 <div className="text-2xl font-bold text-primary">
                   {sessions.filter(s => s.status === 'completed').length}
                 </div>
-                <div className="text-sm text-muted-foreground">Completed</div>
+                <div className="text-xs text-muted-foreground">Completed</div>
               </div>
-              <div className="text-center">
+              <div className="bg-card border border-border rounded-md p-4">
                 <div className="text-2xl font-bold text-purple-500">
                   {sessions.reduce((sum, s) => sum + (s.score || 0), 0)}
                 </div>
-                <div className="text-sm text-muted-foreground">Total Score</div>
+                <div className="text-xs text-muted-foreground">Total Score</div>
               </div>
             </div>
           </div>

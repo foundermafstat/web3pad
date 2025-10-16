@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { io, Socket } from 'socket.io-client';
 import { ENV_CONFIG } from '../env.config';
-import { Smartphone, Wifi, WifiOff, Vibrate } from 'lucide-react';
+import { Smartphone, Wifi, WifiOff, Vibrate, Gamepad2 } from 'lucide-react';
 import AuthModal from './AuthModal';
 
 interface TestGyroMobileControllerProps {
@@ -389,7 +389,12 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 					<p className="text-gray-300 text-sm text-center">
 						📱 Hold your device flat, then tilt to move the ball
 						<br />
-						🎮 The ball will hit walls and vibrate
+						<div className="inline-flex items-center gap-2">
+							<div className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-primary/50 text-primary">
+								<Gamepad2 className="w-3 h-3" />
+							</div>
+							The ball will hit walls and vibrate
+						</div>
 					</p>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { Button } from '../ui/button';
 import { connectLeather, signMessage, LeatherError, getCurrentAddress, disconnectLeather } from '@/lib/leather';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertTriangle } from 'lucide-react';
 
 interface StacksWalletAuthProps {
 	onSuccess?: () => void;
@@ -190,7 +190,12 @@ export function StacksWalletAuth({ onSuccess, onError, className }: StacksWallet
 					<p>Supported wallets: Leather, Hiro, Xverse</p>
 					<p>Your wallet address will be used as your unique identifier</p>
 					<p className="text-yellow-600 mt-2">
-						⚠️ If authentication fails, make sure the server is running on port 3001
+						<div className="inline-flex items-center gap-2">
+							<div className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-primary/50 text-primary">
+								<AlertTriangle className="w-3 h-3" />
+							</div>
+							If authentication fails, make sure the server is running on port 3001
+						</div>
 					</p>
 				</div>
 			</CardContent>

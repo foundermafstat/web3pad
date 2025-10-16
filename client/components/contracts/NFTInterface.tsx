@@ -233,31 +233,31 @@ const NFTInterface: React.FC<NFTInterfaceProps> = ({
       </div>
 
       {/* Stats */}
-      <div className="px-6 py-4 bg-muted/50 border-b border-border">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="text-center">
+      <div className="px-6 py-4 border-b border-border">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-foreground">{nfts.length}</div>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-xs text-muted-foreground">
               {viewMode === 'owned' ? 'My NFTs' : 'Total NFTs'}
             </div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-yellow-500">
               {nfts.filter(nft => nft.metadata?.rarity === 'legendary').length}
             </div>
-            <div className="text-sm text-muted-foreground">Legendary</div>
+            <div className="text-xs text-muted-foreground">Legendary</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-purple-500">
               {nfts.filter(nft => nft.metadata?.rarity === 'epic').length}
             </div>
-            <div className="text-sm text-muted-foreground">Epic</div>
+            <div className="text-xs text-muted-foreground">Epic</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-primary">
               {new Set(nfts.map(nft => nft.metadata?.game_type)).size}
             </div>
-            <div className="text-sm text-muted-foreground">Game Types</div>
+            <div className="text-xs text-muted-foreground">Game Types</div>
           </div>
         </div>
       </div>

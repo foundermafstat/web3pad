@@ -294,36 +294,36 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
       </div>
 
       {/* Stats */}
-      <div className="px-6 py-4 bg-muted/50 border-b border-border">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="text-center">
+      <div className="px-6 py-4 border-b border-border">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-foreground">
               {viewMode === 'balances' ? balances.length : tokens.length}
             </div>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-xs text-muted-foreground">
               {viewMode === 'balances' ? 'Token Types' : 'Total Tokens'}
             </div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-yellow-500">
               ${totalValue.toFixed(2)}
             </div>
-            <div className="text-sm text-muted-foreground">Total Value</div>
+            <div className="text-xs text-muted-foreground">Total Value</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-green-500">
               {balances.reduce((sum, b) => {
                 if (!b || !b.token) return sum;
                 return sum + b.balance / Math.pow(10, b.token.decimals);
               }, 0).toFixed(0)}
             </div>
-            <div className="text-sm text-muted-foreground">Total Balance</div>
+            <div className="text-xs text-muted-foreground">Total Balance</div>
           </div>
-          <div className="text-center">
+          <div className="bg-card border border-border rounded-md p-4">
             <div className="text-2xl font-bold text-primary">
               {tokens.reduce((sum, t) => sum + t.totalSupply / Math.pow(10, t.decimals), 0).toFixed(0)}
             </div>
-            <div className="text-sm text-muted-foreground">Total Supply</div>
+            <div className="text-xs text-muted-foreground">Total Supply</div>
           </div>
         </div>
       </div>
