@@ -21,7 +21,7 @@ const getIsProduction = () => {
 const isProduction = getIsProduction();
 
 // Development local IP - update this to your local network IP
-const DEV_LOCAL_IP = '192.168.1.28';
+const DEV_LOCAL_IP = '192.168.1.XXX';
 
 // Get base URL from current hostname in browser, or use default for SSR
 const getBaseUrl = () => {

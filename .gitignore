@@ -23,6 +23,22 @@ lerna-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+server-config.env
+server-config.*.env
+
+# Stacks blockchain sensitive files
+stacks/settings/Devnet.toml
+stacks/settings/*.toml
+stacks/deployments/*.yaml
+
+# Test files with sensitive data
+test-server-connection.js
+test-shooter-connection.js
+
+# Example files (keep in repo)
+!test-server-connection.example.js
+!test-shooter-connection.example.js
 
 # PM2
 .pm2/
