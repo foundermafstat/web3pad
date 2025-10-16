@@ -13,6 +13,7 @@ import leatherAuthRoutes from './routes/leather-auth.js';
 import walletRoutes from './routes/wallet.js';
 import stacksAuthRoutes from './routes/stacks-auth.js';
 import gamesRoutes from './routes/games.js';
+import blockchainRoutes from './routes/blockchain.js';
 import prisma from './lib/prisma.js';
 import { socketAuthMiddleware } from './middleware/auth.js';
 
@@ -75,6 +76,9 @@ app.use('/api', gameSessionRoutes);
 
 // Games routes
 app.use('/api/games', gamesRoutes);
+
+// Blockchain routes
+app.use('/api/blockchain', blockchainRoutes);
 
 app.get('/api/rooms', (req, res) => {
 	const rooms = roomManager.getActiveRooms();

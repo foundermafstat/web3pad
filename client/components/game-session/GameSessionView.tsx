@@ -242,13 +242,13 @@ function StatCard({ icon, label, value, color }: any) {
 }
 
 function PodiumCard({ result, position, gameType }: { result: GameResult; position: number; gameType: string }) {
-	const colors = {
+	const colors: Record<number, string> = {
 		1: 'from-yellow-500 to-orange-500',
 		2: 'from-gray-400 to-gray-500',
 		3: 'from-orange-600 to-orange-700',
 	};
 
-	const heights = {
+	const heights: Record<number, string> = {
 		1: 'h-48',
 		2: 'h-40',
 		3: 'h-36',

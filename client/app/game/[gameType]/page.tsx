@@ -833,9 +833,9 @@ export default function GamePage({ params }: PageProps) {
 	}
 
 	return (
-		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden">
+		<div className=" w-full h-full flex flex-col overflow-hidden">
 			{/* Header */}
-			<div className="bg-gray-800/90 backdrop-blur-sm px-4 py-2 flex items-center justify-between border-b border-gray-700/50 flex-shrink-0 z-10">
+			<div className=" px-4 py-2 flex items-center justify-between border-b border-gray-700/50 flex-shrink-0 z-10 mt-10">
 				<button
 					onClick={() => (window.location.href = '/')}
 					className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors text-sm"

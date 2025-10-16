@@ -22,15 +22,20 @@
   "author": "W3P Team",
   "license": "MIT",
   "dependencies": {
+    "@noble/hashes": "^2.0.1",
     "@prisma/client": "^6.1.0",
+    "@scure/bip32": "^2.0.1",
     "@stacks/auth": "^7.2.0",
     "@stacks/network": "^7.2.0",
     "@stacks/transactions": "^7.2.0",
+    "@stacks/wallet-sdk": "^7.2.0",
     "bcryptjs": "^2.4.3",
+    "bip39": "^3.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "secp256k1": "^5.0.1",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {

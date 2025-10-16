@@ -225,7 +225,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 
 	return (
 		<div 
-			className="group relative w-full h-[80vh] overflow-hidden"
+			className="group  w-full h-full overflow-hidden"
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 			onTouchStart={onTouchStart}

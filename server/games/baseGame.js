@@ -1,4 +1,5 @@
 import GameSessionManager from '../lib/game-session-manager.js';
+import { stacksIntegration } from '../lib/stacks-integration.js';
 
 // Базовый класс игры
 export class BaseGame {
@@ -10,11 +11,16 @@ export class BaseGame {
 		this.state = {};
 		this.lastUpdate = Date.now();
 		
-		// Session tracking
-		this.sessionId = null;
-		this.hostId = config.hostId || config.userId || null;
-		this.sessionStarted = false;
-		this.sessionCompleted = false;
+	// Session tracking
+	this.sessionId = null;
+	this.hostId = config.hostId || config.userId || null;
+	this.sessionStarted = false;
+	this.sessionCompleted = false;
+	
+	// Blockchain integration
+	this.blockchainSessionId = null;
+	this.blockchainEnabled = config.blockchainEnabled !== false;
+	this.playerAddresses = new Map(); // playerId -> address mapping
 	}
 
 	// Добавить игрока
@@ -80,11 +86,17 @@ export class BaseGame {
 		if (this.sessionCompleted || !this.sessionId) return;
 
 		try {
+			// Save to database
 			await GameSessionManager.completeGameSession(
 				this.sessionId,
 				results,
 				this.getGameData()
 			);
+
+			// Send results to blockchain if enabled
+			if (this.blockchainEnabled) {
+				await this.sendResultsToBlockchain(results);
+			}
 
 			this.sessionCompleted = true;
 			console.log(`[BaseGame] Session completed: ${this.sessionId}`);
@@ -126,5 +138,93 @@ export class BaseGame {
 			},
 			achievements: [],
 		}));
+	}
+
+	// Set player blockchain address
+	setPlayerAddress(playerId, address) {
+		this.playerAddresses.set(playerId, address);
+		console.log(`[BaseGame] Player ${playerId} address set: ${address}`);
+	}
+
+	// Get player blockchain address
+	getPlayerAddress(playerId) {
+		return this.playerAddresses.get(playerId);
+	}
+
+	// Send results to blockchain
+	async sendResultsToBlockchain(results) {
+		if (!this.blockchainEnabled) {
+			console.log('[BaseGame] Blockchain integration disabled');
+			return;
+		}
+
+		try {
+			const blockchainResults = [];
+			
+			for (const result of results) {
+				const playerAddress = this.getPlayerAddress(result.playerId);
+				
+				if (playerAddress) {
+					const gameResult = {
+						playerAddress,
+						score: result.score,
+						gameType: this.gameType,
+						metadata: {
+							rank: result.rank,
+							performance: result.performance,
+							gameId: this.gameId,
+							sessionId: this.sessionId
+						}
+					};
+
+					const blockchainResult = await stacksIntegration.sendGameResult(gameResult);
+					
+					if (blockchainResult.success) {
+						blockchainResults.push({
+							playerId: result.playerId,
+							sessionId: blockchainResult.sessionId,
+							txId: blockchainResult.txId,
+							resultHash: blockchainResult.resultHash
+						});
+						
+						console.log(`[BaseGame] Blockchain result submitted for player ${result.playerId}:`, blockchainResult);
+					} else {
+						console.error(`[BaseGame] Failed to submit blockchain result for player ${result.playerId}:`, blockchainResult.error);
+					}
+				} else {
+					console.warn(`[BaseGame] No blockchain address found for player ${result.playerId}`);
+				}
+			}
+
+			// Store blockchain results for future reference
+			this.blockchainResults = blockchainResults;
+			
+			return blockchainResults;
+		} catch (error) {
+			console.error('[BaseGame] Error sending results to blockchain:', error);
+		}
+	}
+
+	// Start blockchain session
+	async startBlockchainSession(playerId, playerAddress, nftTokenId = null) {
+		if (!this.blockchainEnabled) return null;
+
+		try {
+			this.setPlayerAddress(playerId, playerAddress);
+			
+			const result = await stacksIntegration.startGameSession(playerAddress, this.gameType, nftTokenId);
+			
+			if (result.success) {
+				this.blockchainSessionId = result.sessionId;
+				console.log(`[BaseGame] Blockchain session started: ${result.sessionId} for player ${playerId}`);
+				return result;
+			} else {
+				console.error(`[BaseGame] Failed to start blockchain session:`, result.error);
+				return null;
+			}
+		} catch (error) {
+			console.error('[BaseGame] Error starting blockchain session:', error);
+			return null;
+		}
 	}
 }

@@ -50,7 +50,7 @@ export default function ActiveRoomsBar({
 		// Optionally show error toast
 	};
 	return (
-		<div className="sticky  z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 shadow-xl">
+		<div className="container flex justify-center mx-auto sticky max-w-3xl top-16 z-40 bg-background/10 rounded-lg backdrop-blur-md border-b border-gray-700/50 shadow-xl">
 			<div className="w-full px-4 py-4">
 				<div className="flex items-center justify-between mb-4">
 					<div className="flex items-center space-x-2">

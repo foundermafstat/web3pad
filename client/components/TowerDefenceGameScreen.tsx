@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import * as PIXI from 'pixi.js';
 import { io, Socket } from 'socket.io-client';
 import { ENV_CONFIG } from '../env.config';
 import {
@@ -34,16 +33,17 @@ export default function TowerDefenceGameScreen({
 	onBack,
 }: TowerDefenceGameScreenProps) {
 	const pixiContainer = useRef<HTMLDivElement>(null);
-	const appRef = useRef<PIXI.Application | null>(null);
+	const appRef = useRef<any>(null);
 	const socketRef = useRef<Socket | null>(null);
-	const gameContainerRef = useRef<PIXI.Container | null>(null);
+	const gameContainerRef = useRef<any>(null);
+	const pixiRef = useRef<any>(null);
 
-	const towersMapRef = useRef<Map<string, PIXI.Container>>(new Map());
-	const mobsMapRef = useRef<Map<string, PIXI.Container>>(new Map());
-	const projectilesMapRef = useRef<Map<string, PIXI.Graphics>>(new Map());
-	const buildSpotsMapRef = useRef<Map<string, PIXI.Container>>(new Map());
-	const pathGraphicRef = useRef<PIXI.Graphics | null>(null);
-	const castleGraphicRef = useRef<PIXI.Container | null>(null);
+	const towersMapRef = useRef<Map<string, any>>(new Map());
+	const mobsMapRef = useRef<Map<string, any>>(new Map());
+	const projectilesMapRef = useRef<Map<string, any>>(new Map());
+	const buildSpotsMapRef = useRef<Map<string, any>>(new Map());
+	const pathGraphicRef = useRef<any>(null);
+	const castleGraphicRef = useRef<any>(null);
 
 	const [connectionStatus, setConnectionStatus] = useState<
 		'connecting' | 'connected' | 'disconnected'
@@ -57,6 +57,10 @@ export default function TowerDefenceGameScreen({
 
 		const init = async () => {
 			console.log('[TowerDefence] Initializing...');
+
+			// Dynamic import of PIXI to avoid SSR issues
+			const PIXI = await import('pixi.js');
+			pixiRef.current = PIXI;
 
 			await new Promise((resolve) => requestAnimationFrame(resolve));
 			await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -241,7 +245,8 @@ export default function TowerDefenceGameScreen({
 		};
 	}, [gameId]);
 
-	const updateTowers = (towers: any[], container: PIXI.Container) => {
+	// Define helper functions outside useEffect
+	const updateTowers = (towers: any[], container: any) => {
 		// Remove old towers
 		for (const [id, towerContainer] of towersMapRef.current) {
 			if (!towers.find((t) => t.id === id)) {
@@ -255,7 +260,7 @@ export default function TowerDefenceGameScreen({
 			let towerContainer = towersMapRef.current.get(tower.id);
 
 			if (!towerContainer) {
-				towerContainer = new PIXI.Container();
+				towerContainer = new pixiRef.current.Container();
 				towersMapRef.current.set(tower.id, towerContainer);
 				container.addChild(towerContainer);
 			}
@@ -263,7 +268,7 @@ export default function TowerDefenceGameScreen({
 			towerContainer.removeChildren();
 
 			// Tower base
-			const base = new PIXI.Graphics();
+			const base = new pixiRef.current.Graphics();
 			base.rect(-15, -15, 30, 30);
 
 			const colors: any = {
@@ -278,13 +283,13 @@ export default function TowerDefenceGameScreen({
 			towerContainer.addChild(base);
 
 			// Range indicator (optional, when selected)
-			const range = new PIXI.Graphics();
+			const range = new pixiRef.current.Graphics();
 			range.circle(0, 0, tower.range);
 			range.stroke({ width: 1, color: 0x00ff00, alpha: 0.2 });
 			towerContainer.addChild(range);
 
 			// Level indicator
-			const levelText = new PIXI.Text(`L${tower.level}`, {
+			const levelText = new pixiRef.current.Text(`L${tower.level}`, {
 				fontFamily: 'Arial',
 				fontSize: 10,
 				fill: 0xffffff,
@@ -298,7 +303,7 @@ export default function TowerDefenceGameScreen({
 		});
 	};
 
-	const updateMobs = (mobs: any[], container: PIXI.Container) => {
+	const updateMobs = (mobs: any[], container: any) => {
 		// Remove dead mobs
 		for (const [id, mobContainer] of mobsMapRef.current) {
 			if (!mobs.find((m) => m.id === id && m.alive)) {
@@ -314,7 +319,7 @@ export default function TowerDefenceGameScreen({
 			let mobContainer = mobsMapRef.current.get(mob.id);
 
 			if (!mobContainer) {
-				mobContainer = new PIXI.Container();
+				mobContainer = new pixiRef.current.Container();
 				mobsMapRef.current.set(mob.id, mobContainer);
 				container.addChild(mobContainer);
 			}
@@ -322,7 +327,7 @@ export default function TowerDefenceGameScreen({
 			mobContainer.removeChildren();
 
 			// Mob body
-			const body = new PIXI.Graphics();
+			const body = new pixiRef.current.Graphics();
 			body.circle(0, 0, 12);
 			const color = parseInt(mob.color.substring(1), 16);
 			body.fill(color);
@@ -332,7 +337,7 @@ export default function TowerDefenceGameScreen({
 
 			// Health bar
 			const healthPercent = mob.health / mob.maxHealth;
-			const healthBar = new PIXI.Graphics();
+			const healthBar = new pixiRef.current.Graphics();
 			healthBar.rect(-10, -20, 20, 3);
 			healthBar.fill(0x333333);
 			healthBar.rect(-10, -20, 20 * healthPercent, 3);
@@ -350,7 +355,7 @@ export default function TowerDefenceGameScreen({
 		});
 	};
 
-	const updateProjectiles = (projectiles: any[], container: PIXI.Container) => {
+	const updateProjectiles = (projectiles: any[], container: any) => {
 		// Remove old projectiles
 		for (const [id, proj] of projectilesMapRef.current) {
 			if (!projectiles.find((p) => p.id === id)) {
@@ -364,7 +369,7 @@ export default function TowerDefenceGameScreen({
 			let projGraphic = projectilesMapRef.current.get(proj.id);
 
 			if (!projGraphic) {
-				projGraphic = new PIXI.Graphics();
+				projGraphic = new pixiRef.current.Graphics();
 				projGraphic.circle(0, 0, 3);
 				projGraphic.fill(0xffff00);
 				projectilesMapRef.current.set(proj.id, projGraphic);

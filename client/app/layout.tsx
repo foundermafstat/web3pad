@@ -54,7 +54,6 @@ import { Providers } from './providers';
 import { Header } from '@/components/Header';
 import { auth } from '@/lib/auth';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
-import { PWAStatus } from '@/components/PWAStatus';
 
 export default async function RootLayout({
 	children,
@@ -76,7 +75,6 @@ export default async function RootLayout({
 					<Header />
 					{children}
 					<PWAInstallPrompt />
-					<PWAStatus />
 				</Providers>
 			</body>
 		</html>

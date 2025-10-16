@@ -1,6 +1,6 @@
 ---
 id: 0
-name: Testnet deployment
+name: Custom Testnet deployment
 network: testnet
 stacks-node: "https://api.testnet.hiro.so"
 bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"

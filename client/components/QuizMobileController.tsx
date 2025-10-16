@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { Brain, Trophy, Wifi, WifiOff, CheckCircle, Clock } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
+import BlockchainAddressModal from './BlockchainAddressModal';
+import BlockchainStatus from './BlockchainStatus';
 
 interface QuizMobileControllerProps {
 	gameId: string;
@@ -55,6 +57,10 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 	const [gameState, setGameState] = useState<GameState | null>(null);
 	const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 	const [hasAnswered, setHasAnswered] = useState(false);
+	
+	// Blockchain integration state
+	const [showBlockchainModal, setShowBlockchainModal] = useState(false);
+	const [blockchainConnected, setBlockchainConnected] = useState(false);
 	const [connectionStatus, setConnectionStatus] = useState<
 		'connecting' | 'connected' | 'disconnected'
 	>('connecting');
@@ -132,6 +138,16 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 				playerName: playerName.trim(),
 			});
 		}
+	};
+
+	// Blockchain integration handlers
+	const handleBlockchainConnect = () => {
+		setShowBlockchainModal(true);
+	};
+
+	const handleAddressSet = (address: string, txId?: string) => {
+		setBlockchainConnected(true);
+		console.log('Blockchain address set:', address, txId);
 	};
 
 	const toggleReady = () => {
@@ -272,6 +288,19 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 						{gameState?.players?.length || 0} players connected
 					</p>
 
+					{/* Blockchain connect button */}
+					<button
+						onClick={handleBlockchainConnect}
+						className={`mb-4 px-8 py-4 rounded-xl font-medium text-lg transition-all transform hover:scale-105 active:scale-95 ${
+							blockchainConnected
+								? 'bg-green-500 text-white'
+								: 'bg-gray-600 text-white hover:bg-gray-700'
+						}`}
+					>
+						{blockchainConnected ? '✓ Blockchain Connected' : '🔗 Connect Blockchain'}
+					</button>
+					
+					{/* Ready button */}
 					<button
 						onClick={toggleReady}
 						className={`px-12 py-6 rounded-2xl font-bold text-2xl transition-all transform hover:scale-105 active:scale-95 ${
@@ -446,7 +475,8 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 			: 100;
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex flex-col">
+		<>
+			<div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex flex-col">
 			{/* Header */}
 			<div className="bg-gray-900 p-4">
 				<div className="flex justify-between items-center mb-3">
@@ -542,6 +572,27 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 				)}
 			</div>
 		</div>
+		
+		{/* Blockchain Address Modal */}
+		<BlockchainAddressModal
+			isOpen={showBlockchainModal}
+			onClose={() => setShowBlockchainModal(false)}
+			roomId={gameId}
+			playerId={playerData?.id || ''}
+			playerName={playerData?.name || ''}
+			onAddressSet={handleAddressSet}
+		/>
+		
+		{/* Blockchain Status */}
+		{isJoined && playerData && (
+			<div className="fixed bottom-4 left-4 right-4 z-40">
+				<BlockchainStatus 
+					roomId={gameId} 
+					playerId={playerData.id}
+				/>
+			</div>
+		)}
+		</>
 	);
 };
 
