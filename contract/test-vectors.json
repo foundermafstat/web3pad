@@ -1,0 +1,305 @@
+{
+  "testVectors": {
+    "canonicalPayloads": [
+      {
+        "name": "Basic Game Result",
+        "payload": {
+          "sessionId": 0,
+          "player": "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9",
+          "gameId": 1,
+          "score": 1500,
+          "kills": 25,
+          "timestamp": 1640995200000,
+          "metadata": {
+            "level": 5,
+            "difficulty": "hard"
+          }
+        },
+        "canonical": "{\"gameId\":1,\"kills\":25,\"metadata\":{\"difficulty\":\"hard\",\"level\":5},\"player\":\"SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9\",\"score\":1500,\"sessionId\":0,\"timestamp\":1640995200000}",
+        "hash": "0x" + "a".repeat(64),
+        "description": "Standard game result with all fields"
+      },
+      {
+        "name": "Minimal Game Result",
+        "payload": {
+          "sessionId": 1,
+          "player": "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9",
+          "gameId": 1,
+          "score": 100,
+          "kills": 1,
+          "timestamp": 1640995201000
+        },
+        "canonical": "{\"gameId\":1,\"kills\":1,\"player\":\"SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9\",\"score\":100,\"sessionId\":1,\"timestamp\":1640995201000}",
+        "hash": "0x" + "b".repeat(64),
+        "description": "Minimal required fields only"
+      },
+      {
+        "name": "High Score Result",
+        "payload": {
+          "sessionId": 2,
+          "player": "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9",
+          "gameId": 1,
+          "score": 999999,
+          "kills": 100,
+          "timestamp": 1640995202000,
+          "metadata": {
+            "level": 50,
+            "difficulty": "expert",
+            "achievements": ["first_blood", "kill_streak", "perfect_game"]
+          }
+        },
+        "canonical": "{\"gameId\":1,\"kills\":100,\"metadata\":{\"achievements\":[\"first_blood\",\"kill_streak\",\"perfect_game\"],\"difficulty\":\"expert\",\"level\":50},\"player\":\"SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9\",\"score\":999999,\"sessionId\":2,\"timestamp\":1640995202000}",
+        "hash": "0x" + "c".repeat(64),
+        "description": "High score with achievements"
+      }
+    ],
+    "signatures": [
+      {
+        "name": "Valid 64-byte signature",
+        "privateKey": "0x" + "1".repeat(64),
+        "publicKey": "0x02" + "a".repeat(64),
+        "signature": "0x" + "s".repeat(128),
+        "description": "Standard 64-byte signature format"
+      },
+      {
+        "name": "Valid 65-byte signature",
+        "privateKey": "0x" + "2".repeat(64),
+        "publicKey": "0x02" + "b".repeat(64),
+        "signature": "0x" + "t".repeat(130),
+        "description": "65-byte signature with recovery ID"
+      }
+    ],
+    "testnetKeys": [
+      {
+        "name": "Testnet Server 1",
+        "privateKey": "0x" + "3".repeat(64),
+        "publicKey": "0x02" + "c".repeat(64),
+        "address": "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9",
+        "description": "Primary testnet server key"
+      },
+      {
+        "name": "Testnet Server 2",
+        "privateKey": "0x" + "4".repeat(64),
+        "publicKey": "0x02" + "d".repeat(64),
+        "address": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE",
+        "description": "Secondary testnet server key"
+      }
+    ],
+    "transactionExamples": [
+      {
+        "name": "Start Session",
+        "function": "start-session",
+        "args": [
+          {
+            "type": "principal",
+            "value": "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9"
+          },
+          {
+            "type": "uint",
+            "value": "1"
+          }
+        ],
+        "expectedResult": "ok(0)",
+        "description": "Create new game session"
+      },
+      {
+        "name": "Report Result",
+        "function": "report-result",
+        "args": [
+          {
+            "type": "uint",
+            "value": "0"
+          },
+          {
+            "type": "buff",
+            "value": "0x" + "a".repeat(64)
+          },
+          {
+            "type": "buff",
+            "value": "0x" + "s".repeat(128)
+          },
+          {
+            "type": "buff",
+            "value": "0x02" + "a".repeat(64)
+          },
+          {
+            "type": "optional",
+            "value": null
+          }
+        ],
+        "expectedResult": "ok(true)",
+        "description": "Submit server-signed result"
+      },
+      {
+        "name": "Claim STX Reward",
+        "function": "claim-reward",
+        "args": [
+          {
+            "type": "uint",
+            "value": "0"
+          },
+          {
+            "type": "optional",
+            "value": null
+          },
+          {
+            "type": "uint",
+            "value": "1000000"
+          }
+        ],
+        "expectedResult": "ok(true)",
+        "description": "Claim 1 STX reward"
+      },
+      {
+        "name": "Claim Token Reward",
+        "function": "claim-reward",
+        "args": [
+          {
+            "type": "uint",
+            "value": "0"
+          },
+          {
+            "type": "optional",
+            "value": {
+              "type": "principal",
+              "value": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
+            }
+          },
+          {
+            "type": "uint",
+            "value": "1000000000"
+          }
+        ],
+        "expectedResult": "ok(true)",
+        "description": "Claim 1000 token reward"
+      }
+    ],
+    "errorCases": [
+      {
+        "name": "Unauthorized Access",
+        "function": "set-trusted-server",
+        "args": [
+          {
+            "type": "buff",
+            "value": "0x02" + "a".repeat(64)
+          },
+          {
+            "type": "bool",
+            "value": true
+          }
+        ],
+        "sender": "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9",
+        "expectedResult": "err(u100)",
+        "description": "Non-owner trying to set trusted server"
+      },
+      {
+        "name": "Session Not Found",
+        "function": "get-session",
+        "args": [
+          {
+            "type": "uint",
+            "value": "999"
+          }
+        ],
+        "expectedResult": "none",
+        "description": "Querying non-existent session"
+      },
+      {
+        "name": "Replay Attack",
+        "function": "report-result",
+        "args": [
+          {
+            "type": "uint",
+            "value": "1"
+          },
+          {
+            "type": "buff",
+            "value": "0x" + "a".repeat(64)
+          },
+          {
+            "type": "buff",
+            "value": "0x" + "s".repeat(128)
+          },
+          {
+            "type": "buff",
+            "value": "0x02" + "a".repeat(64)
+          },
+          {
+            "type": "optional",
+            "value": null
+          }
+        ],
+        "expectedResult": "err(u105)",
+        "description": "Trying to reuse same result hash"
+      }
+    ]
+  },
+  "integrationTests": [
+    {
+      "name": "Complete Game Flow",
+      "steps": [
+        {
+          "step": 1,
+          "action": "start-session",
+          "args": ["SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9", 1],
+          "expected": "ok(0)"
+        },
+        {
+          "step": 2,
+          "action": "set-trusted-server",
+          "args": ["0x02" + "a".repeat(64), true],
+          "sender": "deployer",
+          "expected": "ok(true)"
+        },
+        {
+          "step": 3,
+          "action": "report-result",
+          "args": [0, "0x" + "a".repeat(64), "0x" + "s".repeat(128), "0x02" + "a".repeat(64), null],
+          "expected": "ok(true)"
+        },
+        {
+          "step": 4,
+          "action": "claim-reward",
+          "args": [0, null, 1000000],
+          "expected": "ok(true)"
+        }
+      ],
+      "description": "Full game session lifecycle"
+    },
+    {
+      "name": "Dispute Flow",
+      "steps": [
+        {
+          "step": 1,
+          "action": "start-session",
+          "args": ["SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9", 1],
+          "expected": "ok(0)"
+        },
+        {
+          "step": 2,
+          "action": "open-dispute",
+          "args": [0, "0x" + "reason".repeat(20)],
+          "sender": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE",
+          "expected": "ok(true)"
+        }
+      ],
+      "description": "Dispute opening flow"
+    }
+  ],
+  "performanceTests": [
+    {
+      "name": "Multiple Sessions",
+      "description": "Create and process multiple sessions simultaneously",
+      "sessions": 10,
+      "expectedGasUsage": "~200,000 gas units",
+      "expectedStorage": "~2,000 bytes"
+    },
+    {
+      "name": "Large Payload",
+      "description": "Process session with large metadata payload",
+      "payloadSize": "1KB",
+      "expectedGasUsage": "~25,000 gas units",
+      "expectedStorage": "~200 bytes"
+    }
+  ]
+}

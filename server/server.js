@@ -327,7 +327,7 @@ io.on('connection', (socket) => {
 	socket.on('room:create', (data) => {
 		try {
 			const roomId = `room-${Math.random().toString(36).substring(2, 9)}`;
-			const { name, gameType, maxPlayers, password, hostName, userId } = data;
+			const { name, gameType, maxPlayers, password, hostName, userId, hostParticipates } = data;
 
 			console.log('[room:create]', { 
 				roomId, 
@@ -335,6 +335,7 @@ io.on('connection', (socket) => {
 				gameType, 
 				maxPlayers, 
 				hasPassword: !!password,
+				hostParticipates: !!hostParticipates,
 				isAuthenticated: !socket.user?.isGuest,
 				userId: socket.user?.userId || userId
 			});
@@ -351,19 +352,21 @@ io.on('connection', (socket) => {
 				hostId: socket.id,
 				hostName: actualHostName,
 				userId: socket.user?.userId || userId,
+				hostParticipates: !!hostParticipates,
 			});
 
 			// Notify creator first (for redirect) before broadcasting
 			socket.emit('room:created', {
 				roomId,
 				gameInfo: game.getGameInfo(),
+				hostParticipates: !!hostParticipates,
 			});
 
 			// Then broadcast updated room list to all clients (including creator)
 			// Creator will see it in the list but duplicate check prevents double-add
 			broadcastRoomList();
 
-			console.log(`[room:create] Room ${roomId} (${name}) created by ${socket.id}`);
+			console.log(`[room:create] Room ${roomId} (${name}) created by ${socket.id}, host participates: ${!!hostParticipates}`);
 		} catch (error) {
 			socket.emit('error', { message: error.message });
 			console.error('Error creating room:', error);

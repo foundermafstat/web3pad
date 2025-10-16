@@ -1,14 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Users, Lock, Play, Clock } from 'lucide-react';
+import { Users, Lock, Play, Clock, Gamepad2, Monitor } from 'lucide-react';
 import { Room } from '../types/room';
+import RoomDropdownMenu from './RoomDropdownMenu';
 
 interface RoomCardProps {
 	room: Room;
 	onClick: () => void;
-	isExpanded?: boolean;
 	onJoin?: (room: Room) => void;
+	isMobile?: boolean;
 }
 
 const GAME_COLORS: Record<string, string> = {
@@ -35,7 +36,7 @@ const GAME_NAMES: Record<string, string> = {
 	gyrotest: 'Gyro Test',
 };
 
-const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, isExpanded, onJoin }) => {
+const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, onJoin, isMobile = false }) => {
 	const colorClass = GAME_COLORS[room.gameType] || 'from-gray-500/20 to-gray-600/20 border-gray-500/30';
 	const gameIcon = GAME_ICONS[room.gameType] || '🎮';
 	const gameName = GAME_NAMES[room.gameType] || room.gameType;
@@ -66,20 +67,36 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, isExpanded, onJoin }
 		}
 	};
 
+	if (isMobile) {
+		// Mobile card: 120x80 pixels with dropdown
+		return (
+			<RoomDropdownMenu room={room} onJoin={onJoin || (() => {})}>
+				<div className="relative group w-[120px] h-[80px] bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-lg p-2 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-105 flex flex-col items-center justify-between text-center cursor-pointer">
+					{/* Game Icon */}
+					<div className="text-2xl">{gameIcon}</div>
+					
+					{/* Room Name */}
+					<div className="text-xs font-bold text-foreground truncate w-full">
+						{room.name}
+					</div>
+					
+					{/* Players Count */}
+					<div className="flex items-center space-x-1 text-xs text-muted-foreground">
+						<Users className="w-3 h-3" />
+						<span>{room.currentPlayers}/{room.maxPlayers}</span>
+					</div>
+					
+					{/* Status Indicator */}
+					<div className={`w-2 h-2 rounded-full ${getStatusColor()}`} />
+				</div>
+			</RoomDropdownMenu>
+		);
+	}
+
+	// Desktop card with dropdown
 	return (
-		<div className="w-full">
-			<button
-				onClick={onClick}
-				className={`
-					relative group w-full
-					bg-card/80 backdrop-blur-sm
-					border border-border/50 hover:border-primary/50
-					rounded-lg p-3
-					transition-all duration-200
-					hover:shadow-md hover:bg-card
-					${isExpanded ? 'rounded-b-none border-b-0' : ''}
-				`}
-			>
+		<RoomDropdownMenu room={room} onJoin={onJoin || (() => {})}>
+			<div className="relative group w-full text-left bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-[1.02] cursor-pointer">
 				<div className="flex items-center justify-between">
 					{/* Left: Game Info */}
 					<div className="flex items-center space-x-3 flex-1 min-w-0">
@@ -96,6 +113,12 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, isExpanded, onJoin }
 							<Lock className="w-3 h-3 text-yellow-500" />
 						)}
 						
+						{room.hostParticipates && (
+							<div className="flex items-center space-x-1" title="Host participates in game">
+								<Gamepad2 className="w-3 h-3 text-blue-500" />
+							</div>
+						)}
+						
 						<div className="flex items-center space-x-1">
 							<Users className="w-3 h-3 text-muted-foreground" />
 							<span className="text-xs font-medium text-foreground">
@@ -109,74 +132,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, isExpanded, onJoin }
 						</div>
 					</div>
 				</div>
-			</button>
-
-			{/* Expanded Details */}
-			{isExpanded && (
-				<div className="bg-card border border-t-0 border-border/50 rounded-b-lg p-4 space-y-3 shadow-lg">
-					{/* Host Info */}
-					<div className="flex items-center justify-between">
-						<div className="text-sm">
-							<span className="text-muted-foreground">Host:</span>
-							<span className="text-foreground font-medium ml-1">{room.hostName}</span>
-						</div>
-						<div className="text-xs text-muted-foreground">
-							ID: {room.id?.slice(-8)}
-						</div>
-					</div>
-
-					{/* Players List */}
-					{room.players && room.players.length > 0 && (
-						<div>
-							<div className="text-sm font-medium text-foreground mb-2">Connected Players:</div>
-							<div className="space-y-1">
-								{room.players.map((player, index) => (
-									<div key={index} className="flex items-center space-x-2 text-sm">
-										<div 
-											className="w-2 h-2 rounded-full" 
-											style={{ backgroundColor: player.color || '#6b7280' }}
-										/>
-										<span className="text-foreground">{player.name}</span>
-										{player.isHost && (
-											<span className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded">
-												Host
-											</span>
-										)}
-									</div>
-								))}
-							</div>
-						</div>
-					)}
-
-					{/* Action Buttons */}
-					<div className="flex justify-end space-x-2 pt-2 border-t border-border/30">
-						{room.status === 'waiting' ? (
-							<button
-								onClick={(e) => {
-									e.stopPropagation();
-									onJoin?.(room);
-								}}
-								className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-							>
-								<Play className="w-3 h-3 mr-1 inline" />
-								Join Game
-							</button>
-						) : (
-							<button
-								onClick={(e) => {
-									e.stopPropagation();
-									// Handle spectate logic here - could be added later
-								}}
-								className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/90 transition-colors"
-								disabled={room.status === 'finished'}
-							>
-								{room.status === 'playing' ? 'Spectate' : 'Finished'}
-							</button>
-						)}
-					</div>
-				</div>
-			)}
-		</div>
+			</div>
+		</RoomDropdownMenu>
 	);
 };
 

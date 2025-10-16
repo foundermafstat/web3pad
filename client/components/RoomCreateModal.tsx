@@ -14,6 +14,7 @@ interface CreateRoomData {
 	gameType: string;
 	maxPlayers: number;
 	password?: string;
+	hostParticipates: boolean;
 }
 
 const GAME_TYPES = [
@@ -34,6 +35,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 	const [maxPlayers, setMaxPlayers] = useState(4);
 	const [usePassword, setUsePassword] = useState(false);
 	const [password, setPassword] = useState('');
+	const [hostParticipates, setHostParticipates] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
 	const validateForm = () => {
@@ -79,6 +81,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 			gameType: selectedGame,
 			maxPlayers,
 			password: usePassword ? password : undefined,
+			hostParticipates,
 		};
 
 		onCreateRoom(data);
@@ -91,6 +94,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 		setMaxPlayers(4);
 		setUsePassword(false);
 		setPassword('');
+		setHostParticipates(false);
 		setErrors({});
 		onClose();
 	};
@@ -194,6 +198,27 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 						{errors.maxPlayers && (
 							<p className="text-red-400 text-sm mt-1">{errors.maxPlayers}</p>
 						)}
+					</div>
+
+					{/* Host Participation Toggle */}
+					<div>
+						<label className="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl border border-gray-700 cursor-pointer hover:bg-gray-800/50 transition-all">
+							<div className="flex items-center space-x-3">
+								<Gamepad2 className="w-5 h-5 text-blue-400" />
+								<div>
+									<div className="text-white font-medium">Host Participates</div>
+									<div className="text-gray-400 text-sm">
+										Join the game as a player (your device becomes a controller)
+									</div>
+								</div>
+							</div>
+							<input
+								type="checkbox"
+								checked={hostParticipates}
+								onChange={(e) => setHostParticipates(e.target.checked)}
+								className="w-5 h-5 text-blue-500 rounded focus:ring-2 focus:ring-blue-500"
+							/>
+						</label>
 					</div>
 
 					{/* Password Toggle */}

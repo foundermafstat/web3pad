@@ -238,11 +238,11 @@ export function DesktopNavigation() {
 										<div>
 											<div className="flex">
 												<Star className="w-5 h-5 text-primary mr-2" />
-												<div className="font-medium">My Achievements</div>
+												<div className="font-medium">Achievements</div>
 											</div>
 											
 											<div className="text-muted-foreground text-sm">
-												View your achievements
+												View all achievements in the community
 											</div>
 										</div>
 									</Link>
@@ -258,7 +258,7 @@ export function DesktopNavigation() {
 											</div>
 											
 											<div className="text-muted-foreground text-sm">
-												View your settings
+												View and change your settings
 											</div>
 										</div>
 									</Link>

@@ -36,7 +36,6 @@ export default function Home() {
 	const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 	const [showDetailsModal, setShowDetailsModal] = useState(false);
 	const [showAuthModal, setShowAuthModal] = useState(false);
-	const [expandedRoomId, setExpandedRoomId] = useState<string | null>(null);
 	const socketRef = useRef<Socket | null>(null);
 
 
@@ -151,8 +150,13 @@ export default function Home() {
 			// Listen for room creation confirmation
 			socketRef.current.once('room:created', ({ roomId, gameInfo }: any) => {
 				console.log('[Home] Room created, redirecting to game...', roomId);
-				// Redirect host to game screen
-				router.push(`/game/${data.gameType}?roomId=${roomId}`);
+				
+				// If host participates, redirect to display page, otherwise to game screen
+				if (data.hostParticipates) {
+					router.push(`/game-display/${data.gameType}?roomId=${roomId}`);
+				} else {
+					router.push(`/game/${data.gameType}?roomId=${roomId}`);
+				}
 			});
 
 			socketRef.current.emit('room:create', {
@@ -171,9 +175,9 @@ export default function Home() {
 			return;
 		}
 		
-		// Toggle expanded state
-		setExpandedRoomId(expandedRoomId === room.id ? null : room.id);
+		// Show room details modal
 		setSelectedRoom(room);
+		setShowDetailsModal(true);
 	};
 
 	const handleJoinRoom = (roomId: string, password?: string) => {
@@ -216,7 +220,7 @@ export default function Home() {
 				onCreateRoomClick={handleCreateRoomClick}
 				onRoomClick={handleRoomClick}
 				onJoinRoomDirect={handleJoinRoomDirect}
-				expandedRoomId={expandedRoomId}
+				expandedRoomId={null}
 			/>
 
 			{/* Modals */}

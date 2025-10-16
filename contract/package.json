@@ -1,0 +1,52 @@
+{
+  "name": "shooter-game-contract",
+  "version": "1.0.0",
+  "description": "Shooter Game Clarity smart contract for Stacks blockchain",
+  "main": "contracts/shooter-game.clar",
+  "scripts": {
+    "test": "clarinet test",
+    "test:unit": "clarinet test --test shooter-game-tests",
+    "test:integration": "clarinet test --test integration-tests",
+    "simulate": "node scripts/simulate_flow.js",
+    "sign": "node scripts/sign_payload.js",
+    "generate-wallet": "node scripts/generate_wallet.js",
+    "generate-wallet:mainnet": "node scripts/generate_wallet.js --mainnet",
+    "generate-wallet:save": "node scripts/generate_wallet.js --save-env",
+    "generate-wallet:multiple": "node scripts/generate_wallet.js --count=5",
+    "get-keys": "node scripts/get_keys_from_private.js",
+    "get-keys-from-seed": "node scripts/get_keys_from_seed.js",
+    "build": "clarinet build",
+    "deploy:testnet": "clarinet deploy --testnet",
+    "deploy:mainnet": "clarinet deploy --mainnet",
+    "check:clarinet": "clarinet --version || echo 'Clarinet not found. Install with: cargo install clarinet'"
+  },
+  "keywords": [
+    "stacks",
+    "clarity",
+    "blockchain",
+    "game",
+    "smart-contract",
+    "secp256k1",
+    "signature-verification"
+  ],
+  "author": "W3P Team",
+  "license": "MIT",
+  "devDependencies": {
+    "secp256k1": "^5.0.0"
+  },
+  "dependencies": {
+    "secp256k1": "^5.0.0",
+    "dotenv": "^16.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/shooter-game-contract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/shooter-game-contract/issues"
+  },
+  "homepage": "https://github.com/your-org/shooter-game-contract#readme"
+}

@@ -28,6 +28,7 @@ export class GameRoomManager {
 			maxPlayers: config.maxPlayers || 4,
 			currentPlayers: 0,
 			hasPassword: !!config.password,
+			hostParticipates: !!config.hostParticipates,
 			password: config.password || null,
 			status: 'waiting',
 			createdAt: Date.now(),
