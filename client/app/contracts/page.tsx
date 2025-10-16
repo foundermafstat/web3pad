@@ -190,16 +190,16 @@ const ContractsPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Blockchain Status Banner */}
         {blockchainStatus && !blockchainStatus.enabled && (
-          <div className="mb-6 p-4 bg-yellow-100 border border-yellow-400 rounded-lg">
+          <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
             <div className="flex items-center">
-              <svg className="w-5 h-5 text-yellow-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-yellow-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
               <div>
-                <h3 className="text-sm font-medium text-yellow-800">
+                <h3 className="text-sm font-medium text-yellow-600">
                   Blockchain integration disabled
                 </h3>
-                <p className="text-sm text-yellow-700 mt-1">
+                <p className="text-sm text-yellow-500 mt-1">
                   Some features may be unavailable. Check server settings.
                 </p>
               </div>
@@ -214,32 +214,32 @@ const ContractsPage: React.FC = () => {
               {/* Network Information */}
               <div className="bg-card rounded-lg shadow-lg p-6">
                 <h2 className="text-xl font-bold text-foreground mb-4">Network Information</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600">{networkInfo.network}</div>
-                    <div className="text-sm text-muted-foreground">Network</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-green-600">{networkInfo.deployedContracts}</div>
-                    <div className="text-sm text-muted-foreground">Deployed Contracts</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-purple-600">{networkInfo.totalCost}</div>
-                    <div className="text-sm text-muted-foreground">Total Cost (STX)</div>
-                  </div>
-                  <div className="text-center">
-                    <div className={`text-3xl font-bold ${
-                      networkInfo.status === 'Live' || networkInfo.status === 'Connected' 
-                        ? 'text-green-600' 
-                        : networkInfo.status === 'Disconnected' 
-                        ? 'text-red-600' 
-                        : 'text-yellow-600'
-                    }`}>
-                      {networkInfo.status}
-                    </div>
-                    <div className="text-sm text-muted-foreground">All Contracts Status</div>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary">{networkInfo.network}</div>
+                  <div className="text-sm text-muted-foreground">Network</div>
                 </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-500">{networkInfo.deployedContracts}</div>
+                  <div className="text-sm text-muted-foreground">Deployed Contracts</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-500">{networkInfo.totalCost}</div>
+                  <div className="text-sm text-muted-foreground">Total Cost (STX)</div>
+                </div>
+                <div className="text-center">
+                  <div className={`text-3xl font-bold ${
+                    networkInfo.status === 'Live' || networkInfo.status === 'Connected' 
+                      ? 'text-green-500' 
+                      : networkInfo.status === 'Disconnected' 
+                      ? 'text-red-500' 
+                      : 'text-yellow-500'
+                  }`}>
+                    {networkInfo.status}
+                  </div>
+                  <div className="text-sm text-muted-foreground">All Contracts Status</div>
+                </div>
+              </div>
               </div>
 
               {/* Contract Manager */}

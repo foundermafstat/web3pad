@@ -18,9 +18,9 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url, size = 200 }) => {
 				url,
 				{
 					width: size,
-					margin: 2,
+					margin: 1,
 					color: {
-						dark: '#000000',
+						dark: '#1f2937',
 						light: '#FFFFFF',
 					},
 				},
@@ -33,7 +33,7 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url, size = 200 }) => {
 
 	return (
 		<div className="text-center">
-			<div className="inline-block p-4 bg-background rounded-md shadow-lg">
+			<div className="inline-block p-2 bg-white rounded-lg shadow-lg">
 				<canvas ref={canvasRef} />
 			</div>
 			{/* <p className="text-gray-300 text-sm mt-3">

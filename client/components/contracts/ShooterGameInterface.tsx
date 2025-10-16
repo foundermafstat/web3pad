@@ -184,21 +184,21 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
     switch (status) {
       case 'active':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
             <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div>
             Active
           </span>
         );
       case 'completed':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1"></div>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full mr-1"></div>
             Completed
           </span>
         );
       case 'cancelled':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-500 border border-red-500/20">
             <div className="w-1.5 h-1.5 bg-red-500 rounded-full mr-1"></div>
             Cancelled
           </span>
@@ -213,20 +213,20 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
   };
 
   return (
-    <div className="bg-background rounded-lg shadow-lg">
+    <div className="bg-card rounded-lg shadow-lg">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-200">
+      <div className="px-6 py-4 border-b border-border">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Shooter Game</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <h2 className="text-xl font-bold text-foreground">Shooter Game</h2>
+            <p className="text-sm text-muted-foreground mt-1">
               Game session and results management
             </p>
           </div>
           {playerAddress && (
             <div className="text-right">
-              <p className="text-sm text-gray-600">Player:</p>
-              <p className="text-sm font-mono text-gray-900">
+              <p className="text-sm text-muted-foreground">Player:</p>
+              <p className="text-sm font-mono text-foreground">
                 {playerAddress.slice(0, 8)}...{playerAddress.slice(-6)}
               </p>
             </div>
@@ -237,11 +237,11 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
       {!playerAddress && (
         <div className="p-6">
           <div className="text-center py-8">
-            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="mx-auto h-12 w-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">Player address required</h3>
-            <p className="mt-1 text-sm text-gray-500">Connect your Stacks address to manage game sessions.</p>
+            <h3 className="mt-2 text-sm font-medium text-foreground">Player address required</h3>
+            <p className="mt-1 text-sm text-muted-foreground">Connect your Stacks address to manage game sessions.</p>
           </div>
         </div>
       )}
@@ -249,47 +249,47 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
       {playerAddress && (
         <>
           {/* Stats */}
-          <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+          <div className="px-6 py-4 bg-muted/50 border-b border-border">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">{sessions.length}</div>
-                <div className="text-sm text-gray-600">Total Sessions</div>
+                <div className="text-2xl font-bold text-foreground">{sessions.length}</div>
+                <div className="text-sm text-muted-foreground">Total Sessions</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-green-500">
                   {sessions.filter(s => s.status === 'active').length}
                 </div>
-                <div className="text-sm text-gray-600">Active</div>
+                <div className="text-sm text-muted-foreground">Active</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-primary">
                   {sessions.filter(s => s.status === 'completed').length}
                 </div>
-                <div className="text-sm text-gray-600">Completed</div>
+                <div className="text-sm text-muted-foreground">Completed</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-purple-500">
                   {sessions.reduce((sum, s) => sum + (s.score || 0), 0)}
                 </div>
-                <div className="text-sm text-gray-600">Total Score</div>
+                <div className="text-sm text-muted-foreground">Total Score</div>
               </div>
             </div>
           </div>
 
           <div className="p-6">
             {error && (
-              <div className="mb-4 p-4 bg-red-100 border border-red-400 rounded-lg">
-                <p className="text-sm text-red-800">{error}</p>
+              <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <p className="text-sm text-red-500">{error}</p>
               </div>
             )}
 
             {/* Start New Session */}
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">Start New Session</h3>
+            <div className="mb-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
+              <h3 className="text-lg font-semibold text-primary mb-3">Start New Session</h3>
               <form onSubmit={handleStartSession} className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-blue-800 mb-2">
+                    <label className="block text-sm font-medium text-primary mb-2">
                       NFT Token ID (optional)
                     </label>
                     <input
@@ -297,17 +297,17 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                       value={sessionForm.nftTokenId}
                       onChange={(e) => setSessionForm({...sessionForm, nftTokenId: e.target.value})}
                       placeholder="123"
-                      className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-blue-800 mb-2">
+                    <label className="block text-sm font-medium text-primary mb-2">
                       Game Type
                     </label>
                     <select
                       value={sessionForm.gameType}
                       onChange={(e) => setSessionForm({...sessionForm, gameType: e.target.value})}
-                      className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
                     >
                       <option value="shooter">Shooter</option>
                       <option value="tower-defense">Tower Defense</option>
@@ -317,7 +317,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                 </div>
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
                   disabled={loading}
                 >
                   {loading ? 'Starting...' : 'Start Session'}
@@ -327,20 +327,20 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
 
             {/* Sessions List */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Session History</h3>
+              <h3 className="text-lg font-semibold text-foreground">Session History</h3>
               
               {loading && sessions.length === 0 ? (
                 <div className="flex items-center justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                  <span className="ml-2 text-gray-600">Loading sessions...</span>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                  <span className="ml-2 text-muted-foreground">Loading sessions...</span>
                 </div>
               ) : sessions.length === 0 ? (
                 <div className="text-center py-8">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="mx-auto h-12 w-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">No game sessions</h3>
-                  <p className="mt-1 text-sm text-gray-500">Start a new session to play.</p>
+                  <h3 className="mt-2 text-sm font-medium text-foreground">No game sessions</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">Start a new session to play.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -350,49 +350,49 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                       onClick={() => setSelectedSession(session)}
                       className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
                         selectedSession?.id === session.id
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
+                          ? 'border-primary bg-primary/10'
+                          : 'border-border hover:border-primary/50 hover:shadow-md'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
-                          <h4 className="font-medium text-gray-900">Session #{session.id}</h4>
+                          <h4 className="font-medium text-foreground">Session #{session.id}</h4>
                           {getStatusBadge(session.status)}
                         </div>
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-muted-foreground">
                           {formatTime(session.startTime)}
                         </span>
                       </div>
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
-                          <span className="text-gray-500">NFT ID:</span>
-                          <p className="font-medium text-gray-900">
+                          <span className="text-muted-foreground">NFT ID:</span>
+                          <p className="font-medium text-foreground">
                             {session.nftTokenId || 'Not used'}
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-500">Score:</span>
-                          <p className="font-medium text-gray-900">
+                          <span className="text-muted-foreground">Score:</span>
+                          <p className="font-medium text-foreground">
                             {session.score || '—'}
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-500">Experience:</span>
-                          <p className="font-medium text-gray-900">
+                          <span className="text-muted-foreground">Experience:</span>
+                          <p className="font-medium text-foreground">
                             {session.experience || '—'}
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-500">TX ID:</span>
-                          <p className="font-mono text-xs text-gray-900">
+                          <span className="text-muted-foreground">TX ID:</span>
+                          <p className="font-mono text-xs text-foreground">
                             {session.txId ? `${session.txId.slice(0, 8)}...` : '—'}
                           </p>
                         </div>
                       </div>
 
                       {selectedSession?.id === session.id && session.status === 'active' && (
-                        <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="mt-3 pt-3 border-t border-border">
                           <button
                             onClick={() => setShowResultForm(true)}
                             className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
@@ -412,14 +412,14 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
 
       {/* Submit Result Modal */}
       {showResultForm && selectedSession && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-background rounded-lg shadow-xl max-w-md w-full">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-lg shadow-xl max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Submit Result</h2>
+                <h2 className="text-xl font-bold text-foreground">Submit Result</h2>
                 <button
                   onClick={() => setShowResultForm(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -428,14 +428,14 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
               </div>
 
               <div className="mb-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-muted-foreground">
                   Session #{selectedSession.id} • {formatTime(selectedSession.startTime)}
                 </p>
               </div>
 
               <form onSubmit={handleSubmitResult} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Score
                   </label>
                   <input
@@ -443,13 +443,13 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                     value={resultForm.score}
                     onChange={(e) => setResultForm({...resultForm, score: parseInt(e.target.value)})}
                     min="0"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Additional Data (JSON, optional)
                   </label>
                   <textarea
@@ -457,7 +457,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                     onChange={(e) => setResultForm({...resultForm, metadata: e.target.value})}
                     rows={3}
                     placeholder='{"level": 5, "difficulty": "hard"}'
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
                   />
                 </div>
 
@@ -465,7 +465,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowResultForm(false)}
-                    className="flex-1 px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
+                    className="flex-1 px-4 py-2 text-secondary-foreground bg-secondary rounded-md hover:bg-secondary/80 transition-colors"
                     disabled={loading}
                   >
                     Cancel

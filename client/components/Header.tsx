@@ -17,14 +17,12 @@ export function Header() {
 		<header className="fixed top-0 z-50 w-full bg-gradient-to-b from-background/50 to-transparent">
 			<div className="relative h-10 md:h-16 flex items-center px-4">
 				{/* Logo */}
-				<Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+				<Link href="/" className="flex items-center hover:opacity-80 transition-opacity text-white">
 					<ThemeLogo
 						width={78}
 						height={52}
 						className="object-contain"
-						isLoading={isLoading}
-						loadingColor="#000000"
-						loadedColor="#ffffff"
+						color="#ffffff"
 					/>
 				</Link>
 

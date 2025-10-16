@@ -404,9 +404,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 							url={generateGameUrl(currentGameSlide.id)} 
 							size={250}
 						/>
-						<p className="text-white/80 text-sm text-center mt-2 font-medium">
-							Scan to play
-						</p>
+						
 					</div>
 				</div>
 			</div>
