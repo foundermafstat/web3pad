@@ -25,7 +25,7 @@ export default function AboutPage() {
 						🎮 Online Gaming Platform
 					</Badge>
 					<h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-						OSG Platform
+						W3P Platform
 					</h1>
 					<p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
 						Revolutionary gaming platform where your smartphone becomes the controller. 

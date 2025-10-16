@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { GameRoomManager } from './gameRoomManager.js';
+import GameRoomManager from './gameRoomManager.js';
 import { GAME_TYPES, GAME_INFO } from './games/index.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
@@ -14,6 +14,7 @@ import walletRoutes from './routes/wallet.js';
 import stacksAuthRoutes from './routes/stacks-auth.js';
 import gamesRoutes from './routes/games.js';
 import blockchainRoutes from './routes/blockchain.js';
+import blockchainGameRoutes from './routes/blockchain-game.js';
 import prisma from './lib/prisma.js';
 import { socketAuthMiddleware } from './middleware/auth.js';
 
@@ -55,7 +56,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // Инициализируем менеджер игровых комнат
-const roomManager = new GameRoomManager();
+const roomManager = GameRoomManager;
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -79,6 +80,7 @@ app.use('/api/games', gamesRoutes);
 
 // Blockchain routes
 app.use('/api/blockchain', blockchainRoutes);
+app.use('/api/blockchain', blockchainGameRoutes);
 
 app.get('/api/rooms', (req, res) => {
 	const rooms = roomManager.getActiveRooms();
@@ -155,12 +157,13 @@ io.on('connection', (socket) => {
 	});
 
 	// Присоединиться к комнате
-	socket.on('joinRoom', ({ roomId, playerName }) => {
+	socket.on('joinRoom', ({ roomId, playerName, walletAddress }) => {
 		try {
 			const { room, playerData } = roomManager.joinRoom(
 				roomId,
 				socket,
-				playerName
+				playerName,
+				walletAddress
 			);
 
 			// Отправляем подтверждение присоединившемуся игроку
@@ -175,7 +178,7 @@ io.on('connection', (socket) => {
 			// Уведомляем всех в комнате о новом игроке
 			roomManager.broadcastToRoom(roomId, 'playerConnected', playerData);
 
-			console.log(`Player ${playerName} joined room ${roomId}`);
+			console.log(`Player ${playerName} joined room ${roomId}, wallet: ${walletAddress || 'none'}`);
 		} catch (error) {
 			socket.emit('error', { message: error.message });
 			console.error('Error joining room:', error);
@@ -288,6 +291,54 @@ io.on('connection', (socket) => {
 		}
 	});
 
+	// Shooter game specific handlers
+	socket.on('shooter:auth', ({ roomId, walletAddress, playerName }) => {
+		try {
+			let room = roomManager.getRoom(roomId);
+			
+			if (!room) {
+				console.log(`[shooter:auth] Room ${roomId} doesn't exist, creating it`);
+				// Create room with proper configuration
+				roomManager.createRoom(roomId, 'shooter', {
+					name: `Shooter Room ${roomId}`,
+					maxPlayers: 4,
+					hostId: socket.id,
+					hostName: playerName
+				});
+				room = roomManager.getRoom(roomId);
+			}
+
+			// Add socket to room first
+			if (room) {
+				room.sockets.add(socket);
+				roomManager.playerToRoom.set(socket.id, roomId);
+			}
+
+			// Add player to game with wallet address
+			const { room: gameRoom, playerData } = roomManager.joinRoom(
+				roomId,
+				socket,
+				playerName,
+				walletAddress
+			);
+
+			socket.emit('shooter:auth:success', {
+				playerId: socket.id,
+				roomId,
+				playerData,
+				gameConfig: gameRoom.game.config,
+			});
+
+			// Notify all players about new player
+			roomManager.broadcastToRoom(roomId, 'shooter:player:joined', playerData);
+			
+			console.log(`[shooter:auth] Player ${playerName} authenticated in room ${roomId} with wallet ${walletAddress}`);
+		} catch (error) {
+			socket.emit('shooter:auth:error', { message: error.message });
+			console.error('Error in shooter auth:', error);
+		}
+	});
+
 	// Gyroscope data from controller
 	socket.on('controller:gyro', (data) => {
 		try {
@@ -377,7 +428,7 @@ io.on('connection', (socket) => {
 		}
 	});
 
-	socket.on('room:join', ({ roomId, playerName, password }) => {
+	socket.on('room:join', ({ roomId, playerName, password, walletAddress }) => {
 		try {
 			// Validate password if room has one
 			if (!roomManager.validateRoomPassword(roomId, password)) {
@@ -385,7 +436,7 @@ io.on('connection', (socket) => {
 				return;
 			}
 
-			const { room, playerData } = roomManager.joinRoom(roomId, socket, playerName);
+			const { room, playerData } = roomManager.joinRoom(roomId, socket, playerName, walletAddress);
 
 			socket.emit('room:joined', {
 				roomId,
@@ -397,10 +448,35 @@ io.on('connection', (socket) => {
 			// Broadcast updated room list
 			broadcastRoomList();
 
-			console.log(`[room:join] Player ${playerName} joined room ${roomId}`);
+			console.log(`[room:join] Player ${playerName} joined room ${roomId}, wallet: ${walletAddress || 'none'}`);
 		} catch (error) {
 			socket.emit('error', { message: error.message });
 			console.error('Error joining room:', error);
+		}
+	});
+
+	// Shooter game input handlers
+	socket.on('shooter:input', ({ input }) => {
+		try {
+			roomManager.handlePlayerInput(socket.id, input);
+		} catch (error) {
+			console.error('Error handling shooter input:', error);
+		}
+	});
+
+	socket.on('shooter:aim', ({ direction }) => {
+		try {
+			roomManager.handlePlayerAim(socket.id, direction);
+		} catch (error) {
+			console.error('Error handling shooter aim:', error);
+		}
+	});
+
+	socket.on('shooter:shoot', () => {
+		try {
+			roomManager.handlePlayerShoot(socket.id);
+		} catch (error) {
+			console.error('Error handling shooter shoot:', error);
 		}
 	});
 

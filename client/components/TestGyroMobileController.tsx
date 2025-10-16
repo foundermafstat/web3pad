@@ -281,7 +281,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 				</div>
 
 				{/* Gyroscope Status */}
-				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 space-y-4">
+				<div className="bg-background/10 backdrop-blur-sm rounded-2xl p-6 space-y-4">
 					<div className="flex items-center justify-between">
 						<span className="text-white font-semibold">Gyroscope</span>
 						<span
@@ -333,7 +333,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 				</div>
 
 				{/* Vibration Status */}
-				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 space-y-4">
+				<div className="bg-background/10 backdrop-blur-sm rounded-2xl p-6 space-y-4">
 					<div className="flex items-center justify-between">
 						<span className="text-white font-semibold">Vibration</span>
 						<span
@@ -358,7 +358,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 
 				{/* Visual Indicator */}
 				{gyroPermission === 'granted' && (
-					<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+					<div className="bg-background/10 backdrop-blur-sm rounded-2xl p-6">
 						<h3 className="text-white font-semibold mb-4 text-center">
 							Device Tilt Indicator
 						</h3>
@@ -385,7 +385,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 				)}
 
 				{/* Instructions */}
-				<div className="bg-white/5 backdrop-blur-sm rounded-md p-4">
+				<div className="bg-background/5 backdrop-blur-sm rounded-md p-4">
 					<p className="text-gray-300 text-sm text-center">
 						📱 Hold your device flat, then tilt to move the ball
 						<br />

@@ -2,9 +2,10 @@ import { BaseGame } from './baseGame.js';
 
 // Класс игрока для шутера
 class Player {
-	constructor(id, name, worldWidth, worldHeight, playerSize, color) {
+	constructor(id, name, worldWidth, worldHeight, playerSize, color, walletAddress = null) {
 		this.id = id;
 		this.name = name;
+		this.walletAddress = walletAddress; // Blockchain wallet address
 		this.x = worldWidth / 2 - playerSize / 2 + (Math.random() - 0.5) * 100;
 		this.y = worldHeight / 2 - playerSize / 2 + (Math.random() - 0.5) * 100;
 		this.health = 100;
@@ -14,6 +15,8 @@ class Player {
 		this.kills = 0;
 		this.deaths = 0;
 		this.botKills = 0;
+		this.lives = 3; // 3 lives system
+		this.maxLives = 3;
 		this.facingDirection = { x: 0, y: -1 };
 		this.aimDirection = { x: 0, y: -1 };
 		this.currentInput = { x: 0, y: 0 };
@@ -22,6 +25,8 @@ class Player {
 			speedBoost: { active: false, endTime: 0 },
 			shield: { active: false, endTime: 0 },
 		};
+		this.gameOver = false;
+		this.finalScore = 0;
 	}
 
 	updateInput(input) {
@@ -136,21 +141,34 @@ class Player {
 	}
 
 	takeDamage() {
-		if (!this.alive) return false;
+		if (!this.alive || this.gameOver) return false;
 		if (
 			this.effects.shield.active &&
 			Date.now() < this.effects.shield.endTime
 		) {
 			return false;
 		}
-		this.alive = false;
+		
+		this.lives--;
 		this.deaths++;
 		this.effects.speedBoost.active = false;
 		this.effects.shield.active = false;
-		return true;
+		
+		if (this.lives <= 0) {
+			this.alive = false;
+			this.gameOver = true;
+			this.finalScore = this.kills + this.botKills;
+			return true;
+		} else {
+			// Still has lives, respawn after delay
+			this.alive = false;
+			return true;
+		}
 	}
 
 	respawn(worldWidth, worldHeight, playerSize) {
+		if (this.gameOver) return; // Don't respawn if game is over
+		
 		this.alive = true;
 		this.health = 100;
 		this.x = worldWidth / 2 - playerSize / 2 + (Math.random() - 0.5) * 100;
@@ -178,6 +196,7 @@ class Player {
 		return {
 			id: this.id,
 			name: this.name,
+			walletAddress: this.walletAddress,
 			x: this.x,
 			y: this.y,
 			alive: this.alive,
@@ -185,11 +204,15 @@ class Player {
 			kills: this.kills,
 			deaths: this.deaths,
 			botKills: this.botKills || 0,
+			lives: this.lives,
+			maxLives: this.maxLives,
 			health: this.health,
 			effects: this.effects,
 			facingDirection: this.facingDirection,
 			aimDirection: this.aimDirection,
 			isMoving: this.isMoving,
+			gameOver: this.gameOver,
+			finalScore: this.finalScore,
 		};
 	}
 }
@@ -407,7 +430,7 @@ export class ShooterGame extends BaseGame {
 		});
 	}
 
-	addPlayer(playerId, playerName, userId = null) {
+	addPlayer(playerId, playerName, userId = null, walletAddress = null) {
 		const color = this.playerColors[this.colorIndex % this.playerColors.length];
 		this.colorIndex++;
 
@@ -417,7 +440,8 @@ export class ShooterGame extends BaseGame {
 			this.worldWidth,
 			this.worldHeight,
 			this.playerSize,
-			color
+			color,
+			walletAddress
 		);
 		player.userId = userId; // Store userId for database tracking
 
@@ -661,5 +685,84 @@ export class ShooterGame extends BaseGame {
 		if (width > this.worldWidth) this.worldWidth = width;
 		if (height > this.worldHeight) this.worldHeight = height;
 		return { width: this.worldWidth, height: this.worldHeight };
+	}
+
+	// Blockchain integration methods
+	async saveGameResultToBlockchain(playerId) {
+		const player = this.players.get(playerId);
+		if (!player || !player.walletAddress || !player.gameOver) {
+			return null;
+		}
+
+		try {
+			// Prepare game result data
+			const gameResult = {
+				playerAddress: player.walletAddress,
+				finalScore: player.finalScore,
+				kills: player.kills,
+				deaths: player.deaths,
+				botKills: player.botKills,
+				gameType: 'shooter',
+				roomId: this.gameId,
+				timestamp: Date.now()
+			};
+
+			// Call blockchain API to save result
+			const response = await fetch('http://localhost:3001/api/blockchain/save-game-result', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(gameResult)
+			});
+
+			if (response.ok) {
+				const result = await response.json();
+				console.log('Game result saved to blockchain:', result);
+				return result;
+			} else {
+				console.error('Failed to save game result to blockchain:', response.statusText);
+				return null;
+			}
+		} catch (error) {
+			console.error('Error saving game result to blockchain:', error);
+			return null;
+		}
+	}
+
+	// Check if any player has game over
+	checkGameOver() {
+		for (const [, player] of this.players) {
+			if (player.gameOver) {
+				return {
+					gameOver: true,
+					player: player.getPlayerData(),
+					finalScore: player.finalScore
+				};
+			}
+		}
+		return { gameOver: false };
+	}
+
+	// Get game statistics for blockchain
+	getGameStats() {
+		const stats = {
+			totalPlayers: this.players.size,
+			totalKills: 0,
+			totalDeaths: 0,
+			totalBotKills: 0,
+			gameOverPlayers: 0
+		};
+
+		for (const [, player] of this.players) {
+			stats.totalKills += player.kills;
+			stats.totalDeaths += player.deaths;
+			stats.totalBotKills += player.botKills;
+			if (player.gameOver) {
+				stats.gameOverPlayers++;
+			}
+		}
+
+		return stats;
 	}
 }

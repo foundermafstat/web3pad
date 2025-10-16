@@ -2,7 +2,7 @@ import { createGame, GAME_TYPES } from './games/index.js';
 import GameSessionManager from './lib/game-session-manager.js';
 
 // Менеджер игровых комнат
-export class GameRoomManager {
+class GameRoomManager {
 	constructor() {
 		this.rooms = new Map(); // roomId -> { game, sockets: Set(), info: {} }
 		this.playerToRoom = new Map(); // playerId -> roomId
@@ -108,21 +108,29 @@ export class GameRoomManager {
 	}
 
 	// Присоединить игрока к комнате
-	joinRoom(roomId, socket, playerName) {
+	joinRoom(roomId, socket, playerName, walletAddress = null) {
 		const room = this.rooms.get(roomId);
 		if (!room) {
 			throw new Error(`Room ${roomId} not found`);
 		}
 
-		// Добавляем сокет в комнату
-		room.sockets.add(socket);
+		// Добавляем сокет в комнату (если еще не добавлен)
+		if (!room.sockets.has(socket)) {
+			room.sockets.add(socket);
+		}
 		this.playerToRoom.set(socket.id, roomId);
 
 		// Get userId from socket authentication (if available)
 		const userId = socket.user?.userId || null;
 
-		// Добавляем игрока в игру
-		const playerData = room.game.addPlayer(socket.id, playerName, userId);
+		// Проверяем, не добавлен ли уже игрок
+		if (room.game.players.has(socket.id)) {
+			console.log(`[GameRoomManager] Player ${playerName} already in room ${roomId}`);
+			return { room, playerData: room.game.players.get(socket.id).getPlayerData() };
+		}
+
+		// Добавляем игрока в игру с walletAddress
+		const playerData = room.game.addPlayer(socket.id, playerName, userId, walletAddress);
 
 		// Update room player count in database
 		if (room.info.hostUserId) {
@@ -130,7 +138,7 @@ export class GameRoomManager {
 				.catch(err => console.error('[GameRoomManager] Error updating player count:', err));
 		}
 
-		console.log(`[GameRoomManager] Player ${playerName} (${socket.id}) joined room ${roomId}, userId: ${userId || 'guest'}`);
+		console.log(`[GameRoomManager] Player ${playerName} (${socket.id}) joined room ${roomId}, userId: ${userId || 'guest'}, wallet: ${walletAddress || 'none'}`);
 		return { room, playerData };
 	}
 
@@ -191,13 +199,36 @@ export class GameRoomManager {
 		if (!room) return;
 
 		let lastUpdate = Date.now();
-		const intervalId = setInterval(() => {
+		const intervalId = setInterval(async () => {
 			const now = Date.now();
 			const deltaTime = (now - lastUpdate) / 1000;
 			lastUpdate = now;
 
 			// Обновляем состояние игры
 			room.game.update(deltaTime);
+
+			// Check for game over conditions (for shooter game)
+			if (room.game.gameType === 'shooter') {
+				const gameOverResult = room.game.checkGameOver();
+				if (gameOverResult.gameOver) {
+					// Save result to blockchain
+					try {
+						const blockchainResult = await room.game.saveGameResultToBlockchain(gameOverResult.player.id);
+						console.log(`[GameRoomManager] Game over for player ${gameOverResult.player.id}, blockchain result:`, blockchainResult);
+						
+						// Notify all players about game over
+						room.sockets.forEach((socket) => {
+							socket.emit('gameOver', {
+								player: gameOverResult.player,
+								finalScore: gameOverResult.finalScore,
+								blockchainResult: blockchainResult
+							});
+						});
+					} catch (error) {
+						console.error('[GameRoomManager] Error saving game result to blockchain:', error);
+					}
+				}
+			}
 
 			// Отправляем состояние всем игрокам в комнате
 			const gameState = room.game.getGameState();
@@ -291,3 +322,8 @@ export class GameRoomManager {
 		});
 	}
 }
+
+// Export singleton instance
+const gameRoomManager = new GameRoomManager();
+export default gameRoomManager;
+export { GameRoomManager };

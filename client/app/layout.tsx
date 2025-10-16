@@ -10,6 +10,7 @@ const tektur = Tektur({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
 	title: 'W3P - Web3Pad',
 	description:
 		'Transform any screen into an instant multiplayer arena. Your phone becomes the controller. No downloads. No installations. Just scan and play.',
@@ -51,9 +52,9 @@ export const metadata: Metadata = {
 };
 
 import { Providers } from './providers';
-import { Header } from '@/components/Header';
 import { auth } from '@/lib/auth';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
+import { DynamicHeader } from '@/components/DynamicHeader';
 
 export default async function RootLayout({
 	children,
@@ -72,7 +73,7 @@ export default async function RootLayout({
 			</head>
 			<body className={`${tektur.variable} antialiased`} suppressHydrationWarning>
 				<Providers session={session}>
-					<Header />
+					<DynamicHeader />
 					{children}
 					<PWAInstallPrompt />
 				</Providers>

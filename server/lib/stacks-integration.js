@@ -1,13 +1,5 @@
 import { STACKS_TESTNET } from '@stacks/network';
-import { 
-  broadcastTransaction, 
-  makeContractCall, 
-  AnchorMode, 
-  PostConditionMode,
-  createAssetInfo,
-  FungibleConditionCode,
-  makeStandardFungiblePostCondition
-} from '@stacks/transactions';
+import * as transactions from '@stacks/transactions';
 import { createHash, randomBytes } from 'crypto';
 import secp256k1 from 'secp256k1';
 
@@ -114,7 +106,7 @@ export class StacksIntegrationService {
       const expGained = Math.floor(gameResult.score / 10) + 1;
 
       // Create contract call
-      const contractCall = await makeContractCall({
+      const contractCall = await transactions.makeContractCall({
         contractAddress: this.shooterGameContractAddress,
         contractName: this.shooterGameContractName,
         functionName: 'report-result',
@@ -128,14 +120,14 @@ export class StacksIntegrationService {
           { type: 'optional', value: { type: 'buff', value: Buffer.from(JSON.stringify(gameResult.metadata || {})) } }
         ],
         network: this.network,
-        anchorMode: AnchorMode.Any,
-        postConditionMode: PostConditionMode.Allow,
+        anchorMode: transactions.AnchorMode.Any,
+        postConditionMode: transactions.PostConditionMode.Allow,
         fee: 1000, // 1000 microSTX fee
         senderKey: this.serverPrivateKey
       });
 
       // Broadcast transaction
-      const broadcastResult = await broadcastTransaction(contractCall, this.network);
+      const broadcastResult = await transactions.broadcastTransaction(contractCall, this.network);
       
       if (broadcastResult) {
         console.log(`[StacksIntegration] Game result submitted for session ${sessionId}:`, {
@@ -176,7 +168,7 @@ export class StacksIntegrationService {
       const sessionId = this.generateSessionId();
 
       // Create contract call to start session
-      const contractCall = await makeContractCall({
+      const contractCall = await transactions.makeContractCall({
         contractAddress: this.shooterGameContractAddress,
         contractName: this.shooterGameContractName,
         functionName: 'start-session',
@@ -185,14 +177,14 @@ export class StacksIntegrationService {
           { type: 'optional', value: nftTokenId ? { type: 'uint', value: nftTokenId.toString() } : null }
         ],
         network: this.network,
-        anchorMode: AnchorMode.Any,
-        postConditionMode: PostConditionMode.Allow,
+        anchorMode: transactions.AnchorMode.Any,
+        postConditionMode: transactions.PostConditionMode.Allow,
         fee: 500, // 500 microSTX fee
         senderKey: this.serverPrivateKey
       });
 
       // Broadcast transaction
-      const broadcastResult = await broadcastTransaction(contractCall, this.network);
+      const broadcastResult = await transactions.broadcastTransaction(contractCall, this.network);
       
       if (broadcastResult) {
         console.log(`[StacksIntegration] Game session started:`, {
@@ -230,7 +222,7 @@ export class StacksIntegrationService {
 
     try {
       // Create contract call to setup reward
-      const contractCall = await makeContractCall({
+      const contractCall = await transactions.makeContractCall({
         contractAddress: this.shooterGameContractAddress,
         contractName: this.shooterGameContractName,
         functionName: 'setup-reward',
@@ -240,14 +232,14 @@ export class StacksIntegrationService {
           { type: 'uint', value: rewardAmount.toString() }
         ],
         network: this.network,
-        anchorMode: AnchorMode.Any,
-        postConditionMode: PostConditionMode.Allow,
+        anchorMode: transactions.AnchorMode.Any,
+        postConditionMode: transactions.PostConditionMode.Allow,
         fee: 500, // 500 microSTX fee
         senderKey: this.serverPrivateKey
       });
 
       // Broadcast transaction
-      const broadcastResult = await broadcastTransaction(contractCall, this.network);
+      const broadcastResult = await transactions.broadcastTransaction(contractCall, this.network);
       
       if (broadcastResult) {
         console.log(`[StacksIntegration] Reward setup for session ${sessionId}:`, {
@@ -284,7 +276,7 @@ export class StacksIntegrationService {
 
     try {
       // Create contract call to register game module
-      const contractCall = await makeContractCall({
+      const contractCall = await transactions.makeContractCall({
         contractAddress: this.registryContractAddress,
         contractName: this.registryContractName,
         functionName: 'register-game-module',
@@ -298,14 +290,14 @@ export class StacksIntegrationService {
           { type: 'uint', value: moduleData.maxPlayers.toString() }
         ],
         network: this.network,
-        anchorMode: AnchorMode.Any,
-        postConditionMode: PostConditionMode.Allow,
+        anchorMode: transactions.AnchorMode.Any,
+        postConditionMode: transactions.PostConditionMode.Allow,
         fee: 2000, // 2000 microSTX fee
         senderKey: this.serverPrivateKey
       });
 
       // Broadcast transaction
-      const broadcastResult = await broadcastTransaction(contractCall, this.network);
+      const broadcastResult = await transactions.broadcastTransaction(contractCall, this.network);
       
       if (broadcastResult) {
         console.log(`[StacksIntegration] Game module registered:`, {

@@ -50,17 +50,17 @@ export default function HeroSection({ onCreateRoomClick }: HeroSectionProps) {
 
 					{/* Value Props */}
 					<div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-16">
-						<div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+						<div className="bg-background/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-background/10 transition-all duration-300">
 							<QrCode className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
 							<h3 className="text-xl font-bold text-white mb-2">Instant Connection</h3>
 							<p className="text-gray-300">Scan QR code with your phone camera and start playing immediately</p>
 						</div>
-						<div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+						<div className="bg-background/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-background/10 transition-all duration-300">
 							<Users className="w-12 h-12 text-purple-400 mx-auto mb-4" />
 							<h3 className="text-xl font-bold text-white mb-2">Up to 10 Players</h3>
 							<p className="text-gray-300">Play with friends and family on one screen simultaneously</p>
 						</div>
-						<div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+						<div className="bg-background/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-background/10 transition-all duration-300">
 							<Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
 							<h3 className="text-xl font-bold text-white mb-2">Zero Latency</h3>
 							<p className="text-gray-300">WebSocket technology ensures responsive controls like real gamepad</p>
@@ -82,7 +82,7 @@ export default function HeroSection({ onCreateRoomClick }: HeroSectionProps) {
 									document.getElementById('games-section')?.scrollIntoView({ behavior: 'smooth' });
 								}}
 								variant="outline"
-								className="border-white/30 text-white hover:bg-white/10 font-bold py-6 px-12 text-xl rounded-2xl backdrop-blur-xl"
+								className="border-white/30 text-white hover:bg-background/10 font-bold py-6 px-12 text-xl rounded-2xl backdrop-blur-xl"
 							>
 								<Target className="w-6 h-6 mr-3" />
 								Browse Games

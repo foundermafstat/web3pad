@@ -3,6 +3,7 @@ import Google from 'next-auth/providers/google';
 import GitHub from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
 import { isValidStacksAddress } from './leather';
+import { ENV_CONFIG } from '../env.config';
 
 export const authConfig: NextAuthConfig = {
 	trustHost: true,
@@ -28,7 +29,7 @@ export const authConfig: NextAuthConfig = {
 
 				try {
 					const response = await fetch(
-						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
+						`${ENV_CONFIG.SERVER_URL}/api/auth/login`,
 						{
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
@@ -77,9 +78,8 @@ export const authConfig: NextAuthConfig = {
 					});
 
 					// Verify signature on server
-					const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001';
 					const response = await fetch(
-						`${serverUrl}/api/auth/leather`,
+						`${ENV_CONFIG.SERVER_URL}/api/auth/leather`,
 						{
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
@@ -137,7 +137,7 @@ export const authConfig: NextAuthConfig = {
 				try {
 					// Register/login OAuth user on server
 					const response = await fetch(
-						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/oauth`,
+						`${ENV_CONFIG.SERVER_URL}/api/auth/oauth`,
 						{
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },

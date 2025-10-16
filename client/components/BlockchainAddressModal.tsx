@@ -45,7 +45,7 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
     e.preventDefault();
     
     if (!address.trim()) {
-      setError('Пожалуйста, введите адрес Stacks');
+      setError('Please enter a Stacks address');
       return;
     }
 
@@ -64,10 +64,10 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
         onAddressSet?.(address.trim(), result.data?.txId);
         onClose();
       } else {
-        setError(result.error || 'Ошибка при установке адреса');
+        setError(result.error || 'Error setting address');
       }
     } catch (error) {
-      setError('Произошла ошибка при подключении к серверу');
+      setError('Error connecting to server');
     } finally {
       setLoading(false);
     }
@@ -77,11 +77,11 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+      <div className=" rounded-lg shadow-xl max-w-md w-full">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">
-              Подключить блокчейн адрес
+              Connect Blockchain Address
             </h2>
             <button
               onClick={onClose}
@@ -95,7 +95,7 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
 
           <div className="mb-4">
             <p className="text-sm text-gray-600 mb-2">
-              Игрок: <span className="font-medium">{playerName}</span>
+              Player: <span className="font-medium">{playerName}</span>
             </p>
             {blockchainStatus && (
               <div className={`text-xs px-2 py-1 rounded ${
@@ -103,7 +103,7 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
                   ? 'bg-green-100 text-green-800' 
                   : 'bg-red-100 text-red-800'
               }`}>
-                Блокчейн: {blockchainStatus.enabled ? 'Подключен' : 'Отключен'}
+                Blockchain: {blockchainStatus.enabled ? 'Connected' : 'Disconnected'}
                 {blockchainStatus.enabled && (
                   <span className="ml-2">
                     ({blockchainStatus.network.includes('testnet') ? 'Testnet' : 'Mainnet'})
@@ -116,7 +116,7 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
           {!blockchainStatus?.enabled && (
             <div className="mb-4 p-3 bg-yellow-100 border border-yellow-400 rounded">
               <p className="text-sm text-yellow-800">
-                Блокчейн интеграция отключена. Результаты игр будут сохранены только локально.
+                Blockchain integration disabled. Game results will be saved locally only.
               </p>
             </div>
           )}
@@ -124,7 +124,7 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                Stacks адрес
+                Stacks Address
               </label>
               <input
                 type="text"
@@ -136,13 +136,13 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
                 disabled={loading}
               />
               <p className="text-xs text-gray-500 mt-1">
-                Введите ваш Stacks адрес для получения наград
+                Enter your Stacks address to receive rewards
               </p>
             </div>
 
             <div className="mb-4">
               <label htmlFor="nftTokenId" className="block text-sm font-medium text-gray-700 mb-2">
-                NFT Token ID (опционально)
+                NFT Token ID (optional)
               </label>
               <input
                 type="number"
@@ -154,7 +154,7 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
                 disabled={loading}
               />
               <p className="text-xs text-gray-500 mt-1">
-                Если у вас есть NFT для использования в игре
+                If you have an NFT to use in the game
               </p>
             </div>
 
@@ -171,14 +171,14 @@ const BlockchainAddressModal: React.FC<BlockchainAddressModalProps> = ({
                 className="flex-1 px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
                 disabled={loading}
               >
-                Отмена
+                Cancel
               </button>
               <button
                 type="submit"
                 className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
                 disabled={loading || !address.trim()}
               >
-                {loading ? 'Подключение...' : 'Подключить'}
+                {loading ? 'Connecting...' : 'Connect'}
               </button>
             </div>
           </form>

@@ -142,7 +142,7 @@ const RegistryInterface: React.FC<RegistryInterfaceProps> = ({ onModuleSelect })
 
   if (loading && modules.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="bg-background rounded-lg shadow-lg p-6">
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           <span className="ml-2 text-gray-600">Loading modules...</span>
@@ -152,7 +152,7 @@ const RegistryInterface: React.FC<RegistryInterfaceProps> = ({ onModuleSelect })
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg">
+    <div className="bg-background rounded-lg shadow-lg">
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
@@ -283,7 +283,7 @@ const RegistryInterface: React.FC<RegistryInterfaceProps> = ({ onModuleSelect })
       {/* Register Module Modal */}
       {showRegisterForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-background rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Register Game Module</h2>

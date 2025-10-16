@@ -17,6 +17,10 @@ const GameQRSheet = dynamic(
 	{ ssr: false }
 );
 
+const GameInterfaceHeader = dynamic(() => import('./GameInterfaceHeader'), {
+	ssr: false,
+});
+
 interface TestGyroGameScreenProps {
 	gameId: string;
 	gameType: string;
@@ -322,45 +326,15 @@ const TestGyroGameScreen: React.FC<TestGyroGameScreenProps> = ({
 	}
 
 	return (
-		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden">
-			{/* Header */}
-			<div className="bg-gray-800/90 backdrop-blur-sm px-4 py-2 flex items-center justify-between border-b border-gray-700/50 flex-shrink-0 z-10">
-				<button
-					onClick={onBack}
-					className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors text-sm"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					<span>Exit</span>
-				</button>
-
-				<div className="flex items-center space-x-4">
-					{/* Connection Status */}
-					<div className="flex items-center space-x-2">
-						{connectionStatus === 'connected' ? (
-							<Wifi className="w-4 h-4 text-green-400" />
-						) : (
-							<WifiOff className="w-4 h-4 text-red-400" />
-						)}
-					</div>
-
-					{/* Players */}
-					<div className="flex items-center space-x-2 text-sm">
-						<Users className="w-4 h-4 text-blue-400" />
-						<span className="text-white font-medium">
-							{connectedPlayers.length}
-						</span>
-					</div>
-
-					{/* QR Code Button */}
-					<button
-						onClick={() => setShowQRPopup(true)}
-						className="flex items-center space-x-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-sm"
-					>
-						<QrCode className="w-4 h-4" />
-						<span>Show QR</span>
-					</button>
-				</div>
-			</div>
+		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden pt-16">
+			{/* Game Interface Header */}
+			<GameInterfaceHeader
+				onBack={onBack}
+				connectionStatus={connectionStatus}
+				onShowQR={() => setShowQRPopup(true)}
+				gameType="gyrotest"
+				activePlayers={connectedPlayers.length}
+			/>
 
 			{/* Main Content */}
 			<div className="flex-1 flex overflow-hidden">

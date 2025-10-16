@@ -19,6 +19,10 @@ const GameQRSheet = dynamic(
 	{ ssr: false }
 );
 
+const GameInterfaceHeader = dynamic(() => import('./GameInterfaceHeader'), {
+	ssr: false,
+});
+
 interface Player {
 	id: string;
 	name: string;
@@ -268,7 +272,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 				{/* Question area */}
 				<div className="flex-1 flex items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
 					<div className="max-w-7xl w-full">
-						<div className="bg-white rounded-3xl p-12 shadow-2xl">
+						<div className="bg-background rounded-3xl p-12 shadow-2xl">
 							<h2 className="text-5xl font-bold text-gray-900 text-center leading-tight">
 								{question?.text}
 							</h2>
@@ -308,7 +312,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 				{/* Correct answer */}
 				<div className="flex-1 flex flex-col items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
 					<div className="max-w-7xl w-full mb-8">
-						<div className="bg-white rounded-3xl p-8 shadow-2xl mb-8">
+						<div className="bg-background rounded-3xl p-8 shadow-2xl mb-8">
 							<h3 className="text-3xl font-bold text-gray-900 text-center mb-4">
 								{question?.text}
 							</h3>
@@ -494,37 +498,20 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 	};
 
 	return (
-		<div className="relative w-full h-screen bg-gray-900">
-			{/* Header */}
-			<div className="absolute top-0 left-0 right-0 z-20 bg-gray-900 border-b-2 border-gray-700 shadow-lg">
-				<div className="flex items-center justify-between px-6 py-3 h-[50px]">
-					<button
-						onClick={onBack}
-						className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
-					>
-						<ArrowLeft size={20} />
-						<span>Back</span>
-					</button>
-
-					<div className="flex items-center gap-4">
-						{renderConnectionStatus()}
-						<div className="flex items-center gap-2 text-white">
-							<Users size={20} />
-							<span>{players.length}</span>
-						</div>
-						<button
-							onClick={() => setShowQRPopup(true)}
-							className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
-						>
-							<QrCode size={20} />
-							<span>QR Code</span>
-						</button>
-					</div>
-				</div>
+		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden pt-16">
+			{/* Game Interface Header */}
+			<div className="flex-shrink-0">
+				<GameInterfaceHeader
+					onBack={onBack}
+					connectionStatus={connectionStatus}
+					onShowQR={() => setShowQRPopup(true)}
+					gameType="quiz"
+					players={players}
+				/>
 			</div>
 
 			{/* Game content */}
-			<div className="absolute inset-0 pt-[50px]">{renderContent()}</div>
+			<div className="flex-1 overflow-hidden">{renderContent()}</div>
 
 			{/* QR Code Sheet */}
 			<GameQRSheet

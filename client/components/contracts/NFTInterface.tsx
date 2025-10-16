@@ -187,7 +187,7 @@ const NFTInterface: React.FC<NFTInterfaceProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg">
+    <div className="bg-background rounded-lg shadow-lg">
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
@@ -203,7 +203,7 @@ const NFTInterface: React.FC<NFTInterfaceProps> = ({
                 onClick={() => setViewMode('owned')}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
                   viewMode === 'owned'
-                    ? 'bg-white text-gray-900 shadow-sm'
+                    ? 'bg-background text-gray-900 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -213,7 +213,7 @@ const NFTInterface: React.FC<NFTInterfaceProps> = ({
                 onClick={() => setViewMode('all')}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
                   viewMode === 'all'
-                    ? 'bg-white text-gray-900 shadow-sm'
+                    ? 'bg-background text-gray-900 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -401,7 +401,7 @@ const NFTInterface: React.FC<NFTInterfaceProps> = ({
       {/* Create NFT Modal */}
       {showCreateForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-background rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Create NFT</h2>

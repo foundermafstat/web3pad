@@ -206,7 +206,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 	if (!isJoined) {
 		return (
 			<div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex flex-col items-center justify-center p-6">
-				<div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
+				<div className="bg-background rounded-3xl p-8 max-w-md w-full shadow-2xl">
 					<div className="flex justify-between items-center mb-6">
 						<h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
 							<Brain size={32} className="text-purple-600" />
@@ -306,7 +306,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 						className={`px-12 py-6 rounded-2xl font-bold text-2xl transition-all transform hover:scale-105 active:scale-95 ${
 							playerData?.ready
 								? 'bg-green-500 text-white'
-								: 'bg-white text-gray-900'
+								: 'bg-background text-gray-900'
 						}`}
 					>
 						{playerData?.ready ? (
@@ -373,7 +373,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 						{playerData?.avatar}
 					</div>
 
-					<div className="bg-white rounded-3xl p-8 max-w-md">
+					<div className="bg-background rounded-3xl p-8 max-w-md">
 						<div className="text-4xl font-bold text-gray-900 mb-2">
 							{playerData?.name}
 						</div>
@@ -451,7 +451,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 					</h1>
 
 					{gameState.question && (
-						<div className="bg-white rounded-2xl p-6 max-w-md w-full">
+						<div className="bg-background rounded-2xl p-6 max-w-md w-full">
 							<div className="text-lg font-semibold text-gray-900 mb-4 text-center">
 								Correct answer:
 							</div>
@@ -524,7 +524,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 
 			{/* Question and answers */}
 			<div className="flex-1 flex flex-col p-6">
-				<div className="bg-white rounded-2xl p-6 mb-6 shadow-2xl">
+				<div className="bg-background rounded-2xl p-6 mb-6 shadow-2xl">
 					<h2 className="text-2xl font-bold text-gray-900 text-center leading-tight">
 						{gameState.question?.text}
 					</h2>
@@ -544,7 +544,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 										? 'bg-blue-500 text-white scale-105'
 										: hasAnswered
 										? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-										: 'bg-white text-gray-900 hover:bg-gray-100'
+										: 'bg-background text-gray-900 hover:bg-gray-100'
 								}`}
 							>
 								<div className="flex items-center gap-4">

@@ -214,6 +214,27 @@ h1, h2, h3, h4, h5, h6 {
 	transform: scale(1.02);
 }
 
+/* Logo loading animation */
+.w3p-logo path {
+	transition: fill 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading state animation */
+.w3p-logo.loading {
+	animation: logoPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+	0%, 100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.7;
+		transform: scale(1.02);
+	}
+}
+
 /* Logo size variations */
 .w3p-logo-xs {
 	width: 40px;

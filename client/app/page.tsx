@@ -25,12 +25,17 @@ import {
 } from '@/components/landing';
 import { AllGamesPreloader } from '@/components/GamePreloader';
 import { ThemeLogo } from '@/components/ThemeLogo';
+import { useGlobalLoading } from '@/hooks/useGlobalLoading';
 
 export default function Home() {
 	const router = useRouter();
 	const { data: session, status } = useSession();
 	const [games, setGames] = useState<Record<string, GameInfo>>({});
 	const [loading, setLoading] = useState(true);
+	const { startLoading, stopLoading, isLoading: globalLoading } = useGlobalLoading();
+
+	// Debug logging
+	console.log('Home - local loading:', loading, 'global loading:', globalLoading);
 	const [error, setError] = useState<string | null>(null);
 	const [rooms, setRooms] = useState<Room[]>([]);
 	const [showCreateModal, setShowCreateModal] = useState(false);
@@ -40,8 +45,12 @@ export default function Home() {
 	const socketRef = useRef<Socket | null>(null);
 
 
+
 	// Load games list
 	useEffect(() => {
+		// Start global loading
+		startLoading();
+		
 		const apiUrl = ENV_CONFIG.IS_PRODUCTION
 			? `${window.location.protocol}//${window.location.host}/api/games`
 			: `http://${ENV_CONFIG.BASE_URL}:${ENV_CONFIG.SERVER_PORT}/api/games`;
@@ -54,13 +63,15 @@ export default function Home() {
 			.then((data) => {
 				setGames(data || {});
 				setLoading(false);
+				stopLoading();
 			})
 			.catch((error) => {
 				console.error('Error loading games:', error);
 				setError(error.message);
 				setLoading(false);
+				stopLoading();
 			});
-	}, []);
+	}, [startLoading, stopLoading]);
 
 	// Socket connection for real-time room updates
 	useEffect(() => {
@@ -207,7 +218,9 @@ export default function Home() {
 							<ThemeLogo 
 								width={120} 
 								height={78} 
-								color="#000000"
+								isLoading={true}
+								loadingColor="#000000"
+								loadedColor="#ffffff"
 								className="relative z-10 logo-animated"
 							/>
 						</div>
@@ -294,7 +307,7 @@ export default function Home() {
 				onCreateRoomClick={handleCreateRoomClick}
 				onPlayGame={startGame}
 			/>
-			<GamesSection games={games} startGame={startGame} />
+			{/* <GamesSection games={games} startGame={startGame} /> */}
 			
 			<div className="max-w-7xl mx-auto px-4 py-20 space-y-24">
 				<HowItWorksSection />

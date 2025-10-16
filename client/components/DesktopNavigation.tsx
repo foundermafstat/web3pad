@@ -32,6 +32,7 @@ import {
 	FileText
 } from 'lucide-react';
 import { ThemeLogo } from './ThemeLogo';
+import { useLoading } from '@/contexts/LoadingContext';
 
 // Games for navigation
 const games: { title: string; href: string; description: string; icon: React.ComponentType<{ className?: string }> }[] = [
@@ -98,6 +99,8 @@ function ListItem({
 }
 
 export function DesktopNavigation() {
+	const { isLoading } = useLoading();
+
 	return (
 		<NavigationMenu className="hidden md:flex" viewport={false}>
 			<NavigationMenuList>
@@ -113,7 +116,13 @@ export function DesktopNavigation() {
 										href="/about"
 									>
 										<div className="text-primary">
-											<ThemeLogo width={60} height={39} />
+											<ThemeLogo 
+												width={60} 
+												height={39} 
+												isLoading={isLoading}
+												loadingColor="#000000"
+												loadedColor="currentColor"
+											/>
 										</div>
 										
 										<div className="mt-2 mb-2 text-lg font-medium">

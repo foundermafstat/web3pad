@@ -297,14 +297,14 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 						</div>
 					</div>
 
-					<div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+					<div className="bg-background/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
 						<input
 							type="text"
 							value={playerName}
 							onChange={(e) => setPlayerName(e.target.value)}
 							onKeyPress={(e) => e.key === 'Enter' && joinGame()}
 							placeholder="Your name"
-							className="w-full bg-white/20 border border-white/30 rounded-md px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+							className="w-full bg-background/20 border border-white/30 rounded-md px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
 							maxLength={20}
 							autoFocus
 						/>
@@ -383,11 +383,11 @@ const RaceMobileController: React.FC<RaceMobileControllerProps> = ({
 					</div>
 					<div
 						ref={steeringRef}
-						className="relative w-full h-20 bg-white/10 backdrop-blur-lg border-4 border-white/30 rounded-full opacity-90 transition-all duration-200 touch-none select-none cursor-pointer"
+						className="relative w-full h-20 bg-background/10 backdrop-blur-lg border-4 border-white/30 rounded-full opacity-90 transition-all duration-200 touch-none select-none cursor-pointer"
 						onTouchStart={handleSteeringStart}
 						onMouseDown={handleSteeringStart}
 					>
-						<div className="absolute top-1/2 left-1/2 w-1 h-10 bg-white/30 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+						<div className="absolute top-1/2 left-1/2 w-1 h-10 bg-background/30 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 						<div
 							ref={steeringKnobRef}
 							className="absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-2xl border-4 border-white/60 pointer-events-none"

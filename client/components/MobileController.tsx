@@ -456,14 +456,14 @@ const MobileController: React.FC<MobileControllerProps> = ({
 						</div>
 					</div>
 
-					<div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+					<div className="bg-background/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
 						<input
 							type="text"
 							value={playerName}
 							onChange={(e) => setPlayerName(e.target.value)}
 							onKeyPress={(e) => e.key === 'Enter' && joinGame()}
 							placeholder="Your name"
-							className="w-full bg-white/20 border border-white/30 rounded-md px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+							className="w-full bg-background/20 border border-white/30 rounded-md px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
 							maxLength={20}
 							autoFocus
 						/>
@@ -595,12 +595,12 @@ const MobileController: React.FC<MobileControllerProps> = ({
 					<div className="relative">
 						<div
 							ref={joystickRef}
-							className="w-40 h-40 rounded-full bg-white/10 backdrop-blur-lg border-4 border-white/30 relative opacity-90 transition-all duration-200 touch-none select-none cursor-pointer"
+							className="w-40 h-40 rounded-full bg-background/10 backdrop-blur-lg border-4 border-white/30 relative opacity-90 transition-all duration-200 touch-none select-none cursor-pointer"
 							onTouchStart={handleJoystickStart}
 							onMouseDown={handleJoystickStart}
 						>
 							{/* Center dot */}
-							<div className="absolute top-1/2 left-1/2 w-3 h-3 bg-white/50 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+							<div className="absolute top-1/2 left-1/2 w-3 h-3 bg-background/50 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
 							{/* Joystick knob */}
 							<div

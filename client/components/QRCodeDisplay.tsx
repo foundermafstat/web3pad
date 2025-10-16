@@ -5,9 +5,10 @@ import QRCode from 'qrcode';
 
 interface QRCodeDisplayProps {
 	url: string;
+	size?: number;
 }
 
-const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url }) => {
+const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url, size = 200 }) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
@@ -16,7 +17,7 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url }) => {
 				canvasRef.current,
 				url,
 				{
-					width: 200,
+					width: size,
 					margin: 2,
 					color: {
 						dark: '#000000',
@@ -28,11 +29,11 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ url }) => {
 				}
 			);
 		}
-	}, [url]);
+	}, [url, size]);
 
 	return (
 		<div className="text-center">
-			<div className="inline-block p-4 bg-white rounded-md shadow-lg">
+			<div className="inline-block p-4 bg-background rounded-md shadow-lg">
 				<canvas ref={canvasRef} />
 			</div>
 			{/* <p className="text-gray-300 text-sm mt-3">

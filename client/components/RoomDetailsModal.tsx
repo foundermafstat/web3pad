@@ -102,7 +102,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 				<div className="relative bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8 rounded-t-2xl">
 					<button
 						onClick={handleClose}
-						className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-md"
+						className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-1 hover:bg-background/10 rounded-md"
 					>
 						<X className="w-6 h-6" />
 					</button>

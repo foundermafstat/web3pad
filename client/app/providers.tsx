@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, useEffect } from 'react';
 import { registerServiceWorker } from '@/lib/sw-register';
+import { LoadingProvider } from '@/contexts/LoadingContext';
 
 interface ProvidersProps {
 	children: ReactNode;
@@ -25,7 +26,9 @@ export function Providers({ children, session }: ProvidersProps) {
 				enableSystem={false}
 				disableTransitionOnChange
 			>
-				{children}
+				<LoadingProvider>
+					{children}
+				</LoadingProvider>
 			</ThemeProvider>
 		</SessionProvider>
 	);

@@ -24,17 +24,68 @@ const ContractsPage: React.FC = () => {
   const [blockchainStatus, setBlockchainStatus] = useState<BlockchainStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedContract, setSelectedContract] = useState<ContractInfo | null>(null);
+  const [contracts, setContracts] = useState<ContractInfo[]>([]);
+  const [networkInfo, setNetworkInfo] = useState({
+    network: 'Testnet',
+    deployedContracts: 0,
+    totalCost: '0.000000',
+    status: 'Unknown'
+  });
 
   useEffect(() => {
-    loadBlockchainStatus();
+    loadBlockchainData();
   }, []);
 
-  const loadBlockchainStatus = async () => {
+  const loadBlockchainData = async () => {
     try {
+      // Load blockchain status
       const status = await blockchainService.getStatus();
       setBlockchainStatus(status);
+
+      // Load game modules (contracts)
+      const modulesResponse = await blockchainService.getGameModules();
+      if (modulesResponse.success && modulesResponse.data) {
+        const contractList: ContractInfo[] = modulesResponse.data.map((module: any) => ({
+          name: module.name,
+          address: module.contractAddress,
+          cost: '0.000000', // This would come from deployment cost
+          status: 'Live' as const,
+          description: module.description,
+          category: 'registry' as const
+        }));
+        setContracts(contractList);
+        setNetworkInfo(prev => ({
+          ...prev,
+          deployedContracts: contractList.length,
+          status: contractList.length > 0 ? 'Live' : 'No Contracts'
+        }));
+      }
+
+      // Load FT tokens
+      const ftResponse = await blockchainService.getFTTokens();
+      if (ftResponse.success && ftResponse.data) {
+        const ftContracts: ContractInfo[] = ftResponse.data.map((token: any) => ({
+          name: token.name,
+          address: token.contractAddress,
+          cost: '0.000000',
+          status: 'Live' as const,
+          description: `FT Token: ${token.symbol}`,
+          category: 'ft' as const
+        }));
+        setContracts(prev => [...prev, ...ftContracts]);
+      }
+
+      // Update network info based on blockchain status
+      if (status) {
+        setNetworkInfo(prev => ({
+          ...prev,
+          network: status.network,
+          status: status.enabled ? 'Connected' : 'Disconnected'
+        }));
+      }
+
     } catch (error) {
-      console.error('Error loading blockchain status:', error);
+      console.error('Error loading blockchain data:', error);
     } finally {
       setLoading(false);
     }
@@ -69,37 +120,37 @@ const ContractsPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загрузка интерфейса контрактов...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading contracts interface...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-card shadow-sm border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-12">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">Управление контрактами</h1>
+              <h1 className="text-2xl font-bold text-foreground">Contract Management</h1>
               {blockchainStatus && (
                 <div className={`ml-4 px-3 py-1 rounded-full text-xs font-medium ${
                   blockchainStatus.enabled 
                     ? 'bg-green-100 text-green-800' 
                     : 'bg-red-100 text-red-800'
                 }`}>
-                  {blockchainStatus.enabled ? 'Блокчейн подключен' : 'Блокчейн отключен'}
+                  {blockchainStatus.enabled ? 'Blockchain Connected' : 'Blockchain Disconnected'}
                 </div>
               )}
             </div>
             <div className="flex items-center space-x-4">
               {session && (
-                <div className="text-sm text-gray-600">
-                  Подключен как: <span className="font-medium">{session.user?.email}</span>
+                <div className="text-sm text-muted-foreground">
+                  Connected as: <span className="font-medium">{session.user?.email}</span>
                 </div>
               )}
             </div>
@@ -108,11 +159,11 @@ const ContractsPage: React.FC = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-8">
             {[
-              { id: 'overview', name: 'Обзор', icon: '📋' },
+              { id: 'overview', name: 'Overview', icon: '📋' },
               { id: 'registry', name: 'Registry', icon: '📚' },
               { id: 'game', name: 'Shooter Game', icon: '🎮' },
               { id: 'nft', name: 'NFT', icon: '🖼️' },
@@ -123,8 +174,8 @@ const ContractsPage: React.FC = () => {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 }`}
               >
                 <span className="mr-2">{tab.icon}</span>
@@ -146,10 +197,10 @@ const ContractsPage: React.FC = () => {
               </svg>
               <div>
                 <h3 className="text-sm font-medium text-yellow-800">
-                  Блокчейн интеграция отключена
+                  Blockchain integration disabled
                 </h3>
                 <p className="text-sm text-yellow-700 mt-1">
-                  Некоторые функции могут быть недоступны. Проверьте настройки сервера.
+                  Some features may be unavailable. Check server settings.
                 </p>
               </div>
             </div>
@@ -161,24 +212,32 @@ const ContractsPage: React.FC = () => {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Network Information */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Информация о сети</h2>
+              <div className="bg-card rounded-lg shadow-lg p-6">
+                <h2 className="text-xl font-bold text-foreground mb-4">Network Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600">Testnet</div>
-                    <div className="text-sm text-gray-600">Сеть</div>
+                    <div className="text-3xl font-bold text-blue-600">{networkInfo.network}</div>
+                    <div className="text-sm text-muted-foreground">Network</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-green-600">4</div>
-                    <div className="text-sm text-gray-600">Задеплоенных контрактов</div>
+                    <div className="text-3xl font-bold text-green-600">{networkInfo.deployedContracts}</div>
+                    <div className="text-sm text-muted-foreground">Deployed Contracts</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-purple-600">0.460030</div>
-                    <div className="text-sm text-gray-600">Общая стоимость (STX)</div>
+                    <div className="text-3xl font-bold text-purple-600">{networkInfo.totalCost}</div>
+                    <div className="text-sm text-muted-foreground">Total Cost (STX)</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-yellow-600">Live</div>
-                    <div className="text-sm text-gray-600">Статус всех контрактов</div>
+                    <div className={`text-3xl font-bold ${
+                      networkInfo.status === 'Live' || networkInfo.status === 'Connected' 
+                        ? 'text-green-600' 
+                        : networkInfo.status === 'Disconnected' 
+                        ? 'text-red-600' 
+                        : 'text-yellow-600'
+                    }`}>
+                      {networkInfo.status}
+                    </div>
+                    <div className="text-sm text-muted-foreground">All Contracts Status</div>
                   </div>
                 </div>
               </div>
@@ -187,40 +246,40 @@ const ContractsPage: React.FC = () => {
               <ContractManager onContractSelect={handleContractSelect} />
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Быстрые действия</h2>
+              <div className="bg-card rounded-lg shadow-lg p-6">
+                <h2 className="text-xl font-bold text-foreground mb-4">Quick Actions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <button
                     onClick={() => setActiveTab('registry')}
-                    className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors text-left"
+                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
                   >
                     <div className="text-2xl mb-2">📚</div>
-                    <h3 className="font-semibold text-gray-900">Registry</h3>
-                    <p className="text-sm text-gray-600">Управление игровыми модулями</p>
+                    <h3 className="font-semibold text-foreground">Registry</h3>
+                    <p className="text-sm text-muted-foreground">Manage game modules</p>
                   </button>
                   <button
                     onClick={() => setActiveTab('game')}
-                    className="p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-colors text-left"
+                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
                   >
                     <div className="text-2xl mb-2">🎮</div>
-                    <h3 className="font-semibold text-gray-900">Shooter Game</h3>
-                    <p className="text-sm text-gray-600">Игровые сессии и результаты</p>
+                    <h3 className="font-semibold text-foreground">Shooter Game</h3>
+                    <p className="text-sm text-muted-foreground">Game sessions and results</p>
                   </button>
                   <button
                     onClick={() => setActiveTab('nft')}
-                    className="p-4 border-2 border-gray-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-colors text-left"
+                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
                   >
                     <div className="text-2xl mb-2">🖼️</div>
-                    <h3 className="font-semibold text-gray-900">NFT</h3>
-                    <p className="text-sm text-gray-600">Создание и управление NFT</p>
+                    <h3 className="font-semibold text-foreground">NFT</h3>
+                    <p className="text-sm text-muted-foreground">Create and manage NFTs</p>
                   </button>
                   <button
                     onClick={() => setActiveTab('ft')}
-                    className="p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-colors text-left"
+                    className="p-4 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-colors text-left"
                   >
                     <div className="text-2xl mb-2">🪙</div>
-                    <h3 className="font-semibold text-gray-900">FT Tokens</h3>
-                    <p className="text-sm text-gray-600">Токены и переводы</p>
+                    <h3 className="font-semibold text-foreground">FT Tokens</h3>
+                    <p className="text-sm text-muted-foreground">Tokens and transfers</p>
                   </button>
                 </div>
               </div>
@@ -246,28 +305,28 @@ const ContractsPage: React.FC = () => {
 
         {/* Selected Contract Info */}
         {selectedContract && (
-          <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-sm">
+          <div className="fixed bottom-4 right-4 bg-card rounded-lg shadow-lg border border-border p-4 max-w-sm">
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-semibold text-gray-900">{selectedContract.name}</h4>
+              <h4 className="font-semibold text-foreground">{selectedContract.name}</h4>
               <button
                 onClick={() => setSelectedContract(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-2">{selectedContract.description}</p>
+            <p className="text-sm text-muted-foreground mb-2">{selectedContract.description}</p>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">Адрес:</span>
-              <span className="font-mono text-gray-700">
+              <span className="text-muted-foreground">Address:</span>
+              <span className="font-mono text-foreground">
                 {selectedContract.address.split('.')[1]}
               </span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">Стоимость:</span>
-              <span className="text-gray-700">{selectedContract.cost}</span>
+              <span className="text-muted-foreground">Cost:</span>
+              <span className="text-foreground">{selectedContract.cost}</span>
             </div>
           </div>
         )}

@@ -228,6 +228,11 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
   };
 
   const totalValue = balances.reduce((sum, balance) => {
+    // Check if balance and token exist
+    if (!balance || !balance.token) {
+      return sum;
+    }
+    
     // Mock calculation - in real app this would use actual token values
     const tokenValue = balance.token.symbol === 'GGOLD' ? 0.01 : 
                       balance.token.symbol === 'XP' ? 0.005 : 0.1;
@@ -235,7 +240,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
   }, 0);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg">
+    <div className="bg-background rounded-lg shadow-lg">
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
@@ -251,7 +256,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
                 onClick={() => setViewMode('balances')}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
                   viewMode === 'balances'
-                    ? 'bg-white text-gray-900 shadow-sm'
+                    ? 'bg-background text-gray-900 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -261,7 +266,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
                 onClick={() => setViewMode('tokens')}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
                   viewMode === 'tokens'
-                    ? 'bg-white text-gray-900 shadow-sm'
+                    ? 'bg-background text-gray-900 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -307,7 +312,10 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">
-              {balances.reduce((sum, b) => sum + b.balance / Math.pow(10, b.token.decimals), 0).toFixed(0)}
+              {balances.reduce((sum, b) => {
+                if (!b || !b.token) return sum;
+                return sum + b.balance / Math.pow(10, b.token.decimals);
+              }, 0).toFixed(0)}
             </div>
             <div className="text-sm text-gray-600">Total Balance</div>
           </div>
@@ -359,7 +367,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
               token,
               balance: 0,
               owner: token.owner
-            }))).map((item) => (
+            }))).filter(item => item && item.token).map((item) => (
               <div
                 key={item.tokenId}
                 onClick={() => handleTokenSelect(item.token)}
@@ -458,7 +466,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
       {/* Create Token Modal */}
       {showCreateForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-background rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Create FT Token</h2>
@@ -586,7 +594,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
       {/* Transfer Modal */}
       {showTransferForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+          <div className="bg-background rounded-lg shadow-xl max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Transfer Tokens</h2>
@@ -612,7 +620,7 @@ const FTInterface: React.FC<FTInterfaceProps> = ({
                     required
                   >
                     <option value="">Select token</option>
-                    {balances.map((balance) => (
+                    {balances.filter(balance => balance && balance.token).map((balance) => (
                       <option key={balance.tokenId} value={balance.tokenId}>
                         {balance.token.name} ({balance.token.symbol}) - {formatBalance(balance.balance, balance.token.decimals)}
                       </option>

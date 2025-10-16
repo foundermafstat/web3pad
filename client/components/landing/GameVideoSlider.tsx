@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Users, Clock, Target, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Play, Users, Clock, Target, ChevronLeft, ChevronRight, Gamepad2, Zap, Trophy, Sword, Puzzle, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { GameInfo } from './types';
+import QRCodeDisplay from '@/components/QRCodeDisplay';
 
 interface GameVideoSliderProps {
 	games: Record<string, GameInfo>;
@@ -58,6 +59,19 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 	const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 	const startTimeRef = useRef<number>(Date.now());
+
+	// Function to get game icon based on game type
+	const getGameIcon = (gameId: string) => {
+		const iconMap: Record<string, React.ReactNode> = {
+			'quiz': <Puzzle className="w-4 h-4" />,
+			'race': <Car className="w-4 h-4" />,
+			'shooter': <Target className="w-4 h-4" />,
+			'tower-defence': <Sword className="w-4 h-4" />,
+			'gyro-test': <Zap className="w-4 h-4" />,
+			'default': <Gamepad2 className="w-4 h-4" />
+		};
+		return iconMap[gameId] || iconMap['default'];
+	};
 	
 	const totalSlides = gameSlides.length;
 
@@ -181,6 +195,12 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 		onPlayGame(gameId);
 	};
 
+	// Generate game URL for QR code
+	const generateGameUrl = (gameId: string) => {
+		const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+		return `${baseUrl}/game?type=${gameId}`;
+	};
+
 	// Touch handlers for mobile swipe
 	const minSwipeDistance = 50;
 
@@ -225,7 +245,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 
 	return (
 		<div 
-			className="group  w-full h-full overflow-hidden"
+			className="group w-full h-screen overflow-hidden"
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 			onTouchStart={onTouchStart}
@@ -241,7 +261,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 					}`}
 				>
 					{/* Background - Gradient Fallback */}
-					<div className={`absolute inset-0 w-full h-full bg-gradient-to-br ${slide.gradient.replace('/90', '').replace('/80', '').replace('/70', '')}`} />
+					<div className={`absolute inset-0 w-full h-full bg-gradient-to-br ${slide.gradient.replace('/70', '').replace('/50', '').replace('/30', '')}`} />
 					
 					{/* Video Background (overlay on gradient) */}
 					<video
@@ -266,7 +286,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 						{[...Array(8)].map((_, i) => (
 							<div
 								key={i}
-								className="absolute w-2 h-2 bg-white/20 rounded-full animate-bounce"
+								className="absolute w-2 h-2 bg-background/20 rounded-full animate-bounce"
 								style={{
 									left: `${Math.random() * 100}%`,
 									top: `${Math.random() * 100}%`,
@@ -292,35 +312,35 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 					</div>
 
 					{/* Darkening Gradient Overlay */}
-					<div className="absolute inset-0 bg-gradient-to-tr from-background via-gray-800/80 to-transparent z-10" />
+					<div className="absolute inset-0 bg-gradient-to-tr from-background via-gray-800/50 to-transparent z-10" />
 				</div>
 			))}
 
 			{/* Navigation Arrows */}
 			<button
 				onClick={prevSlide}
-				className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 backdrop-blur-md text-white p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all duration-300 opacity-60 sm:opacity-0 group-hover:opacity-100 touch-manipulation"
+				className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 z-30 bg-background/20 backdrop-blur-md text-white p-2 sm:p-3 rounded-full hover:bg-background/30 transition-all duration-300 opacity-60 sm:opacity-0 group-hover:opacity-100 touch-manipulation"
 				aria-label="Previous slide"
 			>
 				<ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
 			</button>
 			<button
 				onClick={nextSlide}
-				className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 backdrop-blur-md text-white p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all duration-300 opacity-60 sm:opacity-0 group-hover:opacity-100 touch-manipulation"
+				className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 z-30 bg-background/20 backdrop-blur-md text-white p-2 sm:p-3 rounded-full hover:bg-background/30 transition-all duration-300 opacity-60 sm:opacity-0 group-hover:opacity-100 touch-manipulation"
 				aria-label="Next slide"
 			>
 				<ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
 			</button>
 
 			{/* Main Content */}
-			<div className="relative z-20 h-full flex items-end justify-start">
-				<div className="max-w-4xl px-6 sm:px-8 lg:px-28 py-12 sm:py-16 lg:py-36 text-left">
-					<div className="space-y-6 sm:space-y-8">
+			<div className="relative z-20 h-full flex items-end justify-between">
+				<div className="max-w-4xl px-6 sm:px-8 lg:px-28 pb-12 sm:pb-16 lg:pb-20 text-left">
+					<div className="space-y-4 sm:space-y-6">
 						{/* Game Icon and Title */}
 						<div className="space-y-4 sm:space-y-6">
 							
 							
-							<h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+							<h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-6xl font-black text-white tracking-tight leading-tight">
 								{currentGameSlide.name}
 							</h1>
 							
@@ -330,24 +350,24 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 						</div>
 
 						{/* Game Stats */}
-						<div className="flex flex-wrap items-center gap-2 sm:gap-3">
-							<Badge className="bg-white/20 backdrop-blur-md text-white border-white/30 px-3 py-2 text-sm">
-								<Users className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+						<div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+							<Badge className="bg-background/20 backdrop-blur-md text-white border-white/30 px-2 py-1 text-xs">
+								<Users className="w-3 h-3 mr-1" />
 								<span className="hidden sm:inline">{currentGameSlide.minPlayers}-{currentGameSlide.maxPlayers} players</span>
 								<span className="sm:hidden">{currentGameSlide.minPlayers}-{currentGameSlide.maxPlayers}</span>
 							</Badge>
-							<Badge className="bg-white/20 backdrop-blur-md text-white border-white/30 px-3 py-2 text-sm">
-								<Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+							<Badge className="bg-background/20 backdrop-blur-md text-white border-white/30 px-2 py-1 text-xs">
+								<Clock className="w-3 h-3 mr-1" />
 								{currentGameSlide.playTime}
 							</Badge>
 						</div>
 
 						{/* Features */}
-						<div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 max-w-lg">
+						<div className="flex flex-wrap gap-1.5 max-w-lg">
 							{currentGameSlide.features.slice(0, 6).map((feature, index) => (
 								<div 
 									key={index}
-									className="bg-white/10 backdrop-blur-md border border-white/20 rounded-md p-2 sm:p-3 text-white text-xs sm:text-sm font-medium hover:bg-white/20 transition-all duration-300 text-center"
+									className="bg-background/5 border border-white/10 rounded-md px-2 py-1 text-white/80 text-xs font-medium"
 								>
 									{feature}
 								</div>
@@ -359,7 +379,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 							<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
 								<Button
 									onClick={onCreateRoomClick}
-									className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 hover:from-cyan-400 hover:via-blue-400 hover:to-purple-400 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-md hover:scale-105"
+									className="bg-background hover:bg-background/90 text-white py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-md hover:scale-105"
 								>
 									<Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
 									Create Room
@@ -367,7 +387,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 								<Button
 									onClick={() => handlePlayGame(currentGameSlide.id)}
 									variant="outline"
-									className="border-white/50 text-white hover:bg-white/20 backdrop-blur-md font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg rounded-md"
+									className="border-white/50 text-white hover:bg-background/20 backdrop-blur-md py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg rounded-md hover:scale-105 transition-all duration-300"
 								>
 									<Target className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
 									Quick Play
@@ -376,55 +396,43 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 						</div>
 					</div>
 				</div>
+
+				{/* QR Code - Right side */}
+				<div className="hidden lg:flex items-end pb-12 sm:pb-16 lg:pb-20 pr-6 sm:pr-8 lg:pr-28">
+					<div className="bg-background/10 backdrop-blur-md rounded-lg p-4 shadow-2xl">
+						<QRCodeDisplay 
+							url={generateGameUrl(currentGameSlide.id)} 
+							size={250}
+						/>
+						<p className="text-white/80 text-sm text-center mt-2 font-medium">
+							Scan to play
+						</p>
+					</div>
+				</div>
 			</div>
 
-			{/* Slide Thumbnails and Progress */}
+			{/* Slide Thumbnails */}
 			<div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm sm:w-auto px-4">
-				<div className="flex items-center justify-center space-x-2 sm:space-x-4 bg-black/30 backdrop-blur-md rounded-md sm:rounded-2xl px-3 sm:px-6 py-3 sm:py-4 overflow-x-auto sm:overflow-visible">
+				<div className="flex items-center justify-center space-x-2 sm:space-x-3 overflow-x-auto sm:overflow-visible">
 					{gameSlides.map((slide, index) => (
 						<button
 							key={slide.id}
 							onClick={() => goToSlide(index)}
-							className={`relative flex items-center space-x-2 sm:space-x-3 px-2 sm:px-4 py-2 rounded-md sm:rounded-md transition-all duration-300 flex-shrink-0 ${
+							className={`flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-300 flex-shrink-0 ${
 								index === currentSlide
-									? 'bg-white/30 text-white scale-110'
-									: 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+									? 'bg-background/20 text-white'
+									: 'bg-gray-500/20 text-gray-300 hover:bg-gray-500/30 hover:text-gray-200'
 							}`}
 						>
-							<span className="text-base sm:text-lg">{slide.icon}</span>
+							<div className={index === currentSlide ? 'text-white' : 'text-gray-300'}>
+								{getGameIcon(slide.id)}
+							</div>
 							<span className="text-xs sm:text-sm font-medium hidden lg:block">{slide.name}</span>
-							
-							{/* Progress Bar for Active Slide */}
-							{index === currentSlide && (
-								<div className="absolute bottom-0 left-0 h-1 bg-white/20 rounded-full overflow-hidden w-full">
-									<div 
-										className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-100 ease-linear rounded-full"
-										style={{ width: `${progress}%` }}
-									/>
-								</div>
-							)}
 						</button>
 					))}
 				</div>
 			</div>
 
-			{/* Play/Pause Control */}
-			<div className="absolute top-4 sm:top-8 right-4 sm:right-8 z-30">
-				<button
-					onClick={() => setIsPlaying(!isPlaying)}
-					className="bg-white/20 backdrop-blur-md text-white p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all duration-300 touch-manipulation"
-					aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
-				>
-					{isPlaying ? (
-						<div className="w-3 h-3 sm:w-4 sm:h-4 flex space-x-1">
-							<div className="w-1 h-3 sm:h-4 bg-white rounded-full" />
-							<div className="w-1 h-3 sm:h-4 bg-white rounded-full" />
-						</div>
-					) : (
-						<Play className="w-3 h-3 sm:w-4 sm:h-4" />
-					)}
-				</button>
-			</div>
 		</div>
 	);
 }

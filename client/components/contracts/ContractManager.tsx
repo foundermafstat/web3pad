@@ -17,56 +17,92 @@ interface ContractManagerProps {
 }
 
 const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) => {
-  const [contracts, setContracts] = useState<ContractInfo[]>([
-    {
-      name: 'Registry',
-      address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.registry',
-      cost: '0.188320 STX',
-      status: 'Live',
-      description: 'Game modules registry and system management',
-      category: 'registry'
-    },
-    {
-      name: 'Shooter Game',
-      address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.shooter-game',
-      cost: '0.178630 STX',
-      status: 'Live',
-      description: 'Main contract for Shooter game with reward system',
-      category: 'game'
-    },
-    {
-      name: 'NFT Trait',
-      address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.nft-trait',
-      cost: '0.042250 STX',
-      status: 'Live',
-      description: 'NFT standard for game items and characters',
-      category: 'nft'
-    },
-    {
-      name: 'FT Trait',
-      address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.ft-trait',
-      cost: '0.050830 STX',
-      status: 'Live',
-      description: 'FT token standard for game currency',
-      category: 'ft'
-    }
-  ]);
+  const [contracts, setContracts] = useState<ContractInfo[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedContract, setSelectedContract] = useState<ContractInfo | null>(null);
   const [blockchainStatus, setBlockchainStatus] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadBlockchainStatus();
+    loadContractData();
   }, []);
 
-  const loadBlockchainStatus = async () => {
+  const loadContractData = async () => {
     setLoading(true);
     try {
+      // Load blockchain status
       const status = await blockchainService.getStatus();
       setBlockchainStatus(status);
+
+      // Load game modules
+      const modulesResponse = await blockchainService.getGameModules();
+      if (modulesResponse.success && modulesResponse.data) {
+        const moduleContracts: ContractInfo[] = modulesResponse.data.map((module: any) => ({
+          name: module.name,
+          address: module.contractAddress,
+          cost: '0.000000', // Would come from deployment data
+          status: 'Live' as const,
+          description: module.description,
+          category: 'registry' as const
+        }));
+        setContracts(prev => [...prev, ...moduleContracts]);
+      }
+
+      // Load FT tokens
+      const ftResponse = await blockchainService.getFTTokens();
+      if (ftResponse.success && ftResponse.data) {
+        const ftContracts: ContractInfo[] = ftResponse.data.map((token: any) => ({
+          name: token.name,
+          address: token.contractAddress,
+          cost: '0.000000',
+          status: 'Live' as const,
+          description: `FT Token: ${token.symbol}`,
+          category: 'ft' as const
+        }));
+        setContracts(prev => [...prev, ...ftContracts]);
+      }
+
+      // Add standard contracts if blockchain is enabled
+      if (status?.enabled) {
+        const standardContracts: ContractInfo[] = [
+          {
+            name: 'Registry',
+            address: status.registryContract || 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.registry',
+            cost: '0.188320 STX',
+            status: 'Live',
+            description: 'Game modules registry and system management',
+            category: 'registry'
+          },
+          {
+            name: 'Shooter Game',
+            address: status.shooterContract || 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.shooter-game',
+            cost: '0.178630 STX',
+            status: 'Live',
+            description: 'Main contract for Shooter game with reward system',
+            category: 'game'
+          },
+          {
+            name: 'NFT Trait',
+            address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.nft-trait',
+            cost: '0.042250 STX',
+            status: 'Live',
+            description: 'NFT standard for game items and characters',
+            category: 'nft'
+          },
+          {
+            name: 'FT Trait',
+            address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.ft-trait',
+            cost: '0.050830 STX',
+            status: 'Live',
+            description: 'FT token standard for game currency',
+            category: 'ft'
+          }
+        ];
+        setContracts(prev => [...prev, ...standardContracts]);
+      }
+
     } catch (error) {
-      console.error('Error loading blockchain status:', error);
+      console.error('Error loading contract data:', error);
     } finally {
       setLoading(false);
     }
@@ -143,23 +179,23 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="bg-card rounded-lg shadow-lg p-6">
         <div className="flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-2 text-gray-600">Loading contract status...</span>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <span className="ml-2 text-muted-foreground">Loading contract status...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg">
+    <div className="bg-card rounded-lg shadow-lg">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-200">
+      <div className="px-6 py-4 border-b border-border">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Contract Management</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <h2 className="text-xl font-bold text-foreground">Contract Management</h2>
+            <p className="text-sm text-muted-foreground mt-1">
               Interaction with deployed contracts in Stacks Testnet
             </p>
           </div>

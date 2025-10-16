@@ -41,7 +41,7 @@ export function LeatherAuthButton({ onSuccess, onError, variant = 'default' }: L
 			console.log('[LeatherAuth] Connected to Stacks wallet:', address);
 
 			// Create message to sign
-			const message = `Sign in to OSG Game Platform\n\nStacks Address: ${address}\nTimestamp: ${Date.now()}`;
+			const message = `Sign in to W3P Game Platform\n\nStacks Address: ${address}\nTimestamp: ${Date.now()}`;
 			
 			// Sign message
 			const signature = await signMessage(message);

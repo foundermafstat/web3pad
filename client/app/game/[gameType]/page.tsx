@@ -20,6 +20,10 @@ const GameQRSheet = dynamic(
 	{ ssr: false }
 );
 
+const GameInterfaceHeader = dynamic(() => import('@/components/GameInterfaceHeader'), {
+	ssr: false,
+});
+
 // Dynamic imports to prevent SSR issues
 const GameScreen = dynamic(() => import('@/components/GameScreen'), {
 	ssr: false,
@@ -833,53 +837,16 @@ export default function GamePage({ params }: PageProps) {
 	}
 
 	return (
-		<div className=" w-full h-full flex flex-col overflow-hidden">
-			{/* Header */}
-			<div className=" px-4 py-2 flex items-center justify-between border-b border-gray-700/50 flex-shrink-0 z-10 mt-10">
-				<button
-					onClick={() => (window.location.href = '/')}
-					className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors text-sm"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					<span>Exit</span>
-				</button>
-
-				<div className="flex items-center space-x-4 text-sm">
-					<div className="flex items-center space-x-1">
-						{connectionStatus === 'connected' ? (
-							<Wifi className="w-4 h-4 text-green-400" />
-						) : (
-							<WifiOff className="w-4 h-4 text-red-400" />
-						)}
-						<span
-							className={
-								connectionStatus === 'connected'
-									? 'text-green-400'
-									: 'text-red-400'
-							}
-						>
-							{connectionStatus}
-						</span>
-					</div>
-					<div className="flex items-center space-x-1 text-green-400">
-						<Users className="w-4 h-4" />
-						<span>{gameStats.activePlayers}</span>
-					</div>
-					{resolvedParams.gameType === 'shooter' && (
-						<div className="flex items-center space-x-1 text-yellow-400">
-							<Zap className="w-4 h-4" />
-							<span>{gameStats.totalKills}</span>
-						</div>
-					)}
-					<button
-						onClick={() => setShowQRPopup(true)}
-						className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
-					>
-						<QrCode className="w-4 h-4" />
-						<span>Connect</span>
-					</button>
-				</div>
-			</div>
+		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden pt-16">
+			{/* Game Interface Header */}
+			<GameInterfaceHeader
+				onBack={() => (window.location.href = '/')}
+				connectionStatus={connectionStatus}
+				onShowQR={() => setShowQRPopup(true)}
+				gameType={resolvedParams.gameType}
+				activePlayers={gameStats.activePlayers}
+				totalKills={gameStats.totalKills}
+			/>
 
 			{/* Canvas Container */}
 			<div className="flex-1 relative bg-gray-900" style={{ minHeight: 0 }}>

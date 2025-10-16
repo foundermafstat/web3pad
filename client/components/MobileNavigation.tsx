@@ -145,7 +145,7 @@ export function MobileNavigation() {
 				<SheetHeader className="p-6 pb-4">
 					<div className="flex items-center justify-between">
 						<div>
-							<SheetTitle className="text-lg font-bold">OSG Platform</SheetTitle>
+							<SheetTitle className="text-lg font-bold">W3P Platform</SheetTitle>
 							<SheetDescription className="text-sm">
 								Gaming platform with mobile controller technology
 							</SheetDescription>

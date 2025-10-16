@@ -8,7 +8,7 @@
       "minPlayers": 1,
       "maxPlayers": 10,
       "icon": "🎯",
-      "videoUrl": "/videos/game01.mp4",
+      "videoUrl": "/videos/game05.mp4",
       "posterUrl": "/images/games/shooter-poster.jpg",
       "gradient": "from-red-900/90 via-orange-800/80 to-yellow-700/70",
       "features": [
@@ -42,7 +42,7 @@
       "minPlayers": 1,
       "maxPlayers": 8,
       "icon": "🏎️",
-      "videoUrl": "/videos/game02.mp4", 
+      "videoUrl": "/videos/game06.mp4", 
       "posterUrl": "/images/games/race-poster.jpg",
       "gradient": "from-blue-900/90 via-cyan-800/80 to-teal-700/70",
       "features": [
@@ -68,40 +68,7 @@
         "Boost system"
       ]
     },
-    {
-      "id": "towerdefence", 
-      "name": "Tower Defence",
-      "shortDescription": "Defend your castle from waves of enemies with strategic tower placement",
-      "description": "Strategically place towers and defend your castle from enemy waves. Upgrade towers and create an impenetrable defense system!",
-      "minPlayers": 1,
-      "maxPlayers": 4,
-      "icon": "🏰",
-      "videoUrl": "/videos/game03.mp4",
-      "posterUrl": "/images/games/towerdefence-poster.jpg", 
-      "gradient": "from-purple-900/90 via-indigo-800/80 to-blue-700/70",
-      "features": [
-        "Tower upgrades",
-        "Enemy waves",
-        "Strategy",
-        "Up to 4 players"
-      ],
-      "playTime": "10-20 min", 
-      "duration": 10000,
-      "difficulty": "Hard",
-      "category": "Strategy",
-      "controls": [
-        "Tap to place towers",
-        "Drag to upgrade", 
-        "Strategy planning"
-      ],
-      "gameMode": "Co-op Defense",
-      "specialFeatures": [
-        "Multiple tower types",
-        "Wave progression",
-        "Cooperative gameplay",
-        "Resource management"
-      ]
-    },
+    
     {
       "id": "quiz",
       "name": "Quiz Battle", 
@@ -110,7 +77,7 @@
       "minPlayers": 2,
       "maxPlayers": 8,
       "icon": "🧠",
-      "videoUrl": "/videos/game04.mp4",
+      "videoUrl": "/videos/game07.mp4",
       "posterUrl": "/images/games/quiz-poster.jpg",
       "gradient": "from-green-900/90 via-emerald-800/80 to-teal-700/70", 
       "features": [
@@ -134,6 +101,40 @@
         "Difficulty scaling", 
         "Speed bonuses",
         "Real-time scoring"
+      ]
+    },
+    {
+      "id": "towerdefence", 
+      "name": "Tower Defence",
+      "shortDescription": "Defend your castle from waves of enemies with strategic tower placement",
+      "description": "Strategically place towers and defend your castle from enemy waves. Upgrade towers and create an impenetrable defense system!",
+      "minPlayers": 1,
+      "maxPlayers": 4,
+      "icon": "🏰",
+      "videoUrl": "/videos/game08.mp4",
+      "posterUrl": "/images/games/towerdefence-poster.jpg", 
+      "gradient": "from-purple-900/90 via-indigo-800/80 to-blue-700/70",
+      "features": [
+        "Tower upgrades",
+        "Enemy waves",
+        "Strategy",
+        "Up to 4 players"
+      ],
+      "playTime": "10-20 min", 
+      "duration": 10000,
+      "difficulty": "Hard",
+      "category": "Strategy",
+      "controls": [
+        "Tap to place towers",
+        "Drag to upgrade", 
+        "Strategy planning"
+      ],
+      "gameMode": "Co-op Defense",
+      "specialFeatures": [
+        "Multiple tower types",
+        "Wave progression",
+        "Cooperative gameplay",
+        "Resource management"
       ]
     }
   ],

@@ -55,7 +55,7 @@ export function StacksWalletAuth({ onSuccess, onError, className }: StacksWallet
 				throw new Error('Server is not running. Please start the server on port 3001.');
 			}
 			// Generate challenge message
-			const challenge = `Sign this message to authenticate with OSG Platform:\nNonce: ${Math.random().toString(36).substring(7)}\nTime: ${Date.now()}`;
+			const challenge = `Sign this message to authenticate with W3P Platform:\nNonce: ${Math.random().toString(36).substring(7)}\nTime: ${Date.now()}`;
 			
 			console.log('[StacksWalletAuth] Starting authentication...', {
 				address,

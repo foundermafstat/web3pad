@@ -12,6 +12,10 @@ const GameQRSheet = dynamic(
 	{ ssr: false }
 );
 
+const GameInterfaceHeader = dynamic(() => import('./GameInterfaceHeader'), {
+	ssr: false,
+});
+
 interface Player {
 	id: string;
 	name: string;
@@ -1093,51 +1097,16 @@ const GameScreen: React.FC<GameScreenProps> = ({
 	}, [gameType, gameId]);
 
 	return (
-		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden z-50">
-			{/* Minimal Header */}
-			<div className="bg-gray-800/90 backdrop-blur-sm px-4 py-2 flex items-center justify-between border-b border-gray-700/50 flex-shrink-0 z-10">
-				<button
-					onClick={onBack}
-					className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors text-sm"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					<span>Exit</span>
-				</button>
-
-				<div className="flex items-center space-x-4 text-sm">
-					<div className="flex items-center space-x-1">
-						{connectionStatus === 'connected' ? (
-							<Wifi className="w-4 h-4 text-green-400" />
-						) : (
-							<WifiOff className="w-4 h-4 text-red-400" />
-						)}
-						<span
-							className={
-								connectionStatus === 'connected'
-									? 'text-green-400'
-									: 'text-red-400'
-							}
-						>
-							{connectionStatus}
-						</span>
-					</div>
-					<div className="flex items-center space-x-1 text-green-400">
-						<Users className="w-4 h-4" />
-						<span>{gameStats.activePlayers}</span>
-					</div>
-					<div className="flex items-center space-x-1 text-yellow-400">
-						<Zap className="w-4 h-4" />
-						<span>{gameStats.totalKills}</span>
-					</div>
-					<button
-						onClick={() => setShowQRPopup(true)}
-						className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
-					>
-						<QrCode className="w-4 h-4" />
-						<span>Connect</span>
-					</button>
-				</div>
-			</div>
+		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden pt-16 z-50">
+			{/* Game Interface Header */}
+			<GameInterfaceHeader
+				onBack={onBack}
+				connectionStatus={connectionStatus}
+				onShowQR={() => setShowQRPopup(true)}
+				gameType={gameType}
+				activePlayers={gameStats.activePlayers}
+				totalKills={gameStats.totalKills}
+			/>
 
 			{/* Game Canvas - Full Screen */}
 			<div

@@ -167,7 +167,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 					</div>
 					<button
 						onClick={onClose}
-						className="text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-md"
+						className="text-white/80 hover:text-white transition-colors p-1 hover:bg-background/10 rounded-md"
 					>
 						<X className="w-6 h-6" />
 					</button>

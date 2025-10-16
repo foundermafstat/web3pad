@@ -222,7 +222,7 @@ function PodiumCard({ player, position, color }: any) {
 					}}
 				/>
 			) : null}
-			<div className={`w-16 h-16 rounded-sm mx-auto mb-3 border-2 border-white bg-white/20 flex items-center justify-center text-2xl font-bold ${player.avatar ? 'hidden' : ''}`}>
+			<div className={`w-16 h-16 rounded-sm mx-auto mb-3 border-2 border-white bg-background/20 flex items-center justify-center text-2xl font-bold ${player.avatar ? 'hidden' : ''}`}>
 				{player.displayName[0]}
 			</div>
 			<div className="font-bold text-lg mb-1">{player.displayName}</div>

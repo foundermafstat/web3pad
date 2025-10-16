@@ -26,23 +26,31 @@ export function GamePreloader({
     // Preload images first (smaller)
     const preloadImages = async () => {
       for (const url of imageUrls) {
-        await preloadResource(url);
+        try {
+          await preloadResource(url);
+        } catch (error) {
+          console.warn(`Failed to preload image: ${url}`, error);
+        }
       }
     };
 
     // Preload videos (larger, do it later)
     const preloadVideos = async () => {
       for (const url of videoUrls) {
-        // For large files, only preload if user is on WiFi or has good connection
-        if ('connection' in navigator) {
-          const conn = (navigator as any).connection;
-          // Skip video preload on slow connections
-          if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
-            console.log('[Preloader] Skipping video preload on slow connection');
-            continue;
+        try {
+          // For large files, only preload if user is on WiFi or has good connection
+          if ('connection' in navigator) {
+            const conn = (navigator as any).connection;
+            // Skip video preload on slow connections
+            if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
+              console.log('[Preloader] Skipping video preload on slow connection');
+              continue;
+            }
           }
+          await preloadResource(url);
+        } catch (error) {
+          console.warn(`Failed to preload video: ${url}`, error);
         }
-        await preloadResource(url);
       }
     };
 
@@ -73,11 +81,16 @@ export function GamePreloader({
 
 // Predefined preloader for all game videos
 export function AllGamesPreloader() {
+  // Only preload files that we know exist
   const gameVideos = [
     '/videos/game01.mp4',
     '/videos/game02.mp4',
     '/videos/game03.mp4',
     '/videos/game04.mp4',
+    '/videos/game05.mp4',
+    '/videos/game06.mp4',
+    '/videos/game07.mp4',
+    '/videos/game08.mp4',
   ];
 
   const gameImages = [

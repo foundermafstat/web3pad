@@ -138,12 +138,21 @@ async function cacheFirstStrategy(request, cacheName) {
 
 // Network First Strategy (best for dynamic content)
 async function networkFirstStrategy(request, cacheName) {
+  // Skip caching for unsupported schemes
+  if (request.url.startsWith('chrome-extension:') || 
+      request.url.startsWith('moz-extension:') || 
+      request.url.startsWith('safari-extension:')) {
+    return fetch(request);
+  }
+
   const cache = await caches.open(cacheName);
 
   try {
     const response = await fetch(request);
     if (response.ok) {
-      cache.put(request, response.clone());
+      cache.put(request, response.clone()).catch(() => {
+        // Ignore cache put errors for unsupported schemes
+      });
     }
     return response;
   } catch (error) {
@@ -158,12 +167,21 @@ async function networkFirstStrategy(request, cacheName) {
 
 // Stale While Revalidate Strategy (best for frequently updated assets)
 async function staleWhileRevalidateStrategy(request, cacheName) {
+  // Skip caching for unsupported schemes
+  if (request.url.startsWith('chrome-extension:') || 
+      request.url.startsWith('moz-extension:') || 
+      request.url.startsWith('safari-extension:')) {
+    return fetch(request);
+  }
+
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
 
   const fetchPromise = fetch(request).then((response) => {
     if (response.ok) {
-      cache.put(request, response.clone());
+      cache.put(request, response.clone()).catch(() => {
+        // Ignore cache put errors for unsupported schemes
+      });
     }
     return response;
   });

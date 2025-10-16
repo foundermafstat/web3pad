@@ -69,7 +69,7 @@ export const connectLeather = async (): Promise<string> => {
 		// Connect to wallet using official method
 		const response = await connect({
 			appDetails: {
-				name: 'OSG Game Platform',
+				name: 'W3P Game Platform',
 				icon: window.location.origin + '/logo-osg.jpg',
 			},
 			redirectTo: window.location.origin,

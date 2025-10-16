@@ -21,6 +21,10 @@ const GameQRSheet = dynamic(
 	{ ssr: false }
 );
 
+const GameInterfaceHeader = dynamic(() => import('./GameInterfaceHeader'), {
+	ssr: false,
+});
+
 interface TowerDefenceGameScreenProps {
 	gameId: string;
 	gameType: string;
@@ -410,68 +414,22 @@ export default function TowerDefenceGameScreen({
 	}, [gameId]);
 
 	return (
-		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden">
-			{/* Header */}
-			<div className="bg-gray-800/90 backdrop-blur-sm px-4 py-2 flex items-center justify-between border-b border-gray-700/50 flex-shrink-0 z-10">
-				<button
-					onClick={onBack}
-					className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors text-sm"
-				>
-					<ArrowLeft className="w-4 h-4" />
-					<span>Exit</span>
-				</button>
-
-				<div className="flex items-center space-x-4 text-sm">
-					<div className="flex items-center space-x-1">
-						{connectionStatus === 'connected' ? (
-							<Wifi className="w-4 h-4 text-green-400" />
-						) : (
-							<WifiOff className="w-4 h-4 text-red-400" />
-						)}
-					</div>
-
-					{gameState && (
-						<>
-							<div className="flex items-center space-x-1 text-yellow-400">
-								<Coins className="w-4 h-4" />
-								<span>{gameState.money}</span>
-							</div>
-							<div className="flex items-center space-x-1 text-red-400">
-								<Heart className="w-4 h-4" />
-								<span>
-									{gameState.castle?.health}/{gameState.castle?.maxHealth}
-								</span>
-							</div>
-							<div className="flex items-center space-x-1 text-blue-400">
-								<WavesIcon className="w-4 h-4" />
-								<span>Wave {gameState.wave}</span>
-							</div>
-							<div className="flex items-center space-x-1 text-green-400">
-								<Users className="w-4 h-4" />
-								<span>{gameState.players?.length || 0}</span>
-							</div>
-						</>
-					)}
-
-					{gameState && !gameState.isWaveActive && !gameState.gameOver && (
-						<button
-							onClick={startWave}
-							className="flex items-center space-x-1 px-3 py-1 bg-green-600 hover:bg-green-500 text-white rounded transition-colors"
-						>
-							<Play className="w-4 h-4" />
-							<span>Start Wave</span>
-						</button>
-					)}
-
-					<button
-						onClick={() => setShowQRPopup(true)}
-						className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
-					>
-						<QrCode className="w-4 h-4" />
-						<span>Connect</span>
-					</button>
-				</div>
-			</div>
+		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden pt-16">
+			{/* Game Interface Header */}
+			<GameInterfaceHeader
+				onBack={onBack}
+				connectionStatus={connectionStatus}
+				onShowQR={() => setShowQRPopup(true)}
+				gameType="towerdefence"
+				activePlayers={gameState?.players?.length || 0}
+				wave={gameState?.wave || 0}
+				money={gameState?.money || 0}
+				castleHealth={gameState?.castle?.health || 100}
+				maxCastleHealth={gameState?.castle?.maxHealth || 100}
+				isWaveActive={gameState?.isWaveActive || false}
+				gameOver={gameState?.gameOver || false}
+				onStartWave={startWave}
+			/>
 
 			{/* Canvas */}
 			<div className="flex-1 relative bg-gray-900" style={{ minHeight: 0 }}>

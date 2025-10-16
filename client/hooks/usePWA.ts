@@ -62,13 +62,33 @@ export function usePWA() {
     if ('caches' in window) {
       try {
         const cache = await caches.open('dynamic-v1');
-        const response = await fetch(url);
+        
+        // Check if already cached
+        const cached = await cache.match(url);
+        if (cached) {
+          console.log('[PWA] Already cached:', url);
+          return;
+        }
+        
+        console.log('[PWA] Attempting to fetch:', url);
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'same-origin',
+        });
+        
+        console.log('[PWA] Fetch response for', url, ':', response.status, response.statusText);
+        
         if (response.ok) {
-          await cache.put(url, response);
-          console.log('[PWA] Preloaded:', url);
+          await cache.put(url, response.clone());
+          console.log('[PWA] Successfully preloaded:', url);
+        } else {
+          console.warn('[PWA] Failed to preload (not ok):', url, response.status, response.statusText);
         }
       } catch (err) {
-        console.error('[PWA] Preload failed:', err);
+        console.warn('[PWA] Preload failed for:', url, err);
+        // Don't throw the error, just log it
       }
     }
   };
