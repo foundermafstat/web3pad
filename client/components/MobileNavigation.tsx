@@ -23,7 +23,8 @@ import {
 	Award,
 	BarChart3,
 	ChevronRight,
-	X
+	X,
+	Blocks
 } from 'lucide-react';
 
 interface NavigationItem {
@@ -44,6 +45,12 @@ const navigationSections: NavigationSection[] = [
 		title: 'About',
 		icon: Info,
 		items: [
+			{
+				title: 'Web3 Integration',
+				href: '/web3',
+				icon: Blocks,
+				description: 'Blockchain-powered gaming with NFT rewards'
+			},
 			{
 				title: 'Project Overview',
 				href: '/about',

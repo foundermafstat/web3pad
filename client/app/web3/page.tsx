@@ -25,12 +25,15 @@ import {
 	Activity,
 	Smartphone,
 	Server,
-	Block,
+	Blocks,
 	Code,
 	Eye,
 	ArrowUpRight,
 	ExternalLink
 } from 'lucide-react';
+import { ArchitectureDiagram } from '@/components/web3/ArchitectureDiagram';
+import { BlockchainStats } from '@/components/web3/BlockchainStats';
+import { TechMap } from '@/components/web3/TechMap';
 
 export default function Web3Page() {
 	const [activeFeature, setActiveFeature] = useState(0);
@@ -66,7 +69,7 @@ export default function Web3Page() {
 		{
 			name: "Stacks Blockchain",
 			description: "Bitcoin-secured smart contracts",
-			icon: Block,
+			icon: Blocks,
 			status: "Live"
 		},
 		{
@@ -163,7 +166,7 @@ export default function Web3Page() {
 				{/* Hero Section */}
 				<div className="text-center mb-16">
 					<div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-6">
-						<Block className="w-5 h-5 text-purple-400" />
+						<Blocks className="w-5 h-5 text-purple-400" />
 						<span className="text-purple-300 text-sm font-medium">Blockchain-Powered Gaming</span>
 					</div>
 					
@@ -224,73 +227,7 @@ export default function Web3Page() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="grid lg:grid-cols-3 gap-8">
-							{/* Client Layer */}
-							<div className="space-y-4">
-								<div className="flex items-center gap-2 mb-4">
-									<Smartphone className="w-5 h-5 text-blue-400" />
-									<h3 className="text-lg font-semibold text-white">Client Layer</h3>
-								</div>
-								<div className="space-y-2">
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-										Mobile Controller Interface
-									</div>
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-										Wallet Connection
-									</div>
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-										Real-time Game Display
-									</div>
-								</div>
-							</div>
-
-							{/* Server Layer */}
-							<div className="space-y-4">
-								<div className="flex items-center gap-2 mb-4">
-									<Server className="w-5 h-5 text-green-400" />
-									<h3 className="text-lg font-semibold text-white">Server Layer</h3>
-								</div>
-								<div className="space-y-2">
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-green-400 rounded-full"></div>
-										Game Logic Processing
-									</div>
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-green-400 rounded-full"></div>
-										Result Verification
-									</div>
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-green-400 rounded-full"></div>
-										Blockchain Integration
-									</div>
-								</div>
-							</div>
-
-							{/* Blockchain Layer */}
-							<div className="space-y-4">
-								<div className="flex items-center gap-2 mb-4">
-									<Block className="w-5 h-5 text-purple-400" />
-									<h3 className="text-lg font-semibold text-white">Blockchain Layer</h3>
-								</div>
-								<div className="space-y-2">
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-										Stacks Smart Contracts
-									</div>
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-										NFT & Token Management
-									</div>
-									<div className="flex items-center gap-2 text-sm text-gray-300">
-										<div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-										Decentralized Storage
-									</div>
-								</div>
-							</div>
-						</div>
+						<ArchitectureDiagram />
 					</CardContent>
 				</Card>
 
@@ -325,32 +262,19 @@ export default function Web3Page() {
 					</CardContent>
 				</Card>
 
-				{/* Tech Stack */}
+				{/* Technology Map */}
 				<Card className="bg-slate-800/50 border-slate-700 mb-16">
 					<CardHeader>
 						<CardTitle className="text-2xl text-white flex items-center gap-3">
 							<Code className="w-6 h-6 text-green-400" />
-							Technology Stack
+							Technology Ecosystem
 						</CardTitle>
 						<CardDescription className="text-gray-400">
-							Built on cutting-edge blockchain technology
+							Interactive map of our complete technology stack
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-							{techStack.map((tech, index) => (
-								<Card key={index} className="bg-slate-900/50 border-slate-600">
-									<CardContent className="p-6 text-center">
-										<tech.icon className="w-12 h-12 text-green-400 mx-auto mb-4" />
-										<h3 className="text-lg font-semibold text-white mb-2">{tech.name}</h3>
-										<p className="text-sm text-gray-400 mb-3">{tech.description}</p>
-										<Badge variant="outline" className="border-green-500/30 text-green-300">
-											{tech.status}
-										</Badge>
-									</CardContent>
-								</Card>
-							))}
-						</div>
+						<TechMap />
 					</CardContent>
 				</Card>
 
@@ -439,36 +363,19 @@ export default function Web3Page() {
 					</CardContent>
 				</Card>
 
-				{/* Network Stats */}
+				{/* Blockchain Statistics */}
 				<Card className="bg-slate-800/50 border-slate-700 mb-16">
 					<CardHeader>
 						<CardTitle className="text-2xl text-white flex items-center gap-3">
 							<Globe className="w-6 h-6 text-blue-400" />
-							Network Statistics
+							Blockchain Statistics
 						</CardTitle>
 						<CardDescription className="text-gray-400">
 							Live deployment metrics and performance
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">1,580</div>
-								<div className="text-sm text-gray-400">Total Lines of Code</div>
-							</div>
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">0.460</div>
-								<div className="text-sm text-gray-400">STX Deployment Cost</div>
-							</div>
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">4</div>
-								<div className="text-sm text-gray-400">Smart Contracts</div>
-							</div>
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">100%</div>
-								<div className="text-sm text-gray-400">SIP Compliance</div>
-							</div>
-						</div>
+						<BlockchainStats />
 					</CardContent>
 				</Card>
 
