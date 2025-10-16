@@ -23,7 +23,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.registry',
       cost: '0.188320 STX',
       status: 'Live',
-      description: 'Реестр игровых модулей и управление системой',
+      description: 'Game modules registry and system management',
       category: 'registry'
     },
     {
@@ -31,7 +31,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.shooter-game',
       cost: '0.178630 STX',
       status: 'Live',
-      description: 'Основной контракт для игры Shooter с системой наград',
+      description: 'Main contract for Shooter game with reward system',
       category: 'game'
     },
     {
@@ -39,7 +39,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.nft-trait',
       cost: '0.042250 STX',
       status: 'Live',
-      description: 'Стандарт NFT для игровых предметов и персонажей',
+      description: 'NFT standard for game items and characters',
       category: 'nft'
     },
     {
@@ -47,7 +47,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       address: 'ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7.ft-trait',
       cost: '0.050830 STX',
       status: 'Live',
-      description: 'Стандарт FT токенов для игровой валюты',
+      description: 'FT token standard for game currency',
       category: 'ft'
     }
   ]);
@@ -146,7 +146,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-2 text-gray-600">Загрузка статуса контрактов...</span>
+          <span className="ml-2 text-gray-600">Loading contract status...</span>
         </div>
       </div>
     );
@@ -158,9 +158,9 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Управление контрактами</h2>
+            <h2 className="text-xl font-bold text-gray-900">Contract Management</h2>
             <p className="text-sm text-gray-600 mt-1">
-              Взаимодействие с задеплоенными контрактами в Stacks Testnet
+              Interaction with deployed contracts in Stacks Testnet
             </p>
           </div>
           {blockchainStatus && (
@@ -169,7 +169,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
                 ? 'bg-green-100 text-green-800' 
                 : 'bg-red-100 text-red-800'
             }`}>
-              {blockchainStatus.enabled ? 'Подключен' : 'Отключен'}
+              {blockchainStatus.enabled ? 'Connected' : 'Disconnected'}
             </div>
           )}
         </div>
@@ -179,17 +179,17 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
       <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
-            <span className="font-medium text-gray-700">Сеть:</span>
+            <span className="font-medium text-gray-700">Network:</span>
             <span className="ml-2 text-gray-600">Stacks Testnet</span>
           </div>
           <div>
-            <span className="font-medium text-gray-700">Адрес деплоя:</span>
+            <span className="font-medium text-gray-700">Deployment Address:</span>
             <span className="ml-2 text-gray-600 font-mono text-xs">
               ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7
             </span>
           </div>
           <div>
-            <span className="font-medium text-gray-700">Общая стоимость:</span>
+            <span className="font-medium text-gray-700">Total Cost:</span>
             <span className="ml-2 text-gray-600">0.460030 STX</span>
           </div>
         </div>
@@ -222,11 +222,11 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
 
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Стоимость:</span>
+                  <span className="text-gray-500">Cost:</span>
                   <span className="font-medium text-gray-700">{contract.cost}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Адрес:</span>
+                  <span className="text-gray-500">Address:</span>
                   <span className="font-mono text-gray-700 truncate ml-2">
                     {contract.address.split('.')[1]}
                   </span>
@@ -247,7 +247,7 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
           <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="flex items-center justify-between mb-3">
               <h4 className="font-semibold text-blue-900">
-                Детали контракта: {selectedContract.name}
+                Contract Details: {selectedContract.name}
               </h4>
               <button
                 onClick={() => setSelectedContract(null)}
@@ -261,36 +261,36 @@ const ContractManager: React.FC<ContractManagerProps> = ({ onContractSelect }) =
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="font-medium text-blue-800">Полный адрес:</span>
+                <span className="font-medium text-blue-800">Full Address:</span>
                 <p className="font-mono text-blue-700 break-all mt-1">
                   {selectedContract.address}
                 </p>
               </div>
               <div>
-                <span className="font-medium text-blue-800">Категория:</span>
+                <span className="font-medium text-blue-800">Category:</span>
                 <p className="text-blue-700 capitalize mt-1">{selectedContract.category}</p>
               </div>
               <div>
-                <span className="font-medium text-blue-800">Статус:</span>
+                <span className="font-medium text-blue-800">Status:</span>
                 <div className="mt-1">{getStatusBadge(selectedContract.status)}</div>
               </div>
               <div>
-                <span className="font-medium text-blue-800">Стоимость деплоя:</span>
+                <span className="font-medium text-blue-800">Deployment Cost:</span>
                 <p className="text-blue-700 mt-1">{selectedContract.cost}</p>
               </div>
             </div>
 
             <div className="mt-4">
-              <span className="font-medium text-blue-800">Описание:</span>
+              <span className="font-medium text-blue-800">Description:</span>
               <p className="text-blue-700 mt-1">{selectedContract.description}</p>
             </div>
 
             <div className="mt-4 flex gap-2">
               <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm">
-                Взаимодействовать
+                Interact
               </button>
               <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors text-sm">
-                Просмотреть код
+                View Code
               </button>
             </div>
           </div>

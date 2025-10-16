@@ -86,7 +86,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
       setError('');
     } catch (error) {
       console.error('Error loading sessions:', error);
-      setError('Ошибка загрузки сессий');
+      setError('Error loading sessions');
     } finally {
       setLoading(false);
     }
@@ -95,7 +95,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
   const handleStartSession = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!playerAddress) {
-      setError('Адрес игрока не указан');
+      setError('Player address not specified');
       return;
     }
 
@@ -118,7 +118,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
       
       setSessionForm({ nftTokenId: '', gameType: 'shooter' });
     } catch (error) {
-      setError('Ошибка запуска сессии');
+      setError('Error starting session');
     } finally {
       setLoading(false);
     }
@@ -127,7 +127,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
   const handleSubmitResult = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedSession || !playerAddress) {
-      setError('Выберите активную сессию');
+      setError('Select an active session');
       return;
     }
 
@@ -171,10 +171,10 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
         
         setResultForm({ score: 0, gameType: 'shooter', metadata: '' });
       } else {
-        setError(response.error || 'Ошибка отправки результата');
+        setError(response.error || 'Error submitting result');
       }
     } catch (error) {
-      setError('Ошибка отправки результата');
+      setError('Error submitting result');
     } finally {
       setLoading(false);
     }
@@ -186,21 +186,21 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
             <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div>
-            Активна
+            Active
           </span>
         );
       case 'completed':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
             <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1"></div>
-            Завершена
+            Completed
           </span>
         );
       case 'cancelled':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
             <div className="w-1.5 h-1.5 bg-red-500 rounded-full mr-1"></div>
-            Отменена
+            Cancelled
           </span>
         );
       default:
@@ -220,12 +220,12 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
           <div>
             <h2 className="text-xl font-bold text-gray-900">Shooter Game</h2>
             <p className="text-sm text-gray-600 mt-1">
-              Управление игровыми сессиями и результатами
+              Game session and results management
             </p>
           </div>
           {playerAddress && (
             <div className="text-right">
-              <p className="text-sm text-gray-600">Игрок:</p>
+              <p className="text-sm text-gray-600">Player:</p>
               <p className="text-sm font-mono text-gray-900">
                 {playerAddress.slice(0, 8)}...{playerAddress.slice(-6)}
               </p>
@@ -240,8 +240,8 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">Требуется адрес игрока</h3>
-            <p className="mt-1 text-sm text-gray-500">Подключите ваш Stacks адрес для управления игровыми сессиями.</p>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">Player address required</h3>
+            <p className="mt-1 text-sm text-gray-500">Connect your Stacks address to manage game sessions.</p>
           </div>
         </div>
       )}
@@ -253,25 +253,25 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-900">{sessions.length}</div>
-                <div className="text-sm text-gray-600">Всего сессий</div>
+                <div className="text-sm text-gray-600">Total Sessions</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
                   {sessions.filter(s => s.status === 'active').length}
                 </div>
-                <div className="text-sm text-gray-600">Активных</div>
+                <div className="text-sm text-gray-600">Active</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">
                   {sessions.filter(s => s.status === 'completed').length}
                 </div>
-                <div className="text-sm text-gray-600">Завершенных</div>
+                <div className="text-sm text-gray-600">Completed</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-600">
                   {sessions.reduce((sum, s) => sum + (s.score || 0), 0)}
                 </div>
-                <div className="text-sm text-gray-600">Общий счет</div>
+                <div className="text-sm text-gray-600">Total Score</div>
               </div>
             </div>
           </div>
@@ -285,12 +285,12 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
 
             {/* Start New Session */}
             <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">Начать новую сессию</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">Start New Session</h3>
               <form onSubmit={handleStartSession} className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-blue-800 mb-2">
-                      NFT Token ID (опционально)
+                      NFT Token ID (optional)
                     </label>
                     <input
                       type="number"
@@ -302,7 +302,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-blue-800 mb-2">
-                      Тип игры
+                      Game Type
                     </label>
                     <select
                       value={sessionForm.gameType}
@@ -320,27 +320,27 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                   className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
                   disabled={loading}
                 >
-                  {loading ? 'Запуск...' : 'Начать сессию'}
+                  {loading ? 'Starting...' : 'Start Session'}
                 </button>
               </form>
             </div>
 
             {/* Sessions List */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">История сессий</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Session History</h3>
               
               {loading && sessions.length === 0 ? (
                 <div className="flex items-center justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                  <span className="ml-2 text-gray-600">Загрузка сессий...</span>
+                  <span className="ml-2 text-gray-600">Loading sessions...</span>
                 </div>
               ) : sessions.length === 0 ? (
                 <div className="text-center py-8">
                   <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">Нет игровых сессий</h3>
-                  <p className="mt-1 text-sm text-gray-500">Начните новую сессию для игры.</p>
+                  <h3 className="mt-2 text-sm font-medium text-gray-900">No game sessions</h3>
+                  <p className="mt-1 text-sm text-gray-500">Start a new session to play.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -356,7 +356,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                     >
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
-                          <h4 className="font-medium text-gray-900">Сессия #{session.id}</h4>
+                          <h4 className="font-medium text-gray-900">Session #{session.id}</h4>
                           {getStatusBadge(session.status)}
                         </div>
                         <span className="text-sm text-gray-500">
@@ -368,17 +368,17 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                         <div>
                           <span className="text-gray-500">NFT ID:</span>
                           <p className="font-medium text-gray-900">
-                            {session.nftTokenId || 'Не используется'}
+                            {session.nftTokenId || 'Not used'}
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-500">Счет:</span>
+                          <span className="text-gray-500">Score:</span>
                           <p className="font-medium text-gray-900">
                             {session.score || '—'}
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-500">Опыт:</span>
+                          <span className="text-gray-500">Experience:</span>
                           <p className="font-medium text-gray-900">
                             {session.experience || '—'}
                           </p>
@@ -397,7 +397,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                             onClick={() => setShowResultForm(true)}
                             className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                           >
-                            Отправить результат
+                            Submit Result
                           </button>
                         </div>
                       )}
@@ -416,7 +416,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Отправить результат</h2>
+                <h2 className="text-xl font-bold text-gray-900">Submit Result</h2>
                 <button
                   onClick={() => setShowResultForm(false)}
                   className="text-gray-400 hover:text-gray-600"
@@ -429,14 +429,14 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
 
               <div className="mb-4">
                 <p className="text-sm text-gray-600">
-                  Сессия #{selectedSession.id} • {formatTime(selectedSession.startTime)}
+                  Session #{selectedSession.id} • {formatTime(selectedSession.startTime)}
                 </p>
               </div>
 
               <form onSubmit={handleSubmitResult} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Счет
+                    Score
                   </label>
                   <input
                     type="number"
@@ -450,7 +450,7 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Дополнительные данные (JSON, опционально)
+                    Additional Data (JSON, optional)
                   </label>
                   <textarea
                     value={resultForm.metadata}
@@ -468,14 +468,14 @@ const ShooterGameInterface: React.FC<ShooterGameInterfaceProps> = ({
                     className="flex-1 px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
                     disabled={loading}
                   >
-                    Отмена
+                    Cancel
                   </button>
                   <button
                     type="submit"
                     className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors disabled:opacity-50"
                     disabled={loading}
                   >
-                    {loading ? 'Отправка...' : 'Отправить'}
+                    {loading ? 'Submitting...' : 'Submit'}
                   </button>
                 </div>
               </form>

@@ -28,7 +28,8 @@ import {
 	Medal,
 	Star,
 	Play,
-	Layers
+	Layers,
+	FileText
 } from 'lucide-react';
 import { ThemeLogo } from './ThemeLogo';
 
@@ -202,6 +203,22 @@ export function DesktopNavigation() {
 											</div>
 											<div className="text-muted-foreground text-sm">
 												Unlock rewards and badges
+											</div>
+										</div>
+									</Link>
+								</NavigationMenuLink>
+							</li>
+							<li>
+								<NavigationMenuLink asChild>
+									<Link href="/contracts" className="flex gap-2 rounded-md hover:bg-accent">
+										
+										<div>
+											<div className="flex">
+												<FileText className="w-5 h-5 text-primary mr-2" />
+												<div className="font-medium">Contracts</div>
+											</div>
+											<div className="text-muted-foreground text-sm">
+												Manage blockchain contracts
 											</div>
 										</div>
 									</Link>

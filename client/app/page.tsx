@@ -258,14 +258,14 @@ export default function Home() {
 			{/* Preload game resources in background */}
 			<AllGamesPreloader />
 			
-			{/* Active Rooms Bar */}
+			{/* Active Rooms Bar
 			<ActiveRoomsBar
 				rooms={rooms}
 				onCreateRoomClick={handleCreateRoomClick}
 				onRoomClick={handleRoomClick}
 				onJoinRoomDirect={handleJoinRoomDirect}
 				expandedRoomId={null}
-			/>
+			/> */}
 
 			{/* Modals */}
 			<AuthModal

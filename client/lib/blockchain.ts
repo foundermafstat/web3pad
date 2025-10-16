@@ -226,6 +226,268 @@ export class BlockchainService {
       };
     }
   }
+
+  /**
+   * Get registered game modules from registry
+   */
+  async getGameModules(): Promise<{ success: boolean; data?: any[]; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/game-modules`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting game modules:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Start a new game session
+   */
+  async startGameSession(
+    playerAddress: string,
+    gameType: string,
+    nftTokenId?: number
+  ): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/start-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          playerAddress,
+          gameType,
+          nftTokenId
+        }),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error starting game session:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Get player game sessions
+   */
+  async getPlayerSessions(playerAddress: string): Promise<{ success: boolean; data?: any[]; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/player/${playerAddress}/sessions`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting player sessions:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Get NFT tokens owned by player
+   */
+  async getPlayerNFTs(playerAddress: string): Promise<{ success: boolean; data?: any[]; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/player/${playerAddress}/nfts`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting player NFTs:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Create new NFT
+   */
+  async createNFT(nftData: {
+    name: string;
+    description: string;
+    imageUrl?: string;
+    traits?: any[];
+    playerAddress: string;
+  }): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/create-nft`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nftData),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error creating NFT:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Get FT token balances for player
+   */
+  async getPlayerFTBalances(playerAddress: string): Promise<{ success: boolean; data?: any[]; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/player/${playerAddress}/ft-balances`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting FT balances:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Get all FT tokens
+   */
+  async getFTTokens(): Promise<{ success: boolean; data?: any[]; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/ft-tokens`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting FT tokens:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Create new FT token
+   */
+  async createFTToken(tokenData: {
+    name: string;
+    symbol: string;
+    decimals: number;
+    totalSupply: number;
+    description?: string;
+    imageUrl?: string;
+    ownerAddress: string;
+  }): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/create-ft-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tokenData),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error creating FT token:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Transfer FT tokens
+   */
+  async transferFTTokens(
+    tokenId: string,
+    fromAddress: string,
+    toAddress: string,
+    amount: number
+  ): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/transfer-ft`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tokenId,
+          fromAddress,
+          toAddress,
+          amount
+        }),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error transferring FT tokens:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Get contract information
+   */
+  async getContractInfo(contractAddress: string): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/contract/${contractAddress}/info`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error getting contract info:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
+  /**
+   * Call contract function (read-only)
+   */
+  async callContractFunction(
+    contractAddress: string,
+    functionName: string,
+    functionArgs: any[]
+  ): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/contract/call`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contractAddress,
+          functionName,
+          functionArgs
+        }),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error calling contract function:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
 }
 
 // Export singleton instance
