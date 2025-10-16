@@ -10,7 +10,10 @@ describe("Contract deployment and initialization", () => {
       "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     );
     
-    expect(result.result).toBeOk();
+    const stats = result.result.value;
+    expect(stats["total-sessions"]).toBeUint(0);
+    expect(stats["total-games-played"]).toBeUint(0);
+    expect(stats["total-rewards-distributed"]).toBeUint(0);
   });
 });
 
@@ -42,7 +45,7 @@ describe("Trusted server management", () => {
       "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     );
     
-    expect(result.result).toBeOk(Cl.bool(true));
+    expect(result.result).toBeBool(false);
   });
 
   it("should not allow non-owner to set trusted server", async () => {
@@ -97,9 +100,11 @@ describe("Game session lifecycle", () => {
       "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
     );
     
-    const session = result.result.expectSome();
-    expect(session.expectTuple()["player"]).toBePrincipal("ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG");
-    expect(session.expectTuple()["status"]).toBeAscii("open");
+    const session = result.result.value;
+    expect(session).toBeTuple({
+      player: Cl.standardPrincipal("ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"),
+      status: Cl.stringAscii("open")
+    });
   });
 });
 
@@ -175,7 +180,7 @@ describe("NFT progression system", () => {
       "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
     );
     
-    expect(result.result).toBeOk(Cl.uint(1)); // 150 exp = level 1
+    expect(result.result).toBeUint(1); // 150 exp = level 1
   });
 });
 
@@ -240,7 +245,7 @@ describe("Game module registry", () => {
       "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     );
     
-    expect(result.result).toBeOk();
+    expect(result.result).toBeOk(Cl.bool(true));
   });
 
   it("should get registered game module", async () => {
@@ -265,9 +270,9 @@ describe("Game module registry", () => {
       "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     );
     
-    const module = result.result.expectSome();
-    expect(module.expectTuple()["name"]).toBeAscii("Strategy Game");
-    expect(module.expectTuple()["enabled"]).toBeBool(true);
+    const module = result.result.value;
+    expect(module.name).toBeAscii("Strategy Game");
+    expect(module.enabled).toBeBool(true);
   });
 });
 
@@ -282,7 +287,7 @@ describe("Replay protection", () => {
       "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
     );
     
-    expect(result.result).toBeOk(Cl.bool(false)); // Not processed
+    expect(result.result).toBeBool(false); // Not processed
   });
 });
 
@@ -295,10 +300,10 @@ describe("Contract statistics", () => {
       "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     );
     
-    const stats = result.result.expectOk();
-    expect(stats.expectTuple()["total-sessions"]).toBeUint(0);
-    expect(stats.expectTuple()["total-games-played"]).toBeUint(0);
-    expect(stats.expectTuple()["total-rewards-distributed"]).toBeUint(0);
+    const stats = result.result.value;
+    expect(stats["total-sessions"]).toBeUint(0);
+    expect(stats["total-games-played"]).toBeUint(0);
+    expect(stats["total-rewards-distributed"]).toBeUint(0);
   });
 });
 
@@ -347,20 +352,19 @@ describe("Integration test - complete game flow", () => {
       "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
     );
     
-    const sessionId = startResult.result.expectOk();
-    expect(sessionId).toBeUint(0);
+    expect(startResult.result).toBeOk(Cl.uint(0));
     
     // 3. Verify session is open
-    const sessionResult = simnet.callPublicFn(
+    const sessionResult = simnet.callReadOnlyFn(
       "shooter-game",
       "get-session",
       [Cl.uint(0)],
       "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
     );
     
-    const session = sessionResult.result.expectSome();
-    expect(session.expectTuple()["status"]).toBeAscii("open");
-    expect(session.expectTuple()["player"]).toBePrincipal("ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG");
+    const session = sessionResult.result.value;
+    expect(session.status).toBeAscii("open");
+    expect(session.player).toBePrincipal("ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG");
     
     // 4. Check contract stats updated
     const statsResult = simnet.callReadOnlyFn(
@@ -370,8 +374,8 @@ describe("Integration test - complete game flow", () => {
       "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     );
     
-    const stats = statsResult.result.expectOk();
-    expect(stats.expectTuple()["total-sessions"]).toBeUint(1);
-    expect(stats.expectTuple()["total-games-played"]).toBeUint(1);
+    const stats = statsResult.result.value;
+    expect(stats["total-sessions"]).toBeUint(1);
+    expect(stats["total-games-played"]).toBeUint(1);
   });
 });

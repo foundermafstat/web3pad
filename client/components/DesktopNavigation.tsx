@@ -27,7 +27,8 @@ import {
 	Crown,
 	Medal,
 	Star,
-	Play
+	Play,
+	Layers
 } from 'lucide-react';
 import { ThemeLogo } from './ThemeLogo';
 
@@ -208,6 +209,16 @@ export function DesktopNavigation() {
 							</li>
 						</ul>
 					</NavigationMenuContent>
+				</NavigationMenuItem>
+
+				{/* Stacks - Web3 Integration */}
+				<NavigationMenuItem>
+					<NavigationMenuLink asChild>
+						<Link href="/stacks" className={navigationMenuTriggerStyle()}>
+							<Layers className="w-4 h-4 mr-2" />
+							Stacks
+						</Link>
+					</NavigationMenuLink>
 				</NavigationMenuItem>
 
 				{/* History - With Icons */}

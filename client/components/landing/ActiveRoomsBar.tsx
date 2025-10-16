@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Gamepad2, Plus } from 'lucide-react';
+import { Gamepad2, Plus, Layers } from 'lucide-react';
 import { Room } from '@/types/room';
 import RoomCard from '@/components/RoomCard';
+import { Web3AuthButton } from '@/components/Web3AuthButton';
 
 interface ActiveRoomsBarProps {
 	rooms: Room[];
@@ -21,6 +22,7 @@ export default function ActiveRoomsBar({
 	expandedRoomId 
 }: ActiveRoomsBarProps) {
 	const [isMobile, setIsMobile] = useState(false);
+	const [showWeb3Auth, setShowWeb3Auth] = useState(false);
 
 	// Check if mobile
 	useEffect(() => {
@@ -36,8 +38,19 @@ export default function ActiveRoomsBar({
 	const handleJoinRoom = (room: Room) => {
 		onJoinRoomDirect(room);
 	};
+
+	const handleWeb3Success = () => {
+		setShowWeb3Auth(false);
+		// Refresh the page to update auth state
+		window.location.reload();
+	};
+
+	const handleWeb3Error = (error: string) => {
+		console.error('Web3 auth error:', error);
+		// Optionally show error toast
+	};
 	return (
-		<div className="sticky top-20 z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 shadow-xl">
+		<div className="sticky  z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 shadow-xl">
 			<div className="w-full px-4 py-4">
 				<div className="flex items-center justify-between mb-4">
 					<div className="flex items-center space-x-2">
@@ -46,13 +59,37 @@ export default function ActiveRoomsBar({
 							{rooms.length > 0 ? `Active Rooms (${rooms.length})` : 'No active rooms'}
 						</h3>
 					</div>
-					<button
-						onClick={onCreateRoomClick}
-						className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
-					>
-						<Plus className="w-4 h-4" />
-						<span>Create Room</span>
-					</button>
+					<div className="flex items-center space-x-2">
+						{!showWeb3Auth ? (
+							<button
+								onClick={() => setShowWeb3Auth(true)}
+								className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
+							>
+								<Layers className="w-4 h-4" />
+								<span>Web3</span>
+							</button>
+						) : (
+							<div className="relative">
+								<Web3AuthButton 
+									onSuccess={handleWeb3Success}
+									onError={handleWeb3Error}
+								/>
+								<button
+									onClick={() => setShowWeb3Auth(false)}
+									className="ml-2 text-xs text-gray-400 hover:text-white transition-colors"
+								>
+									×
+								</button>
+							</div>
+						)}
+						<button
+							onClick={onCreateRoomClick}
+							className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
+						>
+							<Plus className="w-4 h-4" />
+							<span>Create Room</span>
+						</button>
+					</div>
 				</div>
 				
 				{/* Rooms List - Dynamic with animations */}

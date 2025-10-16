@@ -5,13 +5,14 @@ import { HeaderAuthButton } from './HeaderAuthButton';
 import { ThemeLogo } from './ThemeLogo';
 import { MobileNavigation } from './MobileNavigation';
 import { DesktopNavigation } from './DesktopNavigation';
+import { StacksConnectionStatus } from './StacksConnectionStatus';
 
 export async function Header() {
 	const session = await auth();
 
 	return (
-		<header className="sticky top-0 z-50 w-full glass-header">
-			<div className="container mx-auto max-w-7xl h-10 md:h-16 flex items-center justify-between px-4">
+		<header className="sticky top-0 z-50 w-full">
+			<div className="mx-auto h-10 md:h-16 flex items-center justify-between px-4">
 				{/* Logo */}
 				<Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
 					<ThemeLogo
@@ -30,7 +31,10 @@ export async function Header() {
 				</div>
 
 				{/* Auth section */}
-				<div className="flex items-center gap-2">
+				<div className="flex items-center gap-4">
+					{/* Stacks Connection Status */}
+					<StacksConnectionStatus />
+					
 					{session?.user ? (
 						<UserMenu user={session.user} />
 					) : (

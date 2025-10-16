@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { isValidAddress } from '@/lib/metamask';
+import { isValidStacksAddress } from '@/lib/leather';
 
 export async function POST(request: NextRequest) {
 	try {
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 		const body = await request.json();
 		const { walletAddress } = body;
 
-		if (!walletAddress || !isValidAddress(walletAddress)) {
+		if (!walletAddress || !isValidStacksAddress(walletAddress)) {
 			return NextResponse.json(
 				{ error: 'Invalid wallet address' },
 				{ status: 400 }
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 			},
 			body: JSON.stringify({
 				userId: session.user.id,
-				walletAddress,
+				stacksAddress: walletAddress,
 			}),
 		});
 

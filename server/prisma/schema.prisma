@@ -16,7 +16,6 @@ model User {
   password      String   // hashed password
   displayName   String
   avatar        String?  // URL to avatar image
-  walletAddress String?  @unique // Crypto wallet address (MetaMask, etc.)
   stacksAddress String?  @unique // Stacks blockchain address
   stacksConnected Boolean @default(false) // Whether Stacks wallet is connected
   level         Int      @default(1)
@@ -33,7 +32,6 @@ model User {
   
   @@index([email])
   @@index([username])
-  @@index([walletAddress])
   @@index([stacksAddress])
   @@map("users")
 }

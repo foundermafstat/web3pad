@@ -64,8 +64,23 @@ plan:
     - id: 0
       transactions:
         - emulated-contract-publish:
+            contract-name: ft-trait
+            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            path: "contracts\\ft-trait.clar"
+            clarity-version: 3
+        - emulated-contract-publish:
+            contract-name: nft-trait
+            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            path: "contracts\\nft-trait.clar"
+            clarity-version: 3
+        - emulated-contract-publish:
+            contract-name: registry
+            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            path: "contracts\\registry.clar"
+            clarity-version: 3
+        - emulated-contract-publish:
             contract-name: shooter-game
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            path: contracts/shooter-game.clar
+            path: "contracts\\shooter-game.clar"
             clarity-version: 3
       epoch: "3.2"

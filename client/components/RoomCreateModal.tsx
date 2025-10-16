@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Users, Lock, Unlock, Gamepad2 } from 'lucide-react';
+import { X, Users, Lock, Unlock, Gamepad2, Layers } from 'lucide-react';
+import { Web3AuthButton } from './Web3AuthButton';
 
 interface RoomCreateModalProps {
 	isOpen: boolean;
@@ -37,6 +38,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 	const [password, setPassword] = useState('');
 	const [hostParticipates, setHostParticipates] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+	const [showWeb3Auth, setShowWeb3Auth] = useState(false);
 
 	const validateForm = () => {
 		const newErrors: Record<string, string> = {};
@@ -96,7 +98,18 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 		setPassword('');
 		setHostParticipates(false);
 		setErrors({});
+		setShowWeb3Auth(false);
 		onClose();
+	};
+
+	const handleWeb3Success = () => {
+		setShowWeb3Auth(false);
+		// Refresh the page to update auth state
+		window.location.reload();
+	};
+
+	const handleWeb3Error = (error: string) => {
+		setErrors({ web3: error });
 	};
 
 	if (!isOpen) return null;
@@ -259,6 +272,48 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 								{errors.password && (
 									<p className="text-red-400 text-sm mt-1">{errors.password}</p>
 								)}
+							</div>
+						)}
+					</div>
+
+					{/* Web3 Authentication Section */}
+					<div className="border-t border-gray-700 pt-6">
+						<div className="text-center mb-4">
+							<h3 className="text-lg font-semibold text-white mb-2">Connect Your Wallet</h3>
+							<p className="text-gray-400 text-sm">
+								Link your Stacks wallet for enhanced features
+							</p>
+						</div>
+						
+						{!showWeb3Auth ? (
+							<button
+								type="button"
+								onClick={() => setShowWeb3Auth(true)}
+								className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+							>
+								<Layers className="w-5 h-5" />
+								<span>Connect Stacks Wallet</span>
+							</button>
+						) : (
+							<div className="space-y-4">
+								<Web3AuthButton 
+									onSuccess={handleWeb3Success}
+									onError={handleWeb3Error}
+								/>
+								
+								<button
+									type="button"
+									onClick={() => setShowWeb3Auth(false)}
+									className="w-full text-sm text-gray-400 hover:text-white transition-colors"
+								>
+									← Back to room settings
+								</button>
+							</div>
+						)}
+
+						{errors.web3 && (
+							<div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+								<p className="text-red-400 text-sm">{errors.web3}</p>
 							</div>
 						)}
 					</div>

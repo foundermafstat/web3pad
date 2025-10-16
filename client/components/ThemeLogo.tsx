@@ -13,24 +13,27 @@ interface ThemeLogoProps {
 	height?: number;
 	className?: string;
 	color?: string;
+	style?: React.CSSProperties;
 }
 
 export function ThemeLogo({ 
 	width = 78, 
 	height = 52, 
 	className = '', 
-	color = 'currentColor' 
+	color = 'currentColor',
+	style = {}
 }: ThemeLogoProps) {
-	const style = {
+	const combinedStyle = {
 		width: width ? `${width}px` : 'auto',
 		height: height ? `${height}px` : 'auto',
 		color: color,
+		...style,
 	};
 
 	return (
 		<svg
 			viewBox="0 0 517 211"
-			style={style}
+			style={combinedStyle}
 			className={`w3p-logo ${className}`}
 			role="img"
 			aria-label="W3P Logo"

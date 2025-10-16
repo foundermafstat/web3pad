@@ -9,7 +9,7 @@ import { GAME_TYPES, GAME_INFO } from './games/index.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import gameSessionRoutes from './routes/game-sessions.js';
-import metaMaskAuthRoutes from './routes/metamask-auth.js';
+import leatherAuthRoutes from './routes/leather-auth.js';
 import walletRoutes from './routes/wallet.js';
 import stacksAuthRoutes from './routes/stacks-auth.js';
 import gamesRoutes from './routes/games.js';
@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 // Auth routes
 app.use('/api/auth', authRoutes);
-app.use('/api/auth', metaMaskAuthRoutes);
+app.use('/api/auth', leatherAuthRoutes);
 app.use('/api/stacks', stacksAuthRoutes);
 
 // Profile and leaderboard routes

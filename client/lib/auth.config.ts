@@ -2,9 +2,10 @@ import type { NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
 import GitHub from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
-import { isValidAddress } from './metamask';
+import { isValidStacksAddress } from './leather';
 
 export const authConfig: NextAuthConfig = {
+	trustHost: true,
 	providers: [
 		Google({
 			clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -51,8 +52,8 @@ export const authConfig: NextAuthConfig = {
 			},
 		}),
 		Credentials({
-			id: 'metamask',
-			name: 'MetaMask',
+			id: 'leather',
+			name: 'Leather',
 			credentials: {
 				walletAddress: { label: 'Wallet Address', type: 'text' },
 				signature: { label: 'Signature', type: 'text' },
@@ -63,15 +64,15 @@ export const authConfig: NextAuthConfig = {
 					return null;
 				}
 
-				// Validate wallet address format
-				if (!isValidAddress(credentials.walletAddress)) {
+				// Validate Stacks wallet address format
+				if (!isValidStacksAddress(credentials.walletAddress)) {
 					return null;
 				}
 
 				try {
 					// Verify signature on server
 					const response = await fetch(
-						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/metamask`,
+						`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/leather`,
 						{
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
@@ -94,10 +95,10 @@ export const authConfig: NextAuthConfig = {
 						name: user.displayName,
 						username: user.username,
 						image: user.avatar,
-						walletAddress: user.walletAddress,
+						walletAddress: user.stacksAddress,
 					};
 				} catch (error) {
-					console.error('MetaMask auth error:', error);
+					console.error('Leather auth error:', error);
 					return null;
 				}
 			},
@@ -109,8 +110,8 @@ export const authConfig: NextAuthConfig = {
 	},
 	callbacks: {
 		async signIn({ user, account, profile }) {
-			// MetaMask sign in - already handled in authorize
-			if (account?.provider === 'metamask') {
+			// Leather sign in - already handled in authorize
+			if (account?.provider === 'leather') {
 				return true;
 			}
 			

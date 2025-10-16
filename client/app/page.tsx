@@ -24,6 +24,7 @@ import {
 	CreateRoomData,
 } from '@/components/landing';
 import { AllGamesPreloader } from '@/components/GamePreloader';
+import { ThemeLogo } from '@/components/ThemeLogo';
 
 export default function Home() {
 	const router = useRouter();
@@ -198,12 +199,55 @@ export default function Home() {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 flex items-center justify-center">
+			<div className="absolute min-h-screen	top-0 left-0 right-0 bottom-0 bg-gradient-to-br from-primary to-lime-300 flex items-center justify-center">
 				<div className="text-center">
-					<div className="animate-spin w-16 h-16 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
-					<div className="text-white text-2xl font-medium">
+					<div className="mb-8">
+						<div className="relative">
+							{/* Logo with animation */}
+							<ThemeLogo 
+								width={120} 
+								height={78} 
+								color="#000000"
+								className="relative z-10 logo-animated"
+							/>
+						</div>
+					</div>
+					<div className="text-black text-2xl font-medium animate-pulse">
 						Loading games...
 					</div>
+					<style jsx>{`
+						.logo-animated {
+							filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
+							animation: logoFloat 3s ease-in-out infinite, logoGlow 2s ease-in-out infinite alternate;
+						}
+						@keyframes logoFloat {
+							0%, 100% {
+								transform: translateY(0px);
+							}
+							50% {
+								transform: translateY(-10px);
+							}
+						}
+						@keyframes logoGlow {
+							0% {
+								filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
+							}
+							100% {
+								filter: drop-shadow(0 0 30px rgba(55, 255, 0, 0.8)) drop-shadow(0 0 50px rgb(179, 255, 2));
+							}
+						}
+						@keyframes spin-slow {
+							from {
+								transform: rotate(0deg);
+							}
+							to {
+								transform: rotate(360deg);
+							}
+						}
+						.animate-spin-slow {
+							animation: spin-slow 8s linear infinite;
+						}
+					`}</style>
 				</div>
 			</div>
 		);
@@ -264,3 +308,4 @@ export default function Home() {
 		</div>
 	);
 }
+

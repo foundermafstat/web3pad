@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useMetaMask } from '@/hooks/useMetaMask';
-import { formatAddress } from '@/lib/metamask';
+import React, { useState, useEffect } from 'react';
+import { connectLeather, signMessage, isLeatherInstalled, LeatherError, getCurrentAddress } from '@/lib/leather';
 import { 
 	Wallet, 
 	ExternalLink, 
@@ -23,44 +22,59 @@ interface WalletConnectionProps {
 	onWalletDisconnect: () => Promise<void>;
 }
 
+// Helper function to format Stacks address
+const formatAddress = (address: string): string => {
+	if (!address) return '';
+	return `${address.slice(0, 6)}...${address.slice(-4)}`;
+};
+
 export function WalletConnection({ 
 	currentWalletAddress, 
 	onWalletConnect, 
 	onWalletDisconnect 
 }: WalletConnectionProps) {
-	const { 
-		isInstalled, 
-		isConnecting, 
-		isConnected, 
-		account, 
-		error, 
-		connect, 
-		clearError 
-	} = useMetaMask();
-
+	const [isConnecting, setIsConnecting] = useState(false);
+	const [isConnected, setIsConnected] = useState(false);
+	const [account, setAccount] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
 	const [isLinking, setIsLinking] = useState(false);
 	const [isUnlinking, setIsUnlinking] = useState(false);
 	const [isCopied, setIsCopied] = useState(false);
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	const isInstalled = isMounted && isLeatherInstalled();
 
 	const handleConnectWallet = async () => {
 		console.log('[WalletConnection] Connect wallet clicked, isInstalled:', isInstalled);
 		
 		if (!isInstalled) {
-			console.log('[WalletConnection] MetaMask not installed, opening download page');
-			window.open('https://metamask.io/download/', '_blank');
+			console.log('[WalletConnection] No Stacks wallet found, opening download page');
+			window.open('https://leather.io/', '_blank');
 			return;
 		}
 
-		console.log('[WalletConnection] Clearing errors and calling connect...');
-		console.log('[WalletConnection] MetaMask popup should appear now - check for popup blockers!');
-		clearError();
+		console.log('[WalletConnection] Connecting to Stacks wallet...');
+		setError(null);
+		setIsConnecting(true);
 		
 		try {
-			await connect();
-			console.log('[WalletConnection] Connection successful!');
-		} catch (error) {
+			const address = await connectLeather();
+			setAccount(address);
+			setIsConnected(true);
+			console.log('[WalletConnection] Connection successful!', address);
+		} catch (error: any) {
 			console.error('[WalletConnection] Connection failed:', error);
-			// Error is already handled in useMetaMask hook
+			if (error instanceof LeatherError) {
+				setError(error.message);
+			} else {
+				setError('Failed to connect to Stacks wallet');
+			}
+		} finally {
+			setIsConnecting(false);
 		}
 	};
 
@@ -107,10 +121,10 @@ export function WalletConnection({
 		<Card>
 			<CardHeader>
 				<div className="flex items-center justify-between">
-					<div className="flex items-center space-x-2">
-						<Wallet className="w-5 h-5 text-primary" />
-						<CardTitle>Crypto Wallet</CardTitle>
-					</div>
+				<div className="flex items-center space-x-2">
+					<Wallet className="w-5 h-5 text-primary" />
+					<CardTitle>Stacks Wallet</CardTitle>
+				</div>
 					{isWalletLinked && isConnected ? (
 						<Badge variant="outline" className="text-green-600">
 							<CheckCircle2 className="w-3 h-3 mr-1" />
@@ -124,7 +138,7 @@ export function WalletConnection({
 					) : null}
 				</div>
 				<CardDescription>
-					Connect your MetaMask wallet to access Web3 features and secure authentication.
+					Connect your Stacks wallet to access Web3 features and secure authentication.
 				</CardDescription>
 			</CardHeader>
 			
@@ -164,7 +178,7 @@ export function WalletConnection({
 									)}
 								</Button>
 								<a
-									href={`https://etherscan.io/address/${currentWalletAddress}`}
+									href={`https://explorer.stacks.co/address/${currentWalletAddress}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="text-muted-foreground hover:text-foreground"
@@ -189,13 +203,13 @@ export function WalletConnection({
 						{isCurrentWalletConnected && (
 							<div className="flex items-center space-x-2 text-sm text-green-600">
 								<CheckCircle2 className="w-4 h-4" />
-								<span>Currently active in MetaMask</span>
+								<span>Currently active in wallet</span>
 							</div>
 						)}
 					</div>
 				)}
 
-				{/* Wallet saved in DB but MetaMask not connected */}
+				{/* Wallet saved in DB but Stacks wallet not connected */}
 				{isWalletLinked && !isConnected && (
 					<div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 space-y-3">
 						<div className="flex items-center justify-between">
@@ -220,7 +234,7 @@ export function WalletConnection({
 									)}
 								</Button>
 								<a
-									href={`https://etherscan.io/address/${currentWalletAddress}`}
+									href={`https://explorer.stacks.co/address/${currentWalletAddress}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="text-amber-600 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-100"
@@ -243,28 +257,28 @@ export function WalletConnection({
 							</div>
 						</div>
 						<p className="text-xs text-amber-600 dark:text-amber-400">
-							Connect MetaMask to use this wallet or link a different one.
+							Connect your wallet to use this address or link a different one.
 						</p>
 					</div>
 				)}
 
-				{/* MetaMask Connection Status */}
+				{/* Stacks Wallet Connection Status */}
 				<div className="space-y-3">
 					{!isInstalled ? (
 						<div className="text-center py-6">
 							<Wallet className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
 							<p className="text-sm text-muted-foreground mb-3">
-								MetaMask is required to connect your crypto wallet
+								Stacks wallet is required to connect
 							</p>
 							<Button onClick={handleConnectWallet}>
 								<ExternalLink className="w-4 h-4 mr-2" />
-								Install MetaMask
+								Install Stacks Wallet
 							</Button>
 						</div>
 					) : !isConnected ? (
 						<div className="text-center py-4">
 							<p className="text-sm text-muted-foreground mb-3">
-								Connect MetaMask to link your wallet
+								Connect your wallet to link it
 							</p>
 							<Button 
 								onClick={handleConnectWallet}
@@ -275,11 +289,11 @@ export function WalletConnection({
 								) : (
 									<Wallet className="w-4 h-4 mr-2" />
 								)}
-								Connect MetaMask
+								Connect Wallet
 							</Button>
 							{isConnecting && (
 								<p className="text-xs text-muted-foreground mt-3 animate-pulse">
-									⚠️ Check MetaMask popup to approve connection
+									⚠️ Check wallet popup to approve connection
 								</p>
 							)}
 						</div>
@@ -287,7 +301,7 @@ export function WalletConnection({
 						<div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 space-y-3">
 							<div className="flex items-center space-x-2">
 								<CheckCircle2 className="w-4 h-4 text-green-600" />
-								<span className="text-sm font-medium">MetaMask Connected</span>
+								<span className="text-sm font-medium">Wallet Connected</span>
 							</div>
 							
 							<div className="text-sm text-muted-foreground">

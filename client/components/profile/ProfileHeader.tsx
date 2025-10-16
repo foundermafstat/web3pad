@@ -66,12 +66,6 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 						
 						{/* Wallet Connection Badges */}
 						<div className="flex items-center gap-2 mt-2">
-							{user.walletAddress && (
-								<div className="flex items-center gap-1 px-2 py-1 bg-orange-500/10 border border-orange-500/30 rounded-full">
-									<Wallet className="w-3 h-3 text-orange-400" />
-									<span className="text-orange-400 text-xs font-medium">MetaMask</span>
-								</div>
-							)}
 							{user.stacksConnected && (
 								<div className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 border border-purple-500/30 rounded-full">
 									<Layers className="w-3 h-3 text-purple-400" />

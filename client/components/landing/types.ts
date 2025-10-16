@@ -12,4 +12,5 @@ export interface CreateRoomData {
 	gameType: string;
 	maxPlayers: number;
 	password?: string;
+	hostParticipates: boolean;
 }

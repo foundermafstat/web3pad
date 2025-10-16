@@ -1,0 +1,39 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: ft-trait
+            expected-sender: ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7
+            cost: 50830
+            path: "contracts\\ft-trait.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-trait
+            expected-sender: ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7
+            cost: 42250
+            path: "contracts\\nft-trait.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: registry
+            expected-sender: ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7
+            cost: 188320
+            path: "contracts\\registry.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: shooter-game
+            expected-sender: ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7
+            cost: 178630
+            path: "contracts\\shooter-game.clar"
+            anchor-block-only: true
+            clarity-version: 3
+      epoch: "3.2"

@@ -184,10 +184,10 @@ export default function AboutPage() {
 							<div>
 								<h4 className="font-semibold mb-2">Web3</h4>
 								<div className="space-y-1 text-sm text-muted-foreground">
-									<p>MetaMask</p>
 									<p>Stacks</p>
-									<p>Wallet Connect</p>
+									<p>Leather Wallet</p>
 									<p>Smart Contracts</p>
+									<p>Blockchain</p>
 								</div>
 							</div>
 						</div>

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { X, Mail, Lock, User, Github, Chrome, Wallet, Layers } from 'lucide-react';
-import { MetaMaskAuth } from './auth/MetaMaskAuth';
+import { Web3AuthButton } from './Web3AuthButton';
 
 interface AuthModalProps {
 	isOpen: boolean;
@@ -12,7 +12,7 @@ interface AuthModalProps {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => {
-	const [mode, setMode] = useState<'signin' | 'signup' | 'metamask'>('signin');
+	const [mode, setMode] = useState<'signin' | 'signup' | 'web3'>('signin');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
@@ -140,11 +140,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 
 					<div className="text-center">
 						<h2 className="text-2xl font-bold text-white mb-2">
-							{mode === 'metamask' ? 'Crypto Wallet' : mode === 'signin' ? 'Sign In' : 'Create Account'}
+							{mode === 'web3' ? 'Stacks Wallet' : mode === 'signin' ? 'Sign In' : 'Create Account'}
 						</h2>
 						<p className="text-blue-100 text-sm">
-							{mode === 'metamask'
-								? 'Connect with your crypto wallet'
+							{mode === 'web3'
+								? 'Connect with Leather wallet'
 								: mode === 'signin'
 								? 'Welcome back! Sign in to continue'
 								: 'Join now to save your progress'}
@@ -153,9 +153,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 				</div>
 
 				<div className="p-6 space-y-6">
-					{mode === 'metamask' ? (
+					{mode === 'web3' ? (
 						<div>
-							<MetaMaskAuth onClose={onClose} />
+							<Web3AuthButton 
+								onSuccess={onSuccess}
+								onError={setError}
+							/>
 							
 							{/* Back to other options */}
 							<div className="mt-6 text-center">
@@ -197,19 +200,19 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 								</button>
 								
 								<button
-									onClick={() => setMode('metamask')}
+									onClick={() => setMode('web3')}
 									disabled={loading}
-									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
 								>
-									<Wallet className="w-5 h-5" />
-									<span>Continue with MetaMask</span>
+									<Layers className="w-5 h-5" />
+									<span>Continue with Stacks</span>
 								</button>
 								
 							</div>
 						</>
 					)}
 
-					{mode !== 'metamask' && (
+					{mode !== 'web3' && (
 						<>
 							{/* Divider */}
 							<div className="relative">

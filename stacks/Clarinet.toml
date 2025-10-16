@@ -9,6 +9,18 @@ cache_dir = "./.cache"
 path = "contracts/shooter-game.clar"
 epoch = "latest"
 
+[contracts.registry]
+path = "contracts/registry.clar"
+epoch = "latest"
+
+[contracts.nft-trait]
+path = "contracts/nft-trait.clar"
+epoch = "latest"
+
+[contracts.ft-trait]
+path = "contracts/ft-trait.clar"
+epoch = "latest"
+
 [repl.analysis]
 passes = ["check_checker"]
 check_checker = { trusted_sender = false, trusted_caller = false, callee_filter = false }

@@ -1,0 +1,111 @@
+# W3P Project Rules for Cursor IDE
+
+## Language and Localization
+
+- **ALL code comments MUST be in English**
+- **ALL variable names, function names, and identifiers MUST be in English**
+- **ALL commit messages MUST be in English**
+- **ALL documentation MUST be in English**
+- User-facing text (UI labels, messages, etc.) should be in Russian
+- Keep code and comments separate from UI text
+
+## Communication Style
+
+- **DO NOT create summary files or "what was done" documents**
+- **DO NOT generate change logs or progress reports unless explicitly requested**
+- Keep responses concise and action-oriented
+- Focus on code and implementation, not documentation of changes
+
+## Code Style
+
+- Use TypeScript for all new files in the client
+- Use ES6+ features and modern JavaScript patterns
+- Follow existing project structure and naming conventions
+- Prefer functional components and hooks in React
+
+## Project Structure
+
+- Client code goes in `/client` directory
+- Server code goes in `/server` directory
+- Shared types and interfaces should be clearly documented
+- Keep game logic separate from UI components
+
+## Development Workflow
+
+- Test changes before committing
+- Ensure both client and server run without errors
+- Check for TypeScript errors before considering work complete
+- Maintain consistency with existing code patterns
+
+## Specific Rules
+
+- No Russian in code, comments, or variable names
+- No auto-generated summary documents
+- No "changes applied" or "what I did" files
+- Focus on writing code, not documenting what you wrote
+
+## Documentation Rules
+
+- **DO NOT create *.md files (guides, documentation, tutorials) unless explicitly requested by the user**
+- **DO NOT create README files, GUIDE files, SETUP files, or any documentation automatically**
+- Only create documentation when user specifically asks for it
+- Focus on implementing features, not documenting them
+- Code should be self-explanatory with clear comments
+
+## Stacks.js Documentation Reference
+
+### Official Stacks.js Documentation Links
+
+#### Core Pages
+- [accounts-and-addresses](https://docs.hiro.so/reference/stacks.js/accounts-and-addresses)
+- [address-validation](https://docs.hiro.so/reference/stacks.js/address-validation)
+- [broadcast-transactions](https://docs.hiro.so/reference/stacks.js/broadcast-transactions)
+- [build-transactions](https://docs.hiro.so/reference/stacks.js/build-transactions)
+- [connect-wallet](https://docs.hiro.so/reference/stacks.js/connect-wallet)
+- [contract-calls](https://docs.hiro.so/reference/stacks.js/contract-calls)
+- [contract-deployment](https://docs.hiro.so/reference/stacks.js/contract-deployment)
+- [encoding-decoding](https://docs.hiro.so/reference/stacks.js/encoding-decoding)
+- [implementing-post-conditions](https://docs.hiro.so/reference/stacks.js/implementing-post-conditions)
+- [message-signing](https://docs.hiro.so/reference/stacks.js/message-signing)
+- [migration-guide](https://docs.hiro.so/reference/stacks.js/migration-guide)
+- [network-configuration](https://docs.hiro.so/reference/stacks.js/network-configuration)
+- [networks](https://docs.hiro.so/reference/stacks.js/networks)
+- [post-conditions](https://docs.hiro.so/reference/stacks.js/post-conditions)
+- [private-keys](https://docs.hiro.so/reference/stacks.js/private-keys)
+- [pyth-oracle-integration](https://docs.hiro.so/reference/stacks.js/pyth-oracle-integration)
+- [react-native-integration](https://docs.hiro.so/reference/stacks.js/react-native-integration)
+- [read-only-calls](https://docs.hiro.so/reference/stacks.js/read-only-calls)
+- [unit-conversion](https://docs.hiro.so/reference/stacks.js/unit-conversion)
+- [wallet-support](https://docs.hiro.so/reference/stacks.js/wallet-support)
+
+#### Packages
+- [connect](https://docs.hiro.so/reference/stacks.js/packages/connect)
+- [network](https://docs.hiro.so/reference/stacks.js/packages/network)
+- [sbtc](https://docs.hiro.so/reference/stacks.js/packages/sbtc)
+- [transactions](https://docs.hiro.so/reference/stacks.js/packages/transactions)
+
+### Stacks.js Development Guidelines
+
+- **Use @stacks/connect for wallet integration** - Official library for connecting to Stacks wallets
+- **Always verify signatures server-side** - Use `verifyMessageSignature` from `@stacks/transactions`
+- **Follow Stacks address validation** - Use proper address format validation for SP/ST addresses
+- **Implement proper error handling** - Handle wallet connection errors gracefully
+- **Use official Stacks networks** - Configure proper network settings for mainnet/testnet
+- **Follow message signing best practices** - Use structured messages for authentication
+- **Implement post-conditions when needed** - For transaction security and validation
+
+### Authentication Flow
+
+- Use `connect()` from `@stacks/connect` for wallet connection
+- Use `isConnected()` to check connection status
+- Use `getLocalStorage()` to retrieve stored user data
+- Use `request('stx_signMessage')` for message signing
+- Use `disconnect()` to clear wallet connection
+- Always verify signatures server-side before authentication
+
+### Network Configuration
+
+- Use `@stacks/network` for network configuration
+- Configure proper API endpoints for mainnet/testnet
+- Use appropriate network settings for different environments
+- Handle network switching gracefully in the UI
