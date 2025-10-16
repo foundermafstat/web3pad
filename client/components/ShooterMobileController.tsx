@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Gamepad2, Shield, Zap, Target } from 'lucide-react';
+import { Alert, AlertDescription } from './ui/alert';
 
 interface GameState {
   players: any[];
