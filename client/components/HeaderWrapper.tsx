@@ -9,7 +9,7 @@ import { MobileNavigation } from './MobileNavigation';
 import { DesktopNavigation } from './DesktopNavigation';
 import { useLoading } from '@/contexts/LoadingContext';
 
-export function HeaderWrapper() {
+function HeaderWrapper() {
 	const { data: session } = useSession();
 	const { isLoading } = useLoading();
 
@@ -20,7 +20,10 @@ export function HeaderWrapper() {
 		<header className="fixed top-0 z-50 w-full bg-gradient-to-b from-background/50 to-transparent">
 			<div className="relative h-10 md:h-16 flex items-center px-4">
 				{/* Logo */}
-				<Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+				<Link
+					href="/"
+					className="flex items-center hover:opacity-80 transition-opacity"
+				>
 					<ThemeLogo
 						width={78}
 						height={52}
@@ -53,3 +56,5 @@ export function HeaderWrapper() {
 		</header>
 	);
 }
+
+export default HeaderWrapper;

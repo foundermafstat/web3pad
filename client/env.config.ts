@@ -9,7 +9,9 @@
 const getIsProduction = () => {
 	if (typeof window !== 'undefined') {
 		const hostname = window.location.hostname;
-		const isProd = !['localhost', '127.0.0.1'].includes(hostname) && !hostname.startsWith('192.168');
+		const isProd =
+			!['localhost', '127.0.0.1'].includes(hostname) &&
+			!hostname.startsWith('192.168');
 		console.log('[ENV_CONFIG] isProduction - browser:', { hostname, isProd });
 		return isProd;
 	}
@@ -21,22 +23,18 @@ const getIsProduction = () => {
 const isProduction = getIsProduction();
 
 // Development local IP - update this to your local network IP
-const DEV_LOCAL_IP = '192.168.1.XXX';
+const DEV_LOCAL_IP = '192.168.1.43';
 
 // Get base URL from current hostname in browser, or use default for SSR
 const getBaseUrl = () => {
 	if (typeof window !== 'undefined') {
 		const hostname = window.location.hostname;
-		// Use DEV_LOCAL_IP in development for mobile access
-		if (!isProduction && (hostname === 'localhost' || hostname === '127.0.0.1')) {
-			console.log('[ENV_CONFIG] getBaseUrl - using DEV_LOCAL_IP:', DEV_LOCAL_IP);
-			return DEV_LOCAL_IP;
-		}
 		console.log('[ENV_CONFIG] getBaseUrl - browser:', hostname);
 		return hostname;
 	}
-	// Fallback for SSR
-	const fallback = process.env.NODE_ENV === 'production' ? 'nft-dnd.xyz' : DEV_LOCAL_IP;
+	// Fallback for SSR - use localhost for development
+	const fallback =
+		process.env.NODE_ENV === 'production' ? 'nft-dnd.xyz' : 'localhost';
 	console.log('[ENV_CONFIG] getBaseUrl - SSR fallback:', fallback);
 	return fallback;
 };
@@ -46,19 +44,19 @@ export const ENV_CONFIG = {
 	 * Production domain (hardcoded for QR code generation)
 	 */
 	PRODUCTION_DOMAIN: 'nft-dnd.xyz',
-	
+
 	/**
 	 * Development local IP
 	 * ⚠️ Update this to your local network IP for development
 	 */
 	DEV_LOCAL_IP,
-	
+
 	/**
 	 * Base URL for the application
-	 * 
+	 *
 	 * Production: uses domain name
 	 * Development: uses local IP address
-	 * 
+	 *
 	 * @example Production: 'nft-dnd.xyz'
 	 * @example Development: '192.168.1.43'
 	 */
@@ -68,7 +66,7 @@ export const ENV_CONFIG = {
 
 	/**
 	 * Client application port (Next.js)
-	 * 
+	 *
 	 * Production: 4444 (configured via PM2)
 	 * Development: 3000 (Next.js default)
 	 */
@@ -76,7 +74,7 @@ export const ENV_CONFIG = {
 
 	/**
 	 * Server port (Socket.IO)
-	 * 
+	 *
 	 * Production: 5566 (configured via PM2)
 	 * Development: 3001
 	 */
@@ -88,19 +86,20 @@ export const ENV_CONFIG = {
 	get SERVER_URL() {
 		const protocol = isProduction ? 'https' : 'http';
 		const baseUrl = this.BASE_URL;
-		const url = isProduction 
-			? `${protocol}://${baseUrl}` 
+		const url = isProduction
+			? `${protocol}://${baseUrl}`
 			: `${protocol}://${baseUrl}:${this.SERVER_PORT}`;
-		
+
 		// Debug logging
 		console.log('[ENV_CONFIG] SERVER_URL:', {
 			isProduction,
 			protocol,
 			baseUrl,
 			url,
-			windowHostname: typeof window !== 'undefined' ? window.location.hostname : 'SSR',
+			windowHostname:
+				typeof window !== 'undefined' ? window.location.hostname : 'SSR',
 		});
-		
+
 		// In production, nginx proxies /socket.io/ to localhost:5566
 		// so we don't need to specify the port
 		return url;
@@ -111,18 +110,23 @@ export const ENV_CONFIG = {
 	 */
 	get CLIENT_URL() {
 		const protocol = isProduction ? 'https' : 'http';
-		const baseUrl = this.BASE_URL;
-		const url = `${protocol}://${baseUrl}${isProduction ? '' : `:${this.CLIENT_PORT}`}`;
-		
+		// In development, use DEV_LOCAL_IP for QR codes (mobile access)
+		// In production, use BASE_URL (domain name)
+		const baseUrl = isProduction ? this.BASE_URL : DEV_LOCAL_IP;
+		const url = `${protocol}://${baseUrl}${
+			isProduction ? '' : `:${this.CLIENT_PORT}`
+		}`;
+
 		// Debug logging
 		console.log('[ENV_CONFIG] CLIENT_URL:', {
 			isProduction,
 			protocol,
 			baseUrl,
 			url,
-			windowHostname: typeof window !== 'undefined' ? window.location.hostname : 'SSR',
+			windowHostname:
+				typeof window !== 'undefined' ? window.location.hostname : 'SSR',
 		});
-		
+
 		return url;
 	},
 
@@ -132,7 +136,7 @@ export const ENV_CONFIG = {
 	get IS_PRODUCTION() {
 		return isProduction;
 	},
-	
+
 	/**
 	 * Generate QR code URL
 	 * Production: uses domain
