@@ -354,7 +354,7 @@ const TestGyroGameScreen: React.FC<TestGyroGameScreenProps> = ({
 					{/* QR Code Button */}
 					<button
 						onClick={() => setShowQRPopup(true)}
-						className="flex items-center space-x-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors text-sm"
+						className="flex items-center space-x-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-sm"
 					>
 						<QrCode className="w-4 h-4" />
 						<span>Show QR</span>
@@ -371,10 +371,10 @@ const TestGyroGameScreen: React.FC<TestGyroGameScreenProps> = ({
 							ref={canvasRef}
 							width={CANVAS_WIDTH}
 							height={CANVAS_HEIGHT}
-							className="border-2 border-gray-700 rounded-lg shadow-2xl"
+							className="border-2 border-gray-700 rounded-md shadow-2xl"
 						/>
 						{connectedPlayers.length === 0 && (
-							<div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg">
+							<div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-md">
 								<div className="text-center">
 									<p className="text-white text-xl mb-2">
 										Waiting for players...
@@ -396,7 +396,7 @@ const TestGyroGameScreen: React.FC<TestGyroGameScreenProps> = ({
 
 					<div className="space-y-4">
 						{/* Instructions */}
-						<div className="bg-blue-900/30 border border-blue-700/50 rounded-lg p-3">
+						<div className="bg-blue-900/30 border border-blue-700/50 rounded-md p-3">
 							<h3 className="text-blue-400 font-semibold mb-2 text-sm">
 								How to Play
 							</h3>
@@ -420,7 +420,7 @@ const TestGyroGameScreen: React.FC<TestGyroGameScreenProps> = ({
 								connectedPlayers.map((player) => (
 									<div
 										key={player.id}
-										className="bg-gray-700/50 rounded-lg p-3 space-y-2"
+										className="bg-gray-700/50 rounded-md p-3 space-y-2"
 									>
 										<div className="flex items-center justify-between">
 											<div className="flex items-center space-x-2">

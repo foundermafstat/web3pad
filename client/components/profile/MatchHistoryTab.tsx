@@ -30,7 +30,7 @@ export function MatchHistoryTab({ games }: MatchHistoryTabProps) {
 					))}
 				</div>
 			) : (
-				<div className="bg-muted/50 rounded-lg p-12 text-center">
+				<div className="bg-muted/50 rounded-md p-12 text-center">
 					<Target className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
 					<p className="text-muted-foreground">No match history yet</p>
 					<p className="text-sm text-muted-foreground mt-2">
@@ -49,12 +49,12 @@ function MatchCard({ game }: { game: Game }) {
 	return (
 		<Link 
 			href={`/game-session/${game.sessionId}`}
-			className="block bg-card border border-border rounded-lg p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
+			className="block bg-card border border-border rounded-md p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
 		>
 			<div className="flex items-center gap-4">
 				{/* Rank Badge */}
 				<div
-					className={`w-16 h-16 rounded-lg flex items-center justify-center font-bold text-lg ${
+					className={`w-16 h-16 rounded-md flex items-center justify-center font-bold text-lg ${
 						isWin
 							? 'bg-gradient-to-br from-yellow-500 to-orange-500 text-white'
 							: 'bg-muted text-muted-foreground'

@@ -73,7 +73,7 @@ export function LeaderboardView() {
 			</div>
 
 			{/* Filters */}
-			<div className="bg-card border border-border rounded-lg p-4 mb-6">
+			<div className="bg-card border border-border rounded-md p-4 mb-6">
 				<div className="flex flex-col md:flex-row gap-4">
 					{/* Period Filter */}
 					<div className="flex-1">
@@ -145,7 +145,7 @@ export function LeaderboardView() {
 
 			{/* Leaderboard Table */}
 			{loading ? (
-				<div className="bg-card border border-border rounded-lg p-12 text-center">
+				<div className="bg-card border border-border rounded-md p-12 text-center">
 					<div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
 					<p className="text-muted-foreground">Loading leaderboard...</p>
 				</div>
@@ -176,14 +176,14 @@ export function LeaderboardView() {
 					)}
 
 					{/* Rest of the list */}
-					<div className="bg-card border border-border rounded-lg divide-y divide-border">
+					<div className="bg-card border border-border rounded-md divide-y divide-border">
 						{leaderboard.rankings.slice(3).map((player) => (
 							<LeaderboardRow key={player.userId} player={player} />
 						))}
 					</div>
 				</div>
 			) : (
-				<div className="bg-card border border-border rounded-lg p-12 text-center">
+				<div className="bg-card border border-border rounded-md p-12 text-center">
 					<Trophy className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
 					<p className="text-muted-foreground">No leaderboard data yet</p>
 					<p className="text-sm text-muted-foreground mt-2">
@@ -205,7 +205,7 @@ function PodiumCard({ player, position, color }: any) {
 	return (
 		<Link
 			href={`/profile/${player.username}`}
-			className={`bg-gradient-to-br ${color} rounded-lg p-6 text-white text-center hover:opacity-90 transition-opacity ${
+			className={`bg-gradient-to-br ${color} rounded-md p-6 text-white text-center hover:opacity-90 transition-opacity ${
 				position === 1 ? 'order-2 transform scale-110' : position === 2 ? 'order-1' : 'order-3'
 			}`}
 		>
@@ -296,8 +296,8 @@ function LeaderboardRow({ player }: { player: LeaderboardEntry }) {
 
 function StatCard({ icon, label, value }: any) {
 	return (
-		<div className="bg-card border border-border rounded-lg p-4 text-center">
-			<div className="inline-flex p-2 rounded-lg bg-primary/10 text-primary mb-2">{icon}</div>
+		<div className="bg-card border border-border rounded-md p-4 text-center">
+			<div className="inline-flex p-2 rounded-md bg-primary/10 text-primary mb-2">{icon}</div>
 			<div className="text-2xl font-bold text-foreground">{value}</div>
 			<div className="text-xs text-muted-foreground">{label}</div>
 		</div>

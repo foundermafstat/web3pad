@@ -479,7 +479,7 @@ export default function TowerDefenceGameScreen({
 
 			{/* Tower Build Menu */}
 			{selectedSpot && (
-				<div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-lg p-4 border border-gray-700 z-20">
+				<div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-md p-4 border border-gray-700 z-20">
 					<div className="text-white text-sm mb-2">Select Tower Type:</div>
 					<div className="flex space-x-2">
 						<button
@@ -536,7 +536,7 @@ export default function TowerDefenceGameScreen({
 						<p className="text-gray-400 mb-6">Your castle has been destroyed</p>
 						<button
 							onClick={onBack}
-							className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
+							className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors"
 						>
 							Return to Menu
 						</button>

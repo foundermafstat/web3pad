@@ -44,7 +44,7 @@ export default function FinalCTASection() {
 								onClick={() => {
 									window.scrollTo({ top: 0, behavior: 'smooth' });
 								}}
-								className="bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 hover:opacity-90 text-white font-bold py-6 px-12 text-xl shadow-2xl hover:shadow-3xl transition-all duration-200 rounded-xl"
+								className="bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 hover:opacity-90 text-white font-bold py-6 px-12 text-xl shadow-2xl hover:shadow-3xl transition-all duration-200 rounded-md"
 							>
 								<Play className="w-6 h-6 mr-3" />
 								Choose game

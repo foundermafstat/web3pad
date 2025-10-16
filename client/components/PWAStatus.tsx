@@ -50,7 +50,7 @@ export function PWAStatus() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 bg-black/80 text-white text-xs rounded-lg p-3 font-mono space-y-1">
+    <div className="fixed bottom-4 left-4 z-50 bg-black/80 text-white text-xs rounded-md p-3 font-mono space-y-1">
       <div className="font-bold mb-2">PWA Status</div>
       <div className="flex items-center gap-2">
         <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-red-500'}`} />

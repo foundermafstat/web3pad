@@ -125,7 +125,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 					</div>
 					<button
 						onClick={handleClose}
-						className="text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg"
+						className="text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-md"
 					>
 						<X className="w-6 h-6" />
 					</button>
@@ -144,7 +144,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 							placeholder="Enter room name..."
 							className={`w-full px-4 py-3 bg-gray-800/50 border ${
 								errors.roomName ? 'border-red-500' : 'border-gray-700'
-							} rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
+							} rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
 							maxLength={30}
 						/>
 						{errors.roomName && (
@@ -166,7 +166,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 									key={game.id}
 									type="button"
 									onClick={() => setSelectedGame(game.id)}
-									className={`relative p-4 rounded-xl border-2 transition-all ${
+									className={`relative p-4 rounded-md border-2 transition-all ${
 										selectedGame === game.id
 											? 'border-blue-500 bg-blue-500/10'
 											: 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
@@ -201,9 +201,9 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 								max="10"
 								value={maxPlayers}
 								onChange={(e) => setMaxPlayers(parseInt(e.target.value))}
-								className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+								className="flex-1 h-2 bg-gray-700 rounded-md appearance-none cursor-pointer accent-blue-500"
 							/>
-							<div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700 min-w-[80px] justify-center">
+							<div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-md border border-gray-700 min-w-[80px] justify-center">
 								<Users className="w-4 h-4 text-blue-400" />
 								<span className="text-white font-bold">{maxPlayers}</span>
 							</div>
@@ -215,7 +215,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 
 					{/* Host Participation Toggle */}
 					<div>
-						<label className="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl border border-gray-700 cursor-pointer hover:bg-gray-800/50 transition-all">
+						<label className="flex items-center justify-between p-4 bg-gray-800/30 rounded-md border border-gray-700 cursor-pointer hover:bg-gray-800/50 transition-all">
 							<div className="flex items-center space-x-3">
 								<Gamepad2 className="w-5 h-5 text-blue-400" />
 								<div>
@@ -236,7 +236,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 
 					{/* Password Toggle */}
 					<div>
-						<label className="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl border border-gray-700 cursor-pointer hover:bg-gray-800/50 transition-all">
+						<label className="flex items-center justify-between p-4 bg-gray-800/30 rounded-md border border-gray-700 cursor-pointer hover:bg-gray-800/50 transition-all">
 							<div className="flex items-center space-x-3">
 								{usePassword ? (
 									<Lock className="w-5 h-5 text-yellow-400" />
@@ -267,7 +267,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 									placeholder="Enter password..."
 									className={`w-full px-4 py-3 bg-gray-800/50 border ${
 										errors.password ? 'border-red-500' : 'border-gray-700'
-									} rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
+									} rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
 								/>
 								{errors.password && (
 									<p className="text-red-400 text-sm mt-1">{errors.password}</p>
@@ -289,7 +289,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 							<button
 								type="button"
 								onClick={() => setShowWeb3Auth(true)}
-								className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+								className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-md font-semibold transition-all shadow-lg hover:shadow-xl"
 							>
 								<Layers className="w-5 h-5" />
 								<span>Connect Stacks Wallet</span>
@@ -312,7 +312,7 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 						)}
 
 						{errors.web3 && (
-							<div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+							<div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-md">
 								<p className="text-red-400 text-sm">{errors.web3}</p>
 							</div>
 						)}
@@ -323,13 +323,13 @@ const RoomCreateModal: React.FC<RoomCreateModalProps> = ({
 						<button
 							type="button"
 							onClick={handleClose}
-							className="flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-semibold transition-all"
+							className="flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-md font-semibold transition-all"
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
-							className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+							className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-md font-semibold transition-all shadow-lg hover:shadow-xl"
 						>
 							Create Room
 						</button>

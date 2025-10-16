@@ -62,7 +62,7 @@ export default function GamesSection({ games, startGame }: GamesSectionProps) {
 								</CardHeader>
 								<CardContent>
 									<div className="flex items-center space-x-4 text-sm">
-										<div className="flex items-center space-x-2 bg-gray-700/50 px-3 py-2 rounded-lg">
+										<div className="flex items-center space-x-2 bg-gray-700/50 px-3 py-2 rounded-md">
 											<Users className="w-4 h-4 text-blue-400" />
 											<span className="text-white font-medium">
 												{gameInfo.minPlayers}-{gameInfo.maxPlayers} players

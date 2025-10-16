@@ -296,7 +296,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 					{gyroSupported && gyroPermission === 'prompt' && (
 						<button
 							onClick={handleEnableGyro}
-							className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+							className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-md font-semibold shadow-lg hover:shadow-xl transition-all"
 						>
 							Enable Gyroscope
 						</button>
@@ -348,7 +348,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 					{vibrationSupported && (
 						<button
 							onClick={testVibration}
-							className="w-full py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2"
+							className="w-full py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-md font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2"
 						>
 							<Vibrate className="w-5 h-5" />
 							<span>Test Vibration</span>
@@ -362,7 +362,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 						<h3 className="text-white font-semibold mb-4 text-center">
 							Device Tilt Indicator
 						</h3>
-						<div className="relative w-full h-48 bg-gray-800/50 rounded-xl overflow-hidden">
+						<div className="relative w-full h-48 bg-gray-800/50 rounded-md overflow-hidden">
 							{/* Center crosshair */}
 							<div className="absolute inset-0 flex items-center justify-center">
 								<div className="w-1 h-full bg-gray-600/30"></div>
@@ -385,7 +385,7 @@ const TestGyroMobileController: React.FC<TestGyroMobileControllerProps> = ({
 				)}
 
 				{/* Instructions */}
-				<div className="bg-white/5 backdrop-blur-sm rounded-xl p-4">
+				<div className="bg-white/5 backdrop-blur-sm rounded-md p-4">
 					<p className="text-gray-300 text-sm text-center">
 						📱 Hold your device flat, then tilt to move the ball
 						<br />

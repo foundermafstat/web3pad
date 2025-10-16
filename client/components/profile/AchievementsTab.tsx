@@ -31,7 +31,7 @@ export function AchievementsTab({ achievements }: AchievementsTabProps) {
 	return (
 		<div className="space-y-6">
 			{/* Header Stats */}
-			<div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-6">
+			<div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-md p-6">
 				<div className="flex items-center gap-4">
 					<div className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
 						<Award className="w-8 h-8 text-white" />
@@ -68,7 +68,7 @@ export function AchievementsTab({ achievements }: AchievementsTabProps) {
 					))}
 				</div>
 			) : (
-				<div className="bg-muted/50 rounded-lg p-12 text-center">
+				<div className="bg-muted/50 rounded-md p-12 text-center">
 					<Lock className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
 					<p className="text-muted-foreground">No achievements unlocked yet</p>
 					<p className="text-sm text-muted-foreground mt-2">
@@ -83,13 +83,13 @@ export function AchievementsTab({ achievements }: AchievementsTabProps) {
 function AchievementCard({ achievement, unlocked }: { achievement: Achievement; unlocked: boolean }) {
 	return (
 		<div
-			className={`bg-card border rounded-lg p-4 transition-all hover:shadow-lg ${
+			className={`bg-card border rounded-md p-4 transition-all hover:shadow-lg ${
 				unlocked ? 'border-yellow-500/30' : 'border-border opacity-50'
 			}`}
 		>
 			<div className="flex items-start gap-3">
 				<div
-					className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${
+					className={`w-12 h-12 rounded-md flex items-center justify-center text-2xl ${
 						unlocked
 							? 'bg-gradient-to-br from-yellow-500 to-orange-500'
 							: 'bg-muted'

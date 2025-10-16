@@ -127,7 +127,7 @@ export default function TowerDefenceMobileController({
 								type="text"
 								value={playerName}
 								onChange={(e) => setPlayerName(e.target.value)}
-								className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+								className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
 								placeholder="Enter your name"
 								maxLength={20}
 							/>
@@ -136,7 +136,7 @@ export default function TowerDefenceMobileController({
 						<button
 							onClick={handleJoin}
 							disabled={!isConnected || !playerName}
-							className="w-full py-3 bg-yellow-600 hover:bg-yellow-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors"
+							className="w-full py-3 bg-yellow-600 hover:bg-yellow-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-md transition-colors"
 						>
 							{isConnected ? 'Join Game' : 'Connecting...'}
 						</button>
@@ -161,7 +161,7 @@ export default function TowerDefenceMobileController({
 		<div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 p-4">
 			<div className="max-w-md mx-auto">
 				{/* Game Stats */}
-				<div className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 mb-4 border border-gray-700">
+				<div className="bg-gray-800/90 backdrop-blur-sm rounded-md p-4 mb-4 border border-gray-700">
 					<div className="grid grid-cols-2 gap-4">
 						<div className="flex items-center space-x-2">
 							<Coins className="w-5 h-5 text-yellow-400" />
@@ -206,7 +206,7 @@ export default function TowerDefenceMobileController({
 				{gameState && !gameState.isWaveActive && !gameState.gameOver && (
 					<button
 						onClick={startWave}
-						className="w-full mb-4 py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl transition-colors flex items-center justify-center space-x-2"
+						className="w-full mb-4 py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-md transition-colors flex items-center justify-center space-x-2"
 					>
 						<Play className="w-6 h-6" />
 						<span>Start Next Wave</span>
@@ -214,7 +214,7 @@ export default function TowerDefenceMobileController({
 				)}
 
 				{/* Tower Types */}
-				<div className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 mb-4 border border-gray-700">
+				<div className="bg-gray-800/90 backdrop-blur-sm rounded-md p-4 mb-4 border border-gray-700">
 					<h2 className="text-lg font-bold text-white mb-3">Tower Types</h2>
 					<div className="grid grid-cols-2 gap-2">
 						{[
@@ -249,7 +249,7 @@ export default function TowerDefenceMobileController({
 						].map((tower) => (
 							<div
 								key={tower.type}
-								className={`bg-${tower.color}-900/20 border border-${tower.color}-700/50 rounded-lg p-3`}
+								className={`bg-${tower.color}-900/20 border border-${tower.color}-700/50 rounded-md p-3`}
 							>
 								<div className="flex items-center justify-between mb-1">
 									<span className="text-white font-semibold text-sm">
@@ -267,13 +267,13 @@ export default function TowerDefenceMobileController({
 				</div>
 
 				{/* Build Spots */}
-				<div className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 mb-4 border border-gray-700">
+				<div className="bg-gray-800/90 backdrop-blur-sm rounded-md p-4 mb-4 border border-gray-700">
 					<h2 className="text-lg font-bold text-white mb-3">Build Spots</h2>
 					<div className="space-y-2 max-h-64 overflow-y-auto">
 						{gameState?.buildSpots?.map((spot: any, index: number) => (
 							<div
 								key={spot.id}
-								className={`p-3 rounded-lg border ${
+								className={`p-3 rounded-md border ${
 									spot.occupied
 										? 'bg-gray-700/50 border-gray-600'
 										: 'bg-green-900/20 border-green-700/50'
@@ -307,13 +307,13 @@ export default function TowerDefenceMobileController({
 
 				{/* Towers */}
 				{gameState?.towers && gameState.towers.length > 0 && (
-					<div className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 border border-gray-700">
+					<div className="bg-gray-800/90 backdrop-blur-sm rounded-md p-4 border border-gray-700">
 						<h2 className="text-lg font-bold text-white mb-3">Your Towers</h2>
 						<div className="space-y-2 max-h-64 overflow-y-auto">
 							{gameState.towers.map((tower: any) => (
 								<div
 									key={tower.id}
-									className="bg-gray-700/50 border border-gray-600 rounded-lg p-3"
+									className="bg-gray-700/50 border border-gray-600 rounded-md p-3"
 								>
 									<div className="flex items-center justify-between mb-2">
 										<div>

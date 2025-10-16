@@ -133,7 +133,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 				<div className="relative bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-6 rounded-t-2xl">
 					<button
 						onClick={onClose}
-						className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg"
+						className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-md"
 					>
 						<X className="w-6 h-6" />
 					</button>
@@ -174,7 +174,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 						<>
 							{/* Error Message */}
 							{error && (
-								<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">
+								<div className="bg-red-500/10 border border-red-500/30 rounded-md p-3 text-red-400 text-sm">
 									{error}
 								</div>
 							)}
@@ -184,7 +184,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 								<button
 									onClick={() => handleOAuthSignIn('google')}
 									disabled={loading}
-									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-md font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
 								>
 									<Chrome className="w-5 h-5" />
 									<span>Continue with Google</span>
@@ -193,7 +193,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 								<button
 									onClick={() => handleOAuthSignIn('github')}
 									disabled={loading}
-									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-gray-700"
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-md font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-gray-700"
 								>
 									<Github className="w-5 h-5" />
 									<span>Continue with GitHub</span>
@@ -202,7 +202,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 								<button
 									onClick={() => setMode('web3')}
 									disabled={loading}
-									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+									className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-md font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
 								>
 									<Layers className="w-5 h-5" />
 									<span>Continue with Stacks</span>
@@ -241,7 +241,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 											value={username}
 											onChange={(e) => setUsername(e.target.value)}
 											placeholder="Enter username"
-											className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+											className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 											required
 											disabled={loading}
 										/>
@@ -259,7 +259,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 											value={displayName}
 											onChange={(e) => setDisplayName(e.target.value)}
 											placeholder="Enter display name"
-											className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+											className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 											disabled={loading}
 										/>
 									</div>
@@ -278,7 +278,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 									placeholder="Enter email"
-									className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+									className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 									required
 									disabled={loading}
 								/>
@@ -296,7 +296,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
 									placeholder="Enter password"
-									className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+									className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 									required
 									disabled={loading}
 									minLength={6}
@@ -312,7 +312,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => 
 						<button
 							type="submit"
 							disabled={loading}
-							className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl font-semibold transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+							className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-md font-semibold transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
 						>
 							{loading ? (
 								<span className="flex items-center justify-center">

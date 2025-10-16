@@ -49,7 +49,7 @@ export default function ControllerPage() {
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-blue-500/10 flex items-center justify-center mx-auto mb-4">
 								<Touch className="w-6 h-6 text-blue-500" />
 							</div>
 							<CardTitle>Touch Control</CardTitle>
@@ -61,7 +61,7 @@ export default function ControllerPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-green-500/10 flex items-center justify-center mx-auto mb-4">
 								<RotateCw className="w-6 h-6 text-green-500" />
 							</div>
 							<CardTitle>Gyroscope</CardTitle>
@@ -73,7 +73,7 @@ export default function ControllerPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-purple-500/10 flex items-center justify-center mx-auto mb-4">
 								<Vibrate className="w-6 h-6 text-purple-500" />
 							</div>
 							<CardTitle>Haptic Feedback</CardTitle>
@@ -85,7 +85,7 @@ export default function ControllerPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-red-500/10 flex items-center justify-center mx-auto mb-4">
 								<Joystick className="w-6 h-6 text-red-500" />
 							</div>
 							<CardTitle>Virtual Joystick</CardTitle>
@@ -97,7 +97,7 @@ export default function ControllerPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
 								<Zap className="w-6 h-6 text-yellow-500" />
 							</div>
 							<CardTitle>Low Latency</CardTitle>
@@ -109,7 +109,7 @@ export default function ControllerPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-indigo-500/10 flex items-center justify-center mx-auto mb-4">
 								<Settings className="w-6 h-6 text-indigo-500" />
 							</div>
 							<CardTitle>Customization</CardTitle>
@@ -217,7 +217,7 @@ export default function ControllerPage() {
 						<div className="grid md:grid-cols-2 gap-6">
 							<div className="space-y-4">
 								<div className="flex items-start gap-4">
-									<div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0">
+									<div className="w-10 h-10 rounded-md bg-red-500/10 flex items-center justify-center flex-shrink-0">
 										<Target className="w-5 h-5 text-red-500" />
 									</div>
 									<div>
@@ -228,7 +228,7 @@ export default function ControllerPage() {
 									</div>
 								</div>
 								<div className="flex items-start gap-4">
-									<div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+									<div className="w-10 h-10 rounded-md bg-blue-500/10 flex items-center justify-center flex-shrink-0">
 										<RotateCw className="w-5 h-5 text-blue-500" />
 									</div>
 									<div>
@@ -239,7 +239,7 @@ export default function ControllerPage() {
 									</div>
 								</div>
 								<div className="flex items-start gap-4">
-									<div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+									<div className="w-10 h-10 rounded-md bg-green-500/10 flex items-center justify-center flex-shrink-0">
 										<Touch className="w-5 h-5 text-green-500" />
 									</div>
 									<div>
@@ -252,7 +252,7 @@ export default function ControllerPage() {
 							</div>
 							<div className="space-y-4">
 								<div className="flex items-start gap-4">
-									<div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+									<div className="w-10 h-10 rounded-md bg-purple-500/10 flex items-center justify-center flex-shrink-0">
 										<Gamepad2 className="w-5 h-5 text-purple-500" />
 									</div>
 									<div>
@@ -263,7 +263,7 @@ export default function ControllerPage() {
 									</div>
 								</div>
 								<div className="flex items-start gap-4">
-									<div className="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
+									<div className="w-10 h-10 rounded-md bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
 										<Zap className="w-5 h-5 text-yellow-500" />
 									</div>
 									<div>
@@ -274,7 +274,7 @@ export default function ControllerPage() {
 									</div>
 								</div>
 								<div className="flex items-start gap-4">
-									<div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+									<div className="w-10 h-10 rounded-md bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
 										<Settings className="w-5 h-5 text-indigo-500" />
 									</div>
 									<div>

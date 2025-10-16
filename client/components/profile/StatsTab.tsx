@@ -81,7 +81,7 @@ export function StatsTab({ stats }: StatsTabProps) {
 						))}
 					</div>
 				) : (
-					<div className="bg-muted/50 rounded-lg p-12 text-center">
+					<div className="bg-muted/50 rounded-md p-12 text-center">
 						<Gamepad2 className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
 						<p className="text-muted-foreground">No game statistics yet</p>
 						<p className="text-sm text-muted-foreground mt-2">
@@ -96,8 +96,8 @@ export function StatsTab({ stats }: StatsTabProps) {
 
 function StatCard({ icon, title, value, subtitle, gradient }: any) {
 	return (
-		<div className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
-			<div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${gradient} mb-4`}>
+		<div className="bg-card border border-border rounded-md p-6 hover:shadow-lg transition-shadow">
+			<div className={`inline-flex p-3 rounded-md bg-gradient-to-br ${gradient} mb-4`}>
 				<div className="text-white">{icon}</div>
 			</div>
 			<div className="text-3xl font-bold text-foreground mb-1">{value}</div>
@@ -112,9 +112,9 @@ function GameStatCard({ stat, gameIndex }: any) {
 	const gameName = GAME_NAMES[gameType] || 'Unknown Game';
 
 	return (
-		<div className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+		<div className="bg-card border border-border rounded-md p-6 hover:shadow-lg transition-shadow">
 			<div className="flex items-center gap-3 mb-4">
-				<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+				<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
 					<Gamepad2 className="w-6 h-6 text-primary" />
 				</div>
 				<div>

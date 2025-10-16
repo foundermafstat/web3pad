@@ -214,7 +214,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 									}
 								}}
 								placeholder="Enter your name"
-								className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none text-lg text-gray-900"
+								className="w-full px-4 py-3 border-2 border-gray-300 rounded-md focus:border-purple-500 focus:outline-none text-lg text-gray-900"
 								maxLength={20}
 								disabled={!connected}
 							/>
@@ -223,7 +223,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 						<button
 							onClick={joinGame}
 							disabled={!playerName.trim() || !connected}
-							className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95"
+							className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-md font-bold text-lg hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95"
 						>
 							Join Game
 						</button>
@@ -355,13 +355,13 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 							{playerData?.score} pts
 						</div>
 						<div className="grid grid-cols-2 gap-4 text-center">
-							<div className="bg-green-100 rounded-xl p-4">
+							<div className="bg-green-100 rounded-md p-4">
 								<div className="text-3xl font-bold text-green-600">
 									{playerData?.correctAnswers || 0}
 								</div>
 								<div className="text-sm text-green-800">Correct</div>
 							</div>
-							<div className="bg-red-100 rounded-xl p-4">
+							<div className="bg-red-100 rounded-md p-4">
 								<div className="text-3xl font-bold text-red-600">
 									{playerData?.wrongAnswers || 0}
 								</div>
@@ -426,7 +426,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 							<div className="text-lg font-semibold text-gray-900 mb-4 text-center">
 								Correct answer:
 							</div>
-							<div className="bg-green-100 border-4 border-green-500 rounded-xl p-4">
+							<div className="bg-green-100 border-4 border-green-500 rounded-md p-4">
 								<div className="text-xl font-bold text-green-800 text-center">
 									{String.fromCharCode(65 + (gameState.correctAnswer || 0))}.{' '}
 									{gameState.question.answers[gameState.correctAnswer || 0]}
@@ -536,7 +536,7 @@ const QuizMobileController: React.FC<QuizMobileControllerProps> = ({
 				</div>
 
 				{hasAnswered && (
-					<div className="mt-4 bg-green-500 text-white text-center py-3 rounded-xl font-bold">
+					<div className="mt-4 bg-green-500 text-white text-center py-3 rounded-md font-bold">
 						Answer sent! Waiting for other players...
 					</div>
 				)}

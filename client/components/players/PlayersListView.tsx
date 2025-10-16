@@ -86,7 +86,7 @@ export function PlayersListView() {
 			</div>
 
 			{/* Filters and Search */}
-			<div className="bg-card border border-border rounded-lg p-4 mb-6">
+			<div className="bg-card border border-border rounded-md p-4 mb-6">
 				<div className="flex flex-col md:flex-row gap-4">
 					{/* Search */}
 					<div className="flex-1">
@@ -177,7 +177,7 @@ export function PlayersListView() {
 
 			{/* Players List/Grid */}
 			{loading ? (
-				<div className="bg-card border border-border rounded-lg p-12 text-center">
+				<div className="bg-card border border-border rounded-md p-12 text-center">
 					<div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
 					<p className="text-muted-foreground">Loading players...</p>
 				</div>
@@ -196,7 +196,7 @@ export function PlayersListView() {
 					</div>
 				)
 			) : (
-				<div className="bg-card border border-border rounded-lg p-12 text-center">
+				<div className="bg-card border border-border rounded-md p-12 text-center">
 					<Users className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
 					<p className="text-muted-foreground">No players found</p>
 					<p className="text-sm text-muted-foreground mt-2">
@@ -212,7 +212,7 @@ function PlayerCard({ player }: { player: Player }) {
 	return (
 		<Link
 			href={`/profile/${player.username}`}
-			className="block bg-card border border-border rounded-lg p-6 hover:shadow-lg hover:border-primary/50 transition-all group"
+			className="block bg-card border border-border rounded-md p-6 hover:shadow-lg hover:border-primary/50 transition-all group"
 		>
 			{/* Avatar */}
 			<div className="flex items-center gap-4 mb-4">
@@ -241,13 +241,13 @@ function PlayerCard({ player }: { player: Player }) {
 
 			{/* Stats */}
 			<div className="grid grid-cols-2 gap-3 mb-4">
-				<div className="bg-muted/50 rounded-lg p-3 text-center">
+				<div className="bg-muted/50 rounded-md p-3 text-center">
 					<div className="text-2xl font-bold text-primary">
 						{player.level}
 					</div>
 					<div className="text-xs text-muted-foreground">Level</div>
 				</div>
-				<div className="bg-muted/50 rounded-lg p-3 text-center">
+				<div className="bg-muted/50 rounded-md p-3 text-center">
 					<div className="text-2xl font-bold">
 						{player.stats.totalGames}
 					</div>
@@ -273,7 +273,7 @@ function PlayerListItem({ player }: { player: Player }) {
 	return (
 		<Link
 			href={`/profile/${player.username}`}
-			className="flex items-center gap-4 bg-card border border-border rounded-lg p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
+			className="flex items-center gap-4 bg-card border border-border rounded-md p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
 		>
 			{/* Avatar */}
 			{player.avatar ? (
@@ -328,8 +328,8 @@ function PlayerListItem({ player }: { player: Player }) {
 
 function StatCard({ icon, label, value, color }: any) {
 	return (
-		<div className="bg-card border border-border rounded-lg p-4">
-			<div className={`inline-flex p-2 rounded-lg bg-muted mb-2 ${color}`}>
+		<div className="bg-card border border-border rounded-md p-4">
+			<div className={`inline-flex p-2 rounded-md bg-muted mb-2 ${color}`}>
 				{icon}
 			</div>
 			<div className="text-2xl font-bold">{value}</div>

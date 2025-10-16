@@ -160,7 +160,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 					{players.map((player) => (
 						<div
 							key={player.id}
-							className="bg-gray-800 rounded-xl p-6 border-4 transition-all"
+							className="bg-gray-800 rounded-md p-6 border-4 transition-all"
 							style={{
 								borderColor: player.ready ? player.color : '#4a5568',
 								transform: player.ready ? 'scale(1.05)' : 'scale(1)',
@@ -242,7 +242,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 						{players.map((player, index) => (
 							<div
 								key={player.id}
-								className="flex items-center gap-3 bg-gray-800 rounded-lg px-4 py-2 border-2"
+								className="flex items-center gap-3 bg-gray-800 rounded-md px-4 py-2 border-2"
 								style={{ borderColor: player.color }}
 							>
 								<div className="text-3xl">{player.avatar}</div>
@@ -279,7 +279,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 							{question?.answers?.map((answer: string, index: number) => (
 								<div
 									key={index}
-									className="bg-gray-800 rounded-xl p-6 border-2 border-gray-700"
+									className="bg-gray-800 rounded-md p-6 border-2 border-gray-700"
 								>
 									<div className="text-2xl font-semibold text-white text-center">
 										{String.fromCharCode(65 + index)}. {answer}
@@ -332,7 +332,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 								return (
 									<div
 										key={player.id}
-										className={`rounded-xl p-4 border-4 ${
+										className={`rounded-md p-4 border-4 ${
 											isCorrect
 												? 'bg-green-900 border-green-500'
 												: answered
@@ -432,7 +432,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 							{sortedPlayers.map((player, index) => (
 								<div
 									key={player.id}
-									className="flex items-center gap-4 bg-gray-800 rounded-xl p-4 border-2"
+									className="flex items-center gap-4 bg-gray-800 rounded-md p-4 border-2"
 									style={{ borderColor: player.color }}
 								>
 									<div className="text-4xl font-bold text-white w-12 text-center">
@@ -500,7 +500,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 				<div className="flex items-center justify-between px-6 py-3 h-[50px]">
 					<button
 						onClick={onBack}
-						className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+						className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
 					>
 						<ArrowLeft size={20} />
 						<span>Back</span>
@@ -514,7 +514,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({
 						</div>
 						<button
 							onClick={() => setShowQRPopup(true)}
-							className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+							className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
 						>
 							<QrCode size={20} />
 							<span>QR Code</span>

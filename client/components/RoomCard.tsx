@@ -71,7 +71,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, onJoin, isMobile = f
 		// Mobile card: 120x80 pixels with dropdown
 		return (
 			<RoomDropdownMenu room={room} onJoin={onJoin || (() => {})}>
-				<div className="relative group w-[120px] h-[80px] bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-lg p-2 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-105 flex flex-col items-center justify-between text-center cursor-pointer">
+				<div className="relative group w-[120px] h-[80px] bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-md p-2 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-105 flex flex-col items-center justify-between text-center cursor-pointer">
 					{/* Game Icon */}
 					<div className="text-2xl">{gameIcon}</div>
 					
@@ -96,7 +96,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick, onJoin, isMobile = f
 	// Desktop card with dropdown
 	return (
 		<RoomDropdownMenu room={room} onJoin={onJoin || (() => {})}>
-			<div className="relative group w-full text-left bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-[1.02] cursor-pointer">
+			<div className="relative group w-full text-left bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-md p-4 transition-all duration-300 hover:shadow-lg hover:bg-card hover:scale-[1.02] cursor-pointer">
 				<div className="flex items-center justify-between">
 					{/* Left: Game Info */}
 					<div className="flex items-center space-x-3 flex-1 min-w-0">

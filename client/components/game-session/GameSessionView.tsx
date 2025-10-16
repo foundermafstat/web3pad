@@ -68,11 +68,11 @@ export function GameSessionView({ session }: GameSessionViewProps) {
 					← Back to Home
 				</Link>
 				
-				<div className="bg-gradient-to-r from-primary/20 to-primary/5 rounded-lg p-6 border border-border">
+				<div className="bg-gradient-to-r from-primary/20 to-primary/5 rounded-md p-6 border border-border">
 					<div className="flex items-start justify-between gap-4">
 						<div className="flex-1">
 							<div className="flex items-center gap-3 mb-2">
-								<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+								<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
 									<Gamepad2 className="w-6 h-6 text-primary" />
 								</div>
 								<div>
@@ -168,7 +168,7 @@ export function GameSessionView({ session }: GameSessionViewProps) {
 				)}
 
 				{/* All Results */}
-				<div className="bg-card border border-border rounded-lg overflow-hidden">
+				<div className="bg-card border border-border rounded-md overflow-hidden">
 					<div className="overflow-x-auto">
 						<table className="w-full">
 							<thead className="bg-muted/50">
@@ -218,7 +218,7 @@ export function GameSessionView({ session }: GameSessionViewProps) {
 						<Target className="w-6 h-6" />
 						Game Details
 					</h2>
-					<div className="bg-card border border-border rounded-lg p-6">
+					<div className="bg-card border border-border rounded-md p-6">
 						<pre className="text-xs overflow-auto max-h-96">
 							{JSON.stringify(session.gameData, null, 2)}
 						</pre>
@@ -231,8 +231,8 @@ export function GameSessionView({ session }: GameSessionViewProps) {
 
 function StatCard({ icon, label, value, color }: any) {
 	return (
-		<div className="bg-card border border-border rounded-lg p-4">
-			<div className={`inline-flex p-2 rounded-lg bg-muted mb-2 ${color}`}>
+		<div className="bg-card border border-border rounded-md p-4">
+			<div className={`inline-flex p-2 rounded-md bg-muted mb-2 ${color}`}>
 				{icon}
 			</div>
 			<div className="text-2xl font-bold">{value}</div>
@@ -256,7 +256,7 @@ function PodiumCard({ result, position, gameType }: { result: GameResult; positi
 
 	return (
 		<div
-			className={`bg-gradient-to-br ${colors[position]} rounded-lg p-6 text-white text-center ${heights[position]} flex flex-col justify-end ${
+			className={`bg-gradient-to-br ${colors[position]} rounded-md p-6 text-white text-center ${heights[position]} flex flex-col justify-end ${
 				position === 1 ? 'order-2 transform scale-105' : position === 2 ? 'order-1' : 'order-3'
 			}`}
 		>

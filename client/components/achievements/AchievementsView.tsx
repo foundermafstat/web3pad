@@ -217,7 +217,7 @@ export function AchievementsView() {
 					<Card key={i} className="animate-pulse">
 						<CardHeader>
 							<div className="flex items-center gap-3">
-								<div className="w-12 h-12 bg-muted rounded-lg" />
+								<div className="w-12 h-12 bg-muted rounded-md" />
 								<div className="space-y-2 flex-1">
 									<div className="h-4 bg-muted rounded w-3/4" />
 									<div className="h-3 bg-muted rounded w-full" />
@@ -237,7 +237,7 @@ export function AchievementsView() {
 				<Card>
 					<CardContent className="p-6">
 						<div className="flex items-center gap-4">
-							<div className="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+							<div className="w-12 h-12 rounded-md bg-yellow-500/10 flex items-center justify-center">
 								<Trophy className="w-6 h-6 text-yellow-500" />
 							</div>
 							<div>
@@ -250,7 +250,7 @@ export function AchievementsView() {
 				<Card>
 					<CardContent className="p-6">
 						<div className="flex items-center gap-4">
-							<div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center">
+							<div className="w-12 h-12 rounded-md bg-blue-500/10 flex items-center justify-center">
 								<Star className="w-6 h-6 text-blue-500" />
 							</div>
 							<div>
@@ -263,7 +263,7 @@ export function AchievementsView() {
 				<Card>
 					<CardContent className="p-6">
 						<div className="flex items-center gap-4">
-							<div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center">
+							<div className="w-12 h-12 rounded-md bg-green-500/10 flex items-center justify-center">
 								<Medal className="w-6 h-6 text-green-500" />
 							</div>
 							<div>
@@ -338,7 +338,7 @@ export function AchievementsView() {
 
 							<CardHeader>
 								<div className="flex items-start gap-3">
-									<div className={`w-12 h-12 rounded-lg border flex items-center justify-center ${
+									<div className={`w-12 h-12 rounded-md border flex items-center justify-center ${
 										isUnlocked 
 											? 'border-yellow-500/20 bg-yellow-500/10' 
 											: 'border-muted bg-muted'

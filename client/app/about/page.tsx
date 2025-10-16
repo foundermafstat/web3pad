@@ -37,7 +37,7 @@ export default function AboutPage() {
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mx-auto mb-4">
 								<Smartphone className="w-6 h-6 text-primary" />
 							</div>
 							<CardTitle>Mobile Controller</CardTitle>
@@ -49,7 +49,7 @@ export default function AboutPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mx-auto mb-4">
 								<Globe className="w-6 h-6 text-primary" />
 							</div>
 							<CardTitle>Browser Games</CardTitle>
@@ -61,7 +61,7 @@ export default function AboutPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mx-auto mb-4">
 								<Users className="w-6 h-6 text-primary" />
 							</div>
 							<CardTitle>Multiplayer</CardTitle>
@@ -73,7 +73,7 @@ export default function AboutPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mx-auto mb-4">
 								<Zap className="w-6 h-6 text-primary" />
 							</div>
 							<CardTitle>Instant Access</CardTitle>
@@ -85,7 +85,7 @@ export default function AboutPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mx-auto mb-4">
 								<Shield className="w-6 h-6 text-primary" />
 							</div>
 							<CardTitle>Web3 Ready</CardTitle>
@@ -97,7 +97,7 @@ export default function AboutPage() {
 
 					<Card className="text-center">
 						<CardHeader>
-							<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+							<div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mx-auto mb-4">
 								<Wifi className="w-6 h-6 text-primary" />
 							</div>
 							<CardTitle>Low Latency</CardTitle>

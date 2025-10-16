@@ -28,9 +28,9 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 	const xpProgress = (currentLevelXP / xpPerLevel) * 100;
 
 	return (
-		<div className="bg-card border border-border rounded-xl overflow-hidden shadow-lg">
+		<div className="bg-card border border-border rounded-md overflow-hidden shadow-lg">
 			{/* Banner Background */}
-			<div className="h-32 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600" />
+			<div className="h-32 bg-gradient-to-r from-primary to-secondary" />
 
 			<div className="px-6 pb-6">
 				{/* Avatar and Basic Info */}
@@ -41,7 +41,7 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 							<img
 								src={user.avatar}
 								alt={user.displayName}
-								className="w-32 h-32 rounded-lg border-4 border-background object-cover"
+								className="w-32 h-32 rounded-md border-4 border-background object-cover"
 								crossOrigin="anonymous"
 								referrerPolicy="no-referrer"
 								onError={(e) => {
@@ -51,7 +51,7 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
 								}}
 							/>
 						) : null}
-						<div className={`w-32 h-32 rounded-lg border-4 border-background bg-primary text-primary-foreground flex items-center justify-center text-4xl font-bold ${user.avatar ? 'hidden' : ''}`}>
+						<div className={`w-32 h-32 rounded-md border-4 border-background bg-primary text-primary-foreground flex items-center justify-center text-4xl font-bold ${user.avatar ? 'hidden' : ''}`}>
 							{user.displayName[0].toUpperCase()}
 						</div>
 						<div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground rounded-full w-10 h-10 flex items-center justify-center font-bold border-2 border-background">
@@ -133,8 +133,8 @@ function StatCard({ icon, label, value, color }: any) {
 	};
 
 	return (
-		<div className="bg-muted/50 rounded-lg p-3 text-center">
-			<div className={`inline-flex p-2 rounded-lg mb-2 ${colorClasses[color]}`}>
+		<div className="bg-muted/50 rounded-md p-3 text-center">
+			<div className={`inline-flex p-2 rounded-md mb-2 ${colorClasses[color as keyof typeof colorClasses]}`}>
 				{icon}
 			</div>
 			<div className="text-2xl font-bold text-foreground">{value}</div>

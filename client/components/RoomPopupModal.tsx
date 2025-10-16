@@ -167,7 +167,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 					</div>
 					<button
 						onClick={onClose}
-						className="text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg"
+						className="text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-md"
 					>
 						<X className="w-6 h-6" />
 					</button>
@@ -175,7 +175,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 
 				<div className="p-6 space-y-6">
 					{/* Game Type & Room ID */}
-					<div className="bg-gray-800/50 rounded-xl p-4">
+					<div className="bg-gray-800/50 rounded-md p-4">
 						<div className="space-y-3">
 							<div className="flex items-center space-x-3">
 								<div className="text-3xl">{gameIcon}</div>
@@ -202,7 +202,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 					</div>
 
 					{/* Room Status & Created Time */}
-					<div className="bg-gray-800/50 rounded-xl p-4">
+					<div className="bg-gray-800/50 rounded-md p-4">
 						<div className="space-y-3">
 							<div className="flex items-center justify-between">
 								<div className="flex items-center space-x-2">
@@ -224,7 +224,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 					</div>
 
 					{/* Host Info */}
-					<div className="bg-gray-800/50 rounded-xl p-4">
+					<div className="bg-gray-800/50 rounded-md p-4">
 						<div className="space-y-3">
 							<div className="flex items-center justify-between">
 								<div>
@@ -262,7 +262,7 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 					</div>
 
 					{/* Players Info */}
-					<div className="bg-gray-800/50 rounded-xl p-4">
+					<div className="bg-gray-800/50 rounded-md p-4">
 						<div className="flex items-center justify-between mb-3">
 							<div className="flex items-center space-x-2">
 								<Users className="w-5 h-5 text-green-400" />
@@ -317,14 +317,14 @@ const RoomPopupModal: React.FC<RoomPopupModalProps> = ({
 						{room.status === 'waiting' ? (
 							<button
 								onClick={() => onJoin(room)}
-								className="w-full py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+								className="w-full py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 text-white rounded-md font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
 							>
 								<Play className="w-5 h-5" />
 								<span>Join Game</span>
 							</button>
 						) : (
 							<button
-								className="w-full py-3 bg-gray-600 text-gray-300 rounded-xl font-semibold cursor-not-allowed flex items-center justify-center space-x-2"
+								className="w-full py-3 bg-gray-600 text-gray-300 rounded-md font-semibold cursor-not-allowed flex items-center justify-center space-x-2"
 								disabled
 							>
 								<Monitor className="w-5 h-5" />

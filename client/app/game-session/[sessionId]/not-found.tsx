@@ -14,7 +14,7 @@ export default function GameSessionNotFound() {
 				</p>
 				<Link
 					href="/"
-					className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+					className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
 				>
 					Return to Home
 				</Link>

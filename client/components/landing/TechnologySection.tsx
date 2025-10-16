@@ -29,7 +29,7 @@ export default function TechnologySection() {
 						<div className="grid md:grid-cols-2 gap-6">
 							<div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-700">
 								<div className="flex items-start space-x-4">
-									<div className="bg-blue-500/20 p-3 rounded-xl">
+									<div className="bg-blue-500/20 p-3 rounded-md">
 										<Wifi className="w-6 h-6 text-blue-400" />
 									</div>
 									<div>
@@ -47,7 +47,7 @@ export default function TechnologySection() {
 
 							<div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-700">
 								<div className="flex items-start space-x-4">
-									<div className="bg-green-500/20 p-3 rounded-xl">
+									<div className="bg-green-500/20 p-3 rounded-md">
 										<QrCode className="w-6 h-6 text-green-400" />
 									</div>
 									<div>
@@ -65,7 +65,7 @@ export default function TechnologySection() {
 
 							<div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-700">
 								<div className="flex items-start space-x-4">
-									<div className="bg-purple-500/20 p-3 rounded-xl">
+									<div className="bg-purple-500/20 p-3 rounded-md">
 										<Smartphone className="w-6 h-6 text-purple-400" />
 									</div>
 									<div>
@@ -83,7 +83,7 @@ export default function TechnologySection() {
 
 							<div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-700">
 								<div className="flex items-start space-x-4">
-									<div className="bg-orange-500/20 p-3 rounded-xl">
+									<div className="bg-orange-500/20 p-3 rounded-md">
 										<Shield className="w-6 h-6 text-orange-400" />
 									</div>
 									<div>
@@ -135,19 +135,19 @@ export default function TechnologySection() {
 							</div>
 
 							<div className="mt-8 grid md:grid-cols-3 gap-4 text-center">
-								<div className="bg-gray-800/50 rounded-xl p-4">
+								<div className="bg-gray-800/50 rounded-md p-4">
 									<div className="text-2xl font-bold text-green-400 mb-1">
 										60 FPS
 									</div>
 									<div className="text-gray-400 text-sm">Update rate</div>
 								</div>
-								<div className="bg-gray-800/50 rounded-xl p-4">
+								<div className="bg-gray-800/50 rounded-md p-4">
 									<div className="text-2xl font-bold text-blue-400 mb-1">
 										10+ players
 									</div>
 									<div className="text-gray-400 text-sm">Simultaneously</div>
 								</div>
-								<div className="bg-gray-800/50 rounded-xl p-4">
+								<div className="bg-gray-800/50 rounded-md p-4">
 									<div className="text-2xl font-bold text-purple-400 mb-1">
 										0 installs
 									</div>

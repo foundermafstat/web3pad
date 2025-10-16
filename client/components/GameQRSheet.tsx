@@ -95,7 +95,7 @@ export function GameQRSheet({
                 type="text"
                 value={controllerUrl}
                 readOnly
-                className="flex-1 px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <Button
                 variant="outline"
@@ -139,7 +139,7 @@ export function GameQRSheet({
                 {players.map((player) => (
                   <div
                     key={player.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700"
                   >
                     <div className="flex items-center gap-3">
                       {/* Player Avatar/Color Indicator */}

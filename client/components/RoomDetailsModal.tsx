@@ -102,7 +102,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 				<div className="relative bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8 rounded-t-2xl">
 					<button
 						onClick={handleClose}
-						className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg"
+						className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-md"
 					>
 						<X className="w-6 h-6" />
 					</button>
@@ -132,7 +132,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 				<div className="p-6 space-y-6">
 					{/* Room Info */}
 					<div className="grid grid-cols-2 gap-4">
-						<div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+						<div className="bg-gray-800/50 rounded-md p-4 border border-gray-700">
 							<div className="flex items-center space-x-2 text-gray-400 mb-1">
 								<Users className="w-4 h-4" />
 								<span className="text-sm">Players</span>
@@ -145,7 +145,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 							)}
 						</div>
 
-						<div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+						<div className="bg-gray-800/50 rounded-md p-4 border border-gray-700">
 							<div className="flex items-center space-x-2 text-gray-400 mb-1">
 								<Clock className="w-4 h-4" />
 								<span className="text-sm">Created</span>
@@ -164,7 +164,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 								players.map((player) => (
 									<div
 										key={player.id}
-										className="flex items-center justify-between bg-gray-800/50 rounded-xl p-3 border border-gray-700"
+										className="flex items-center justify-between bg-gray-800/50 rounded-md p-3 border border-gray-700"
 									>
 										<div className="flex items-center space-x-3">
 											<div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
@@ -217,7 +217,7 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								placeholder="Enter password..."
-								className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+								className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
 								autoFocus
 							/>
 						</div>
@@ -227,14 +227,14 @@ const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({
 					<div className="flex space-x-3 pt-2">
 						<button
 							onClick={handleClose}
-							className="flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-semibold transition-all"
+							className="flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-md font-semibold transition-all"
 						>
 							Close
 						</button>
 						<button
 							onClick={handleJoinClick}
 							disabled={!canJoin}
-							className={`flex-1 px-6 py-3 rounded-xl font-semibold transition-all shadow-lg flex items-center justify-center space-x-2 ${
+							className={`flex-1 px-6 py-3 rounded-md font-semibold transition-all shadow-lg flex items-center justify-center space-x-2 ${
 								canJoin
 									? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white hover:shadow-xl'
 									: 'bg-gray-700 text-gray-400 cursor-not-allowed'

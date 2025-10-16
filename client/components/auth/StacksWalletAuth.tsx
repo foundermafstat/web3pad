@@ -127,7 +127,7 @@ export function StacksWalletAuth({ onSuccess, onError, className }: StacksWallet
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{error && (
-					<div className="p-3 border border-red-200 bg-red-50 rounded-lg">
+					<div className="p-3 border border-red-200 bg-red-50 rounded-md">
 						<p className="text-sm text-red-700">{error}</p>
 					</div>
 				)}
@@ -154,7 +154,7 @@ export function StacksWalletAuth({ onSuccess, onError, className }: StacksWallet
 					</div>
 				) : (
 					<div className="space-y-3">
-						<div className="p-3 border border-green-200 bg-green-50 rounded-lg">
+						<div className="p-3 border border-green-200 bg-green-50 rounded-md">
 							<p className="text-sm text-green-700">
 								<strong>Connected:</strong> {address?.slice(0, 6)}...{address?.slice(-4)}
 							</p>

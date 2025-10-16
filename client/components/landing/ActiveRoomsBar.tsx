@@ -63,7 +63,7 @@ export default function ActiveRoomsBar({
 						{!showWeb3Auth ? (
 							<button
 								onClick={() => setShowWeb3Auth(true)}
-								className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
+								className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-md font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
 							>
 								<Layers className="w-4 h-4" />
 								<span>Web3</span>
@@ -85,7 +85,7 @@ export default function ActiveRoomsBar({
 						)}
 						<button
 							onClick={onCreateRoomClick}
-							className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
+							className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-md font-semibold transition-all shadow-lg hover:shadow-xl text-sm"
 						>
 							<Plus className="w-4 h-4" />
 							<span>Create Room</span>

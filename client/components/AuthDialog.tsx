@@ -65,7 +65,7 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
 
 					{/* Web3 Wallet Section */}
 					{!isChecking && walletInfo.isConnected && (
-						<div className="mb-6 p-4 rounded-lg bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200">
+						<div className="mb-6 p-4 rounded-md bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200">
 							<div className="text-center">
 								<div className="flex items-center justify-center mb-2">
 									<svg className="w-5 h-5 text-purple-600 mr-2" viewBox="0 0 24 24" fill="currentColor">

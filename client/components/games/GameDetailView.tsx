@@ -191,7 +191,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 								<button
 									key={index}
 									onClick={() => setActiveImageIndex(index)}
-									className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
+									className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-colors ${
 										index === activeImageIndex
 											? 'border-primary'
 											: 'border-border hover:border-muted-foreground'
@@ -329,7 +329,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 							<CardContent>
 								<div className="grid md:grid-cols-2 gap-4">
 									{game.features.map((feature: any, index: number) => (
-										<div key={index} className="flex gap-4 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
+										<div key={index} className="flex gap-4 p-4 rounded-md border bg-card hover:bg-accent/50 transition-colors">
 											<div className="text-3xl flex-shrink-0">{feature.icon}</div>
 											<div>
 												<h4 className="font-semibold mb-1">{feature.title}</h4>
@@ -364,7 +364,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 						<CardContent>
 							<div className="grid md:grid-cols-2 gap-3">
 								{game.controls.map((control) => (
-									<div key={control} className="flex items-center gap-3 p-4 rounded-lg border bg-gradient-to-r from-primary/5 to-transparent">
+									<div key={control} className="flex items-center gap-3 p-4 rounded-md border bg-gradient-to-r from-primary/5 to-transparent">
 										<div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
 											<Gamepad2 className="w-5 h-5 text-primary" />
 										</div>
@@ -448,7 +448,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 											<video
 												key={index}
 												controls
-												className="w-full rounded-lg border"
+												className="w-full rounded-md border"
 												poster={game.images[0]}
 											>
 												<source src={video} type="video/mp4" />
@@ -477,7 +477,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 											<button
 												key={index}
 												onClick={() => setActiveImageIndex(index)}
-												className="aspect-video rounded-lg overflow-hidden border-2 hover:border-primary transition-all hover:scale-105"
+												className="aspect-video rounded-md overflow-hidden border-2 hover:border-primary transition-all hover:scale-105"
 											>
 												<img
 													src={image}
@@ -501,17 +501,17 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 							</CardHeader>
 							<CardContent className="space-y-4">
 								<div className="grid grid-cols-3 gap-4 text-center">
-									<div className="p-4 rounded-lg bg-background/50">
+									<div className="p-4 rounded-md bg-background/50">
 										<Users className="w-6 h-6 mx-auto mb-2 text-blue-500" />
 										<div className="text-2xl font-bold">1.2K+</div>
 										<div className="text-xs text-muted-foreground">Active Players</div>
 									</div>
-									<div className="p-4 rounded-lg bg-background/50">
+									<div className="p-4 rounded-md bg-background/50">
 										<Trophy className="w-6 h-6 mx-auto mb-2 text-yellow-500" />
 										<div className="text-2xl font-bold">5K+</div>
 										<div className="text-xs text-muted-foreground">Games Played</div>
 									</div>
-									<div className="p-4 rounded-lg bg-background/50">
+									<div className="p-4 rounded-md bg-background/50">
 										<Star className="w-6 h-6 mx-auto mb-2 text-purple-500" />
 										<div className="text-2xl font-bold">4.8</div>
 										<div className="text-xs text-muted-foreground">Rating</div>
@@ -545,7 +545,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 								<CardContent>
 									<div className="grid gap-4">
 										{game.gameAchievements.map((achievement) => (
-											<div key={achievement.id} className="flex items-start gap-4 p-4 rounded-lg border bg-gradient-to-r from-yellow-500/5 to-transparent hover:from-yellow-500/10 transition-colors">
+											<div key={achievement.id} className="flex items-start gap-4 p-4 rounded-md border bg-gradient-to-r from-yellow-500/5 to-transparent hover:from-yellow-500/10 transition-colors">
 												<div className="w-12 h-12 rounded-full bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
 													{achievement.icon ? (
 														<span className="text-2xl">{achievement.icon}</span>
@@ -637,7 +637,7 @@ export function GameDetailView({ gameCode }: GameDetailViewProps) {
 											{ rank: 2, name: 'SpeedRunner', score: '11,820', icon: '🥈' },
 											{ rank: 3, name: 'NightHawk', score: '10,995', icon: '🥉' },
 										].map((player) => (
-											<div key={player.rank} className="flex items-center gap-4 p-3 rounded-lg border">
+											<div key={player.rank} className="flex items-center gap-4 p-3 rounded-md border">
 												<span className="text-2xl">{player.icon}</span>
 												<div className="flex-1">
 													<div className="font-semibold">{player.name}</div>

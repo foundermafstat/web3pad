@@ -97,7 +97,7 @@ export default function StacksPage() {
 									</div>
 									
 									{address && (
-										<div className="bg-gray-700/50 rounded-lg p-4">
+										<div className="bg-gray-700/50 rounded-md p-4">
 											<div className="flex items-center justify-between">
 												<div>
 													<p className="text-sm text-gray-400 mb-1">Stacks Address</p>
@@ -105,7 +105,7 @@ export default function StacksPage() {
 												</div>
 												<button
 													onClick={handleCopyAddress}
-													className="flex items-center space-x-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
+													className="flex items-center space-x-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors"
 												>
 													<Copy className="w-4 h-4" />
 													<span>{copied ? 'Copied!' : 'Copy'}</span>
@@ -134,7 +134,7 @@ export default function StacksPage() {
 
 									<button
 										onClick={handleConnect}
-										className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+										className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white rounded-md font-semibold transition-all shadow-lg hover:shadow-xl"
 									>
 										<Wallet className="w-5 h-5" />
 										<span>Connect Leather Wallet</span>

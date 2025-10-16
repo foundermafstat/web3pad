@@ -347,7 +347,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 							{currentGameSlide.features.slice(0, 6).map((feature, index) => (
 								<div 
 									key={index}
-									className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-2 sm:p-3 text-white text-xs sm:text-sm font-medium hover:bg-white/20 transition-all duration-300 text-center"
+									className="bg-white/10 backdrop-blur-md border border-white/20 rounded-md p-2 sm:p-3 text-white text-xs sm:text-sm font-medium hover:bg-white/20 transition-all duration-300 text-center"
 								>
 									{feature}
 								</div>
@@ -359,7 +359,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 							<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
 								<Button
 									onClick={onCreateRoomClick}
-									className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 hover:from-cyan-400 hover:via-blue-400 hover:to-purple-400 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-xl hover:scale-105"
+									className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 hover:from-cyan-400 hover:via-blue-400 hover:to-purple-400 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-md hover:scale-105"
 								>
 									<Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
 									Create Room
@@ -367,7 +367,7 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 								<Button
 									onClick={() => handlePlayGame(currentGameSlide.id)}
 									variant="outline"
-									className="border-white/50 text-white hover:bg-white/20 backdrop-blur-md font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg rounded-xl"
+									className="border-white/50 text-white hover:bg-white/20 backdrop-blur-md font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg rounded-md"
 								>
 									<Target className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
 									Quick Play
@@ -380,12 +380,12 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 
 			{/* Slide Thumbnails and Progress */}
 			<div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm sm:w-auto px-4">
-				<div className="flex items-center justify-center space-x-2 sm:space-x-4 bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl px-3 sm:px-6 py-3 sm:py-4 overflow-x-auto sm:overflow-visible">
+				<div className="flex items-center justify-center space-x-2 sm:space-x-4 bg-black/30 backdrop-blur-md rounded-md sm:rounded-2xl px-3 sm:px-6 py-3 sm:py-4 overflow-x-auto sm:overflow-visible">
 					{gameSlides.map((slide, index) => (
 						<button
 							key={slide.id}
 							onClick={() => goToSlide(index)}
-							className={`relative flex items-center space-x-2 sm:space-x-3 px-2 sm:px-4 py-2 rounded-lg sm:rounded-xl transition-all duration-300 flex-shrink-0 ${
+							className={`relative flex items-center space-x-2 sm:space-x-3 px-2 sm:px-4 py-2 rounded-md sm:rounded-md transition-all duration-300 flex-shrink-0 ${
 								index === currentSlide
 									? 'bg-white/30 text-white scale-110'
 									: 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'

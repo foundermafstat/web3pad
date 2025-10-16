@@ -76,7 +76,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
 
 	return (
 		<div className="max-w-2xl space-y-6">
-			<div className="bg-card border border-border rounded-lg p-6">
+			<div className="bg-card border border-border rounded-md p-6">
 				<h3 className="text-lg font-bold mb-4 flex items-center gap-2">
 					<User className="w-5 h-5" />
 					Profile Settings
@@ -136,7 +136,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
 			</div>
 
 			{/* Account Settings */}
-			<div className="bg-card border border-border rounded-lg p-6">
+			<div className="bg-card border border-border rounded-md p-6">
 				<h3 className="text-lg font-bold mb-4 flex items-center gap-2">
 					<Shield className="w-5 h-5" />
 					Account Settings
@@ -162,7 +162,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
 			/>
 
 			{/* Stacks Wallet Section */}
-			<div className="bg-card border border-border rounded-lg p-6">
+			<div className="bg-card border border-border rounded-md p-6">
 				<h3 className="text-lg font-bold mb-4 flex items-center gap-2">
 					<Layers className="w-5 h-5" />
 					Stacks Blockchain

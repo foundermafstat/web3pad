@@ -145,7 +145,7 @@ export function WalletConnection({
 			<CardContent className="space-y-4">
 				{/* Error Display */}
 				{error && (
-					<div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3">
+					<div className="bg-destructive/10 border border-destructive/20 rounded-md p-3">
 						<div className="flex items-center space-x-2">
 							<AlertCircle className="w-4 h-4 text-destructive" />
 							<p className="text-sm text-destructive">{error}</p>
@@ -155,7 +155,7 @@ export function WalletConnection({
 
 				{/* Current Linked Wallet - shown only when wallet is connected AND address is in DB */}
 				{isWalletLinked && isConnected && (
-					<div className="bg-muted/50 rounded-lg p-4 space-y-3">
+					<div className="bg-muted/50 rounded-md p-4 space-y-3">
 						<div className="flex items-center justify-between">
 							<div>
 								<p className="text-sm font-medium">Linked Wallet</p>
@@ -211,7 +211,7 @@ export function WalletConnection({
 
 				{/* Wallet saved in DB but Stacks wallet not connected */}
 				{isWalletLinked && !isConnected && (
-					<div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 space-y-3">
+					<div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-md p-4 space-y-3">
 						<div className="flex items-center justify-between">
 							<div>
 								<p className="text-sm font-medium text-amber-800 dark:text-amber-200">Wallet Saved (Not Connected)</p>
@@ -298,7 +298,7 @@ export function WalletConnection({
 							)}
 						</div>
 					) : (
-						<div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 space-y-3">
+						<div className="bg-green-50 dark:bg-green-950/20 rounded-md p-4 space-y-3">
 							<div className="flex items-center space-x-2">
 								<CheckCircle2 className="w-4 h-4 text-green-600" />
 								<span className="text-sm font-medium">Wallet Connected</span>
@@ -350,7 +350,7 @@ export function WalletConnection({
 				</div>
 
 				{/* Info Section */}
-				<div className="bg-muted/30 rounded-lg p-3 text-xs text-muted-foreground">
+				<div className="bg-muted/30 rounded-md p-3 text-xs text-muted-foreground">
 					<p className="mb-1">💡 <strong>Why connect a wallet?</strong></p>
 					<ul className="space-y-1 ml-4 list-disc">
 						<li>Secure Web3 authentication</li>

@@ -246,7 +246,7 @@ export default function TestGamePage({ params }: PageProps) {
 					<div className="text-sm text-gray-400">Players: {players.length}</div>
 					<a
 						href="/"
-						className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
+						className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md text-sm transition-colors"
 					>
 						Home
 					</a>

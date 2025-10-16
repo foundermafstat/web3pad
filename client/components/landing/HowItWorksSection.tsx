@@ -37,7 +37,7 @@ export default function HowItWorksSection() {
 							will automatically create a unique game room and generate a QR
 							code for connection.
 						</p>
-						<div className="mt-6 bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+						<div className="mt-6 bg-gray-900/50 rounded-md p-4 border border-gray-700">
 							<div className="text-sm text-gray-400 mb-2">Supported:</div>
 							<div className="flex flex-wrap gap-2">
 								<Badge className="bg-gray-800 text-gray-300">
@@ -69,7 +69,7 @@ export default function HowItWorksSection() {
 							apps, no registrations—everything works through the web
 							browser!
 						</p>
-						<div className="mt-6 bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+						<div className="mt-6 bg-gray-900/50 rounded-md p-4 border border-gray-700">
 							<div className="text-sm text-gray-400 mb-2">
 								Works on any phone:
 							</div>
@@ -98,7 +98,7 @@ export default function HowItWorksSection() {
 							joysticks, action buttons, and adaptive interface. Control
 							your character and compete with friends!
 						</p>
-						<div className="mt-6 bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+						<div className="mt-6 bg-gray-900/50 rounded-md p-4 border border-gray-700">
 							<div className="text-sm text-gray-400 mb-2">
 								Instant response:
 							</div>

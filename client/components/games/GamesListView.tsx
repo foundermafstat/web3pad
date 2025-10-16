@@ -72,7 +72,7 @@ export function GamesListView() {
 			</div>
 
 			{/* Filters */}
-			<div className="bg-card border border-border rounded-lg p-4 mb-6">
+			<div className="bg-card border border-border rounded-md p-4 mb-6">
 				<div className="flex flex-col md:flex-row gap-4">
 					{/* Game Type Filter */}
 					<div className="flex-1">
@@ -145,7 +145,7 @@ export function GamesListView() {
 
 			{/* Games List */}
 			{loading ? (
-				<div className="bg-card border border-border rounded-lg p-12 text-center">
+				<div className="bg-card border border-border rounded-md p-12 text-center">
 					<div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
 					<p className="text-muted-foreground">Loading games...</p>
 				</div>
@@ -156,7 +156,7 @@ export function GamesListView() {
 					))}
 				</div>
 			) : (
-				<div className="bg-card border border-border rounded-lg p-12 text-center">
+				<div className="bg-card border border-border rounded-md p-12 text-center">
 					<Gamepad2 className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
 					<p className="text-muted-foreground">No games found</p>
 					<p className="text-sm text-muted-foreground mt-2">
@@ -177,11 +177,11 @@ function GameCard({ game }: { game: GameSession }) {
 	return (
 		<Link
 			href={`/game-session/${game.id}`}
-			className="block bg-card border border-border rounded-lg p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
+			className="block bg-card border border-border rounded-md p-4 hover:shadow-lg hover:border-primary/50 transition-all group"
 		>
 			<div className="flex items-center gap-4">
 				{/* Game Icon */}
-				<div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+				<div className="w-16 h-16 rounded-md bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
 					<Gamepad2 className="w-8 h-8 text-primary" />
 				</div>
 
@@ -233,8 +233,8 @@ function GameCard({ game }: { game: GameSession }) {
 
 function StatCard({ icon, label, value, color }: any) {
 	return (
-		<div className="bg-card border border-border rounded-lg p-4">
-			<div className={`inline-flex p-2 rounded-lg bg-muted mb-2 ${color}`}>
+		<div className="bg-card border border-border rounded-md p-4">
+			<div className={`inline-flex p-2 rounded-md bg-muted mb-2 ${color}`}>
 				{icon}
 			</div>
 			<div className="text-2xl font-bold">{value}</div>

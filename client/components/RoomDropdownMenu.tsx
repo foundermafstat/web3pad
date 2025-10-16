@@ -137,7 +137,7 @@ const RoomDropdownMenu: React.FC<RoomDropdownMenuProps> = ({
 							</div>
 
 							{/* Host Info */}
-							<div className="mb-4 p-3 bg-muted/50 rounded-lg">
+							<div className="mb-4 p-3 bg-muted/50 rounded-md">
 								<div className="flex items-center justify-between">
 									<div className="flex items-center space-x-2">
 										<User className="w-4 h-4 text-muted-foreground" />
@@ -160,7 +160,7 @@ const RoomDropdownMenu: React.FC<RoomDropdownMenuProps> = ({
 							</div>
 
 							{/* Players */}
-							<div className="mb-4 p-3 bg-muted/50 rounded-lg">
+							<div className="mb-4 p-3 bg-muted/50 rounded-md">
 								<div className="flex items-center justify-between mb-2">
 									<div className="flex items-center space-x-2">
 										<Users className="w-4 h-4 text-muted-foreground" />

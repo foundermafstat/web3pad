@@ -428,7 +428,7 @@ const MobileController: React.FC<MobileControllerProps> = ({
 					</p>
 					<button
 						onClick={() => window.location.reload()}
-						className="mt-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors"
+						className="mt-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md transition-colors"
 					>
 						Retry Connection
 					</button>
@@ -463,14 +463,14 @@ const MobileController: React.FC<MobileControllerProps> = ({
 							onChange={(e) => setPlayerName(e.target.value)}
 							onKeyPress={(e) => e.key === 'Enter' && joinGame()}
 							placeholder="Your name"
-							className="w-full bg-white/20 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+							className="w-full bg-white/20 border border-white/30 rounded-md px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
 							maxLength={20}
 							autoFocus
 						/>
 						<button
 							onClick={joinGame}
 							disabled={!playerName.trim() || !connected}
-							className="w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:from-gray-500 disabled:to-gray-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
+							className="w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:from-gray-500 disabled:to-gray-600 text-white font-semibold py-3 px-6 rounded-md transition-all duration-200 disabled:cursor-not-allowed"
 						>
 							{connected ? 'Join Game' : 'Connecting...'}
 						</button>
@@ -535,7 +535,7 @@ const MobileController: React.FC<MobileControllerProps> = ({
 
 				{/* Health Bar */}
 				{playerData && (
-					<div className="mt-2 bg-gray-800/50 rounded-lg p-2">
+					<div className="mt-2 bg-gray-800/50 rounded-md p-2">
 						<div className="flex items-center justify-between mb-1">
 							<span className="text-xs text-gray-400">HP</span>
 							<span className="text-xs text-white font-bold">

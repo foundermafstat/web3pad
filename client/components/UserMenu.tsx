@@ -78,7 +78,7 @@ export function UserMenu({ user }: UserMenuProps) {
 
 			{/* Dropdown menu */}
 			{isOpen && (
-				<div className="absolute right-0 mt-2 w-64 rounded-lg border border-border bg-popover shadow-lg zoom-in-95">
+				<div className="absolute right-0 mt-2 w-64 rounded-md border border-border bg-popover shadow-lg zoom-in-95">
 					<div className="p-4 border-b border-border">
 						<div className="flex items-center gap-3">
 							{user.image ? (

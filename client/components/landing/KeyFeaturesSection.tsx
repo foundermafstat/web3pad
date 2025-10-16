@@ -17,7 +17,7 @@ export default function KeyFeaturesSection() {
 			<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 				<Card className="bg-gray-800/50 border-gray-700 backdrop-blur-lg hover:bg-gray-800/70 transition-all">
 					<CardHeader>
-						<div className="bg-green-500/20 p-3 rounded-xl w-fit mb-4">
+						<div className="bg-green-500/20 p-3 rounded-md w-fit mb-4">
 							<Sparkles className="w-8 h-8 text-green-400" />
 						</div>
 						<CardTitle className="text-xl text-white font-bold">
@@ -32,7 +32,7 @@ export default function KeyFeaturesSection() {
 
 				<Card className="bg-gray-800/50 border-gray-700 backdrop-blur-lg hover:bg-gray-800/70 transition-all">
 					<CardHeader>
-						<div className="bg-blue-500/20 p-3 rounded-xl w-fit mb-4">
+						<div className="bg-blue-500/20 p-3 rounded-md w-fit mb-4">
 							<Users className="w-8 h-8 text-blue-400" />
 						</div>
 						<CardTitle className="text-xl text-white font-bold">
@@ -47,7 +47,7 @@ export default function KeyFeaturesSection() {
 
 				<Card className="bg-gray-800/50 border-gray-700 backdrop-blur-lg hover:bg-gray-800/70 transition-all">
 					<CardHeader>
-						<div className="bg-purple-500/20 p-3 rounded-xl w-fit mb-4">
+						<div className="bg-purple-500/20 p-3 rounded-md w-fit mb-4">
 							<Zap className="w-8 h-8 text-purple-400" />
 						</div>
 						<CardTitle className="text-xl text-white font-bold">
@@ -62,7 +62,7 @@ export default function KeyFeaturesSection() {
 
 				<Card className="bg-gray-800/50 border-gray-700 backdrop-blur-lg hover:bg-gray-800/70 transition-all">
 					<CardHeader>
-						<div className="bg-cyan-500/20 p-3 rounded-xl w-fit mb-4">
+						<div className="bg-cyan-500/20 p-3 rounded-md w-fit mb-4">
 							<Heart className="w-8 h-8 text-cyan-400" />
 						</div>
 						<CardTitle className="text-xl text-white font-bold">
@@ -77,7 +77,7 @@ export default function KeyFeaturesSection() {
 
 				<Card className="bg-gray-800/50 border-gray-700 backdrop-blur-lg hover:bg-gray-800/70 transition-all">
 					<CardHeader>
-						<div className="bg-pink-500/20 p-3 rounded-xl w-fit mb-4">
+						<div className="bg-pink-500/20 p-3 rounded-md w-fit mb-4">
 							<Trophy className="w-8 h-8 text-pink-400" />
 						</div>
 						<CardTitle className="text-xl text-white font-bold">
@@ -92,7 +92,7 @@ export default function KeyFeaturesSection() {
 
 				<Card className="bg-gray-800/50 border-gray-700 backdrop-blur-lg hover:bg-gray-800/70 transition-all">
 					<CardHeader>
-						<div className="bg-orange-500/20 p-3 rounded-xl w-fit mb-4">
+						<div className="bg-orange-500/20 p-3 rounded-md w-fit mb-4">
 							<Shield className="w-8 h-8 text-orange-400" />
 						</div>
 						<CardTitle className="text-xl text-white font-bold">
