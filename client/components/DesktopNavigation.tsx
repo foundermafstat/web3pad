@@ -134,11 +134,12 @@ export function DesktopNavigation() {
 									</Link>
 								</NavigationMenuLink>
 							</li>
-							<ListItem href="/about" title="WEB3 integration" icon={Info}>
-								Collect NFTs, results are saved on the blockchain, play and earn rewards							
+							<ListItem href="/web3" title="Web3 Integration" icon={Info}>
+								Blockchain-powered gaming with NFT rewards and decentralized results storage
 							</ListItem>
+							
 							<ListItem href="/about/controller" title="Controller Mechanics" icon={Smartphone}>
-								How your smartphone transforms into a professional game controller. Control your game with your phone.
+								How your smartphone transforms into a professional game controller
 							</ListItem>
 						</ul>
 					</NavigationMenuContent>

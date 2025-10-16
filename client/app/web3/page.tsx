@@ -37,6 +37,9 @@ import {
 	ArrowUpRight,
 	ExternalLink,
 } from 'lucide-react';
+import { ArchitectureDiagram } from '@/components/web3/ArchitectureDiagram';
+import { BlockchainStats } from '@/components/web3/BlockchainStats';
+import { TechMap } from '@/components/web3/TechMap';
 
 export default function Web3Page() {
 	const [activeFeature, setActiveFeature] = useState(0);
@@ -74,10 +77,17 @@ export default function Web3Page() {
 
 	const techStack = [
 		{
+<<<<<<< HEAD
 			name: 'Stacks Blockchain',
 			description: 'Bitcoin-secured smart contracts',
 			icon: Square,
 			status: 'Live',
+=======
+			name: "Stacks Blockchain",
+			description: "Bitcoin-secured smart contracts",
+			icon: Blocks,
+			status: "Live"
+>>>>>>> 826c74a8895a12c689f6dc54e41a93e4a97c44fc
 		},
 		{
 			name: 'Clarity Smart Contracts',
@@ -185,10 +195,15 @@ export default function Web3Page() {
 				{/* Hero Section */}
 				<div className="text-center mb-16">
 					<div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-6">
+<<<<<<< HEAD
 						<Square className="w-5 h-5 text-purple-400" />
 						<span className="text-purple-300 text-sm font-medium">
 							Blockchain-Powered Gaming
 						</span>
+=======
+						<Blocks className="w-5 h-5 text-purple-400" />
+						<span className="text-purple-300 text-sm font-medium">Blockchain-Powered Gaming</span>
+>>>>>>> 826c74a8895a12c689f6dc54e41a93e4a97c44fc
 					</div>
 
 					<h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent mb-6">
@@ -259,6 +274,7 @@ export default function Web3Page() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
+<<<<<<< HEAD
 						<div className="grid lg:grid-cols-3 gap-8">
 							{/* Client Layer */}
 							<div className="space-y-4">
@@ -332,6 +348,9 @@ export default function Web3Page() {
 								</div>
 							</div>
 						</div>
+=======
+						<ArchitectureDiagram />
+>>>>>>> 826c74a8895a12c689f6dc54e41a93e4a97c44fc
 					</CardContent>
 				</Card>
 
@@ -368,18 +387,19 @@ export default function Web3Page() {
 					</CardContent>
 				</Card>
 
-				{/* Tech Stack */}
+				{/* Technology Map */}
 				<Card className="bg-slate-800/50 border-slate-700 mb-16">
 					<CardHeader>
 						<CardTitle className="text-2xl text-white flex items-center gap-3">
 							<Code className="w-6 h-6 text-green-400" />
-							Technology Stack
+							Technology Ecosystem
 						</CardTitle>
 						<CardDescription className="text-gray-400">
-							Built on cutting-edge blockchain technology
+							Interactive map of our complete technology stack
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
+<<<<<<< HEAD
 						<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 							{techStack.map((tech, index) => (
 								<Card key={index} className="bg-slate-900/50 border-slate-600">
@@ -401,6 +421,9 @@ export default function Web3Page() {
 								</Card>
 							))}
 						</div>
+=======
+						<TechMap />
+>>>>>>> 826c74a8895a12c689f6dc54e41a93e4a97c44fc
 					</CardContent>
 				</Card>
 
@@ -523,36 +546,19 @@ export default function Web3Page() {
 					</CardContent>
 				</Card>
 
-				{/* Network Stats */}
+				{/* Blockchain Statistics */}
 				<Card className="bg-slate-800/50 border-slate-700 mb-16">
 					<CardHeader>
 						<CardTitle className="text-2xl text-white flex items-center gap-3">
 							<Globe className="w-6 h-6 text-blue-400" />
-							Network Statistics
+							Blockchain Statistics
 						</CardTitle>
 						<CardDescription className="text-gray-400">
 							Live deployment metrics and performance
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">1,580</div>
-								<div className="text-sm text-gray-400">Total Lines of Code</div>
-							</div>
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">0.460</div>
-								<div className="text-sm text-gray-400">STX Deployment Cost</div>
-							</div>
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">4</div>
-								<div className="text-sm text-gray-400">Smart Contracts</div>
-							</div>
-							<div className="text-center">
-								<div className="text-3xl font-bold text-white mb-2">100%</div>
-								<div className="text-sm text-gray-400">SIP Compliance</div>
-							</div>
-						</div>
+						<BlockchainStats />
 					</CardContent>
 				</Card>
 
