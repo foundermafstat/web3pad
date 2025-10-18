@@ -1,78 +1,32 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { isLeatherInstalled, getCurrentAddress } from '@/lib/leather';
-
-export interface WalletInfo {
-	type: 'leather' | null;
-	address: string | null;
-	isConnected: boolean;
-}
+import { useSession } from 'next-auth/react';
 
 export function useWalletCheck() {
-	const [walletInfo, setWalletInfo] = useState<WalletInfo>({
-		type: null,
-		address: null,
-		isConnected: false,
-	});
-	const [isChecking, setIsChecking] = useState(true);
-	const [isMounted, setIsMounted] = useState(false);
+  const { data: session, status } = useSession();
+  const [isConnected, setIsConnected] = useState(false);
+  const [userAddress, setUserAddress] = useState<string | null>(null);
+  const [privateKey, setPrivateKey] = useState<string | null>(null);
 
-	useEffect(() => {
-		setIsMounted(true);
-		
-		const checkWallets = async () => {
-			if (!isMounted) return;
-			setIsChecking(true);
-			
-			try {
-				// Check Stacks wallet
-				if (isLeatherInstalled()) {
-					const address = await getCurrentAddress();
-					if (address) {
-						setWalletInfo({
-							type: 'leather',
-							address,
-							isConnected: true,
-						});
-						setIsChecking(false);
-						return;
-					}
-				}
+  useEffect(() => {
+    if (session?.user) {
+      setIsConnected(true);
+      // Extract address from session (this would need to be implemented in your auth)
+      setUserAddress('ST1G646AB7VAKZP6P6SVA7S8P2H6T3Z07E6F410E7'); // Placeholder
+      // For demo purposes - using a test private key (DO NOT USE IN PRODUCTION)
+      setPrivateKey('7287ba251d44a4d3fd9276c88ce34c5c52a038955636ccc70d06af6efc4b09ae01'); // Test private key
+    } else {
+      setIsConnected(false);
+      setUserAddress(null);
+      setPrivateKey(null);
+    }
+  }, [session]);
 
-				// No wallet connected
-				setWalletInfo({
-					type: null,
-					address: null,
-					isConnected: false,
-				});
-			} catch (error) {
-				console.error('Error checking wallets:', error);
-				setWalletInfo({
-					type: null,
-					address: null,
-					isConnected: false,
-				});
-			} finally {
-				setIsChecking(false);
-			}
-		};
-
-		checkWallets();
-	}, []);
-
-	// Don't check wallets on server side
-	if (!isMounted) {
-		return {
-			walletInfo: { type: null, address: null, isConnected: false },
-			isChecking: true,
-			checkWallets: () => {},
-		};
-	}
-
-	return {
-		walletInfo,
-		isChecking,
-		checkWallets: () => {}, // Placeholder function
-	};
+  return {
+    isConnected,
+    userAddress,
+    privateKey,
+    isLoading: status === 'loading',
+  };
 }

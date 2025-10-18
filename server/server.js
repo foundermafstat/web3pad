@@ -282,10 +282,17 @@ io.on('connection', (socket) => {
 				roomManager.playerToRoom.set(socket.id, roomId);
 			}
 
-			// Notify game screen about new player
+			// Notify game screen about new controller
+			roomManager.broadcastToRoom(roomId, 'controller:joined', { 
+				id: playerId, 
+				controllerType: controllerType || 'mobile',
+				joinedAt: new Date().toISOString()
+			}, socket.id);
+			
+			// Also send player:joined for compatibility
 			roomManager.broadcastToRoom(roomId, 'player:joined', { playerId, controllerType }, socket.id);
 			
-			console.log(`[controller:join] Player ${playerId} joined room ${roomId} with ${controllerType || 'standard'} controller`);
+			console.log(`[controller:join] Controller ${playerId} joined room ${roomId} with ${controllerType || 'standard'} controller`);
 		} catch (error) {
 			console.error('Error joining controller:', error);
 		}
@@ -487,6 +494,7 @@ io.on('connection', (socket) => {
 			if (roomId) {
 				roomManager.broadcastToRoom(roomId, 'playerDisconnected', socket.id);
 				roomManager.broadcastToRoom(roomId, 'player:left', { playerId: socket.id });
+				roomManager.broadcastToRoom(roomId, 'controller:left', socket.id);
 				console.log(`Player ${socket.id} disconnected from room ${roomId}`);
 				
 				// Broadcast updated room list

@@ -281,3 +281,66 @@ h1, h2, h3, h4, h5, h6 {
 .w3p-logo-black {
 	color: black;
 }
+
+/* Force landscape orientation for mobile controllers */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+	.force-landscape {
+		transform: rotate(90deg);
+		transform-origin: center center;
+		width: 100vh;
+		height: 100vw;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-top: -50vw;
+		margin-left: -50vh;
+	}
+}
+
+/* Landscape orientation styles */
+@media screen and (orientation: landscape) {
+	.landscape-optimized {
+		/* Optimize for landscape mode */
+	}
+}
+
+/* Portrait orientation warning */
+@media screen and (orientation: portrait) {
+	.portrait-warning {
+		display: block;
+	}
+	
+	.landscape-content {
+		display: none;
+	}
+}
+
+/* Mobile landscape controller styles */
+.mobile-controller-landscape {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem;
+	gap: 2rem;
+}
+
+.mobile-controller-landscape .joystick-area {
+	flex: 0 0 auto;
+}
+
+.mobile-controller-landscape .action-area {
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.mobile-controller-landscape .info-area {
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}

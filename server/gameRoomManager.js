@@ -207,6 +207,23 @@ class GameRoomManager {
 			// Обновляем состояние игры
 			room.game.update(deltaTime);
 
+			// Check for respawn events (for shooter game)
+			if (room.game.gameType === 'shooter') {
+				// Check if any player respawned
+				for (const [, player] of room.game.players) {
+					if (player.checkRespawn && player.checkRespawn()) {
+						player.respawn(room.game.worldWidth, room.game.worldHeight, room.game.playerSize);
+						// Notify all clients about respawn
+						room.sockets.forEach((socket) => {
+							socket.emit('playerRespawned', { 
+								playerId: player.id, 
+								playerData: player.getPlayerData() 
+							});
+						});
+					}
+				}
+			}
+
 			// Check for game over conditions (for shooter game)
 			if (room.game.gameType === 'shooter') {
 				const gameOverResult = room.game.checkGameOver();

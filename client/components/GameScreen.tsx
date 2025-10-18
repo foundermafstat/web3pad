@@ -135,14 +135,13 @@ const GameScreen: React.FC<GameScreenProps> = ({
 					childrenCount: containerElement.children.length,
 				});
 
-				// Calculate proper dimensions
-				// For the game screen, we want full window minus header height (approx 37px)
-				const headerHeight = 50; // Header height
-				const screenWidth = window.innerWidth;
-				const screenHeight = window.innerHeight - headerHeight;
+				// Calculate proper dimensions - use full container size
+				const containerRect = containerElement.getBoundingClientRect();
+				const screenWidth = Math.floor(containerRect.width);
+				const screenHeight = Math.floor(containerRect.height);
 
 				console.log(
-					`[GameScreen] Using screen size: ${screenWidth}x${screenHeight} (window: ${window.innerWidth}x${window.innerHeight})`
+					`[GameScreen] Using container size: ${screenWidth}x${screenHeight} (container: ${containerRect.width}x${containerRect.height})`
 				);
 
 				const app = new PIXI.Application();
@@ -151,6 +150,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
 					height: screenHeight,
 					backgroundColor: 0x0a0a0a,
 					antialias: true,
+					resizeTo: containerElement, // Auto-resize to container
 				});
 				console.log('[GameScreen] Pixi.js initialized successfully');
 				console.log('[GameScreen] Canvas dimensions:', {
@@ -165,13 +165,14 @@ const GameScreen: React.FC<GameScreenProps> = ({
 						pixiContainer.current.removeChild(pixiContainer.current.firstChild);
 					}
 
-					// Set canvas to exact pixel dimensions
+					// Set canvas to fill container completely
 					app.canvas.style.display = 'block';
-					app.canvas.style.width = `${screenWidth}px`;
-					app.canvas.style.height = `${screenHeight}px`;
+					app.canvas.style.width = '100%';
+					app.canvas.style.height = '100%';
 					app.canvas.style.position = 'absolute';
 					app.canvas.style.top = '0';
 					app.canvas.style.left = '0';
+					app.canvas.style.objectFit = 'cover';
 
 					pixiContainer.current.appendChild(app.canvas);
 					console.log('[GameScreen] Canvas added to DOM');
@@ -378,8 +379,24 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
 		initPixi();
 
+		// Handle window resize
+		const handleResize = () => {
+			if (appRef.current && pixiContainer.current) {
+				const containerRect = pixiContainer.current.getBoundingClientRect();
+				const newWidth = Math.floor(containerRect.width);
+				const newHeight = Math.floor(containerRect.height);
+				
+				console.log(`[GameScreen] Resizing to: ${newWidth}x${newHeight}`);
+				
+				appRef.current.renderer.resize(newWidth, newHeight);
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+
 		return () => {
 			console.log('[GameScreen] Cleanup called');
+			window.removeEventListener('resize', handleResize);
 			if (socket) socket.disconnect();
 			if (appRef.current) {
 				appRef.current.destroy({ removeView: true });
@@ -1097,7 +1114,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
 	}, [gameType, gameId]);
 
 	return (
-		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden pt-16 z-50">
+		<div className="fixed inset-0 w-full h-full bg-gray-900 flex flex-col overflow-hidden z-50">
 			{/* Game Interface Header */}
 			<GameInterfaceHeader
 				onBack={onBack}
@@ -1111,12 +1128,20 @@ const GameScreen: React.FC<GameScreenProps> = ({
 			{/* Game Canvas - Full Screen */}
 			<div
 				className="flex-1 relative bg-gray-900 overflow-hidden"
-				style={{ minHeight: 0 }}
+				style={{ 
+					minHeight: 0,
+					width: '100%',
+					height: 'calc(100vh - 64px)' // Full height minus header
+				}}
 			>
 				<div
 					ref={pixiContainer}
-					className="absolute inset-0"
-					style={{ width: '100%', height: '100%' }}
+					className="absolute inset-0 w-full h-full"
+					style={{ 
+						width: '100%', 
+						height: '100%',
+						minHeight: '100%'
+					}}
 				/>
 			</div>
 

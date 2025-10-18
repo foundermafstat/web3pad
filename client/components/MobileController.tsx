@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { ENV_CONFIG } from '../env.config';
 import AuthModal from './AuthModal';
+import LandscapeOrientationLock from './LandscapeOrientationLock';
 
 interface MobileControllerProps {
 	gameId: string;
@@ -66,6 +67,7 @@ const MobileController: React.FC<MobileControllerProps> = ({
 			setPlayerName(session.user.name || session.user.username || 'Player');
 		}
 	}, [status, session]);
+
 
 	const socketRef = useRef<Socket | null>(null);
 	const joystickRef = useRef<HTMLDivElement>(null);
@@ -375,6 +377,7 @@ const MobileController: React.FC<MobileControllerProps> = ({
 		};
 	}, []);
 
+
 	// Auth loading state
 	if (status === 'loading') {
 		return (
@@ -481,7 +484,8 @@ const MobileController: React.FC<MobileControllerProps> = ({
 	}
 
 	return (
-		<div className="fixed inset-0 w-screen h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col overflow-hidden z-50">
+		<LandscapeOrientationLock>
+			<div className="fixed inset-0 w-screen h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col overflow-hidden z-50">
 			{/* Header */}
 			<div className="bg-black/50 backdrop-blur-lg px-4 py-3 border-b border-gray-700">
 				<div className="flex items-center justify-between">
@@ -577,74 +581,105 @@ const MobileController: React.FC<MobileControllerProps> = ({
 				)}
 			</div>
 
-			{/* Game Controls */}
-			<div className="flex-1 flex flex-col justify-end p-8">
+			{/* Game Controls - Landscape Optimized */}
+			<div className="flex-1 mobile-controller-landscape">
 				{!playerStats.alive && (
-					<div className="mb-8 text-center">
+					<div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
 						<div className="bg-red-900/50 backdrop-blur-lg rounded-2xl p-4 border border-red-700">
-							<p className="text-red-300 font-semibold">
+							<p className="text-red-300 font-semibold text-center">
 								You've been eliminated!
 							</p>
-							<p className="text-red-400 text-sm mt-1">Respawning soon...</p>
+							<p className="text-red-400 text-sm mt-1 text-center">Respawning soon...</p>
 						</div>
 					</div>
 				)}
 
-				<div className="flex items-end justify-between">
-					{/* Enhanced Joystick with 360° indicators */}
-					<div className="relative">
-						<div
-							ref={joystickRef}
-							className="w-40 h-40 rounded-full bg-background/10 backdrop-blur-lg border-4 border-white/30 relative opacity-90 transition-all duration-200 touch-none select-none cursor-pointer"
-							onTouchStart={handleJoystickStart}
-							onMouseDown={handleJoystickStart}
-						>
-							{/* Center dot */}
-							<div className="absolute top-1/2 left-1/2 w-3 h-3 bg-background/50 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+				{/* Movement Joystick - Left Side */}
+				<div className="joystick-area">
+					<div className="text-center mb-2">
+						<span className="text-xs text-blue-400 font-medium">MOVEMENT</span>
+					</div>
+					<div
+						ref={joystickRef}
+						className="w-40 h-40 rounded-full bg-background/10 backdrop-blur-lg border-4 border-blue-400/50 relative opacity-90 transition-all duration-200 touch-none select-none cursor-pointer"
+						onTouchStart={handleJoystickStart}
+						onMouseDown={handleJoystickStart}
+					>
+						{/* Center dot */}
+						<div className="absolute top-1/2 left-1/2 w-3 h-3 bg-blue-400/70 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-							{/* Joystick knob */}
-							<div
-								ref={knobRef}
-								className="absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-2xl border-4 border-white/60 pointer-events-none"
-							></div>
+						{/* Joystick knob */}
+						<div
+							ref={knobRef}
+							className="absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-2xl border-4 border-blue-300/80 pointer-events-none"
+						></div>
+					</div>
+				</div>
+
+				{/* Action Buttons - Center */}
+				<div className="action-area">
+					<div className="text-center mb-2">
+						<span className="text-xs text-red-400 font-medium">ACTIONS</span>
+					</div>
+					<button
+						onTouchStart={(e) => {
+							e.preventDefault();
+							shoot();
+						}}
+						onMouseDown={(e) => {
+							e.preventDefault();
+							shoot();
+						}}
+						disabled={!playerStats.alive}
+						className="w-24 h-24 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-500 disabled:to-gray-600 rounded-full text-white font-bold shadow-lg active:scale-95 transition-all flex items-center justify-center border-4 border-red-400/50 disabled:border-gray-400/50"
+					>
+						<Zap className="w-10 h-10" />
+					</button>
+				</div>
+
+				{/* Game Status - Right Side */}
+				<div className="info-area">
+					<div className="text-center mb-2">
+						<span className="text-xs text-green-400 font-medium">STATUS</span>
+					</div>
+					<div className="w-20 h-20 rounded-full bg-background/10 backdrop-blur-lg border-4 border-green-400/30 flex items-center justify-center mb-2">
+						<Gamepad2 className="w-8 h-8 text-green-400" />
+					</div>
+					<div className="text-center">
+						<div className="text-xs text-green-400 font-semibold">READY</div>
+						<div className="text-xs text-gray-400 mt-1">
+							{playerStats.alive ? 'ALIVE' : 'DEAD'}
 						</div>
 					</div>
+				</div>
+			</div>
 
-					{/* Action Buttons */}
-					<div className="space-y-4">
-						<button
-							onTouchStart={(e) => {
-								e.preventDefault();
-								shoot();
-							}}
-							onMouseDown={(e) => {
-								e.preventDefault();
-								shoot();
-							}}
-							disabled={!playerStats.alive}
-							className="w-24 h-24 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-500 disabled:to-gray-600 rounded-full text-white font-bold shadow-lg active:scale-95 transition-all flex items-center justify-center border-4 border-red-400/50 disabled:border-gray-400/50"
-						>
-							<Zap className="w-10 h-10" />
-						</button>
+			{/* Instructions - Landscape Optimized */}
+			<div className="p-3 bg-black/30 backdrop-blur-lg">
+				<div className="flex items-center justify-between text-xs text-gray-400">
+					<div className="flex items-center space-x-2">
+						<div className="w-3 h-3 rounded-full bg-blue-400"></div>
+						<span>Движение</span>
+					</div>
+					<div className="flex items-center space-x-2">
+						<div className="w-3 h-3 rounded-full bg-red-400"></div>
+						<span>Стрельба</span>
+					</div>
+					<div className="flex items-center space-x-2">
+						<div className="w-3 h-3 rounded-full bg-green-400"></div>
+						<span>Готов</span>
 					</div>
 				</div>
-			</div>
-
-			{/* Instructions */}
-			<div className="p-4 bg-black/30 backdrop-blur-lg">
-				<p className="text-gray-400 text-sm text-center">
-					Move with joystick • Shoot button fires in your direction • Kill bots
-					to earn points
-				</p>
-				<div className="flex justify-center space-x-4 mt-2 text-xs text-gray-500">
-					<span>🟣 Teleporter</span>
-					<span>🔶 Speed</span>
-					<span>🔷 Shield</span>
-					<span>🔴 Bouncer</span>
-					<span>👹 Bot Enemy</span>
+				<div className="flex justify-center space-x-6 mt-2 text-xs text-gray-500">
+					<span>🟣 Телепорт</span>
+					<span>🔶 Скорость</span>
+					<span>🔷 Щит</span>
+					<span>🔴 Отскок</span>
+					<span>👹 Бот</span>
 				</div>
 			</div>
-		</div>
+			</div>
+		</LandscapeOrientationLock>
 	);
 };
 

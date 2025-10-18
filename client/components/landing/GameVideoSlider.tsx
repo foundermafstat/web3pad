@@ -11,6 +11,7 @@ interface GameVideoSliderProps {
 	games: Record<string, GameInfo>;
 	onCreateRoomClick: () => void;
 	onPlayGame: (gameType: string) => void;
+	onTestShooterClick?: () => void;
 }
 
 interface GameSlideData {
@@ -45,7 +46,7 @@ interface SlideSettings {
 	fallbackToGradient: boolean;
 }
 
-export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }: GameVideoSliderProps) {
+export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame, onTestShooterClick }: GameVideoSliderProps) {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [progress, setProgress] = useState(0);
 	const [isPlaying, setIsPlaying] = useState(true);
@@ -392,6 +393,16 @@ export default function GameVideoSlider({ games, onCreateRoomClick, onPlayGame }
 									<Target className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
 									Quick Play
 								</Button>
+								{onTestShooterClick && (
+									<Button
+										onClick={onTestShooterClick}
+										variant="outline"
+										className="border-yellow-400/50 text-yellow-400 hover:bg-yellow-400/20 backdrop-blur-md py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg rounded-md hover:scale-105 transition-all duration-300"
+									>
+										<Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+										Test Shooter
+									</Button>
+								)}
 							</div>
 						</div>
 					</div>

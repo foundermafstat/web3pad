@@ -17,8 +17,8 @@ class Player {
 		this.botKills = 0;
 		this.lives = 3; // 3 lives system
 		this.maxLives = 3;
-		this.facingDirection = { x: 0, y: -1 };
-		this.aimDirection = { x: 0, y: -1 };
+		this.facingDirection = { x: 0, y: -1 }; // Only for movement direction
+		this.aimDirection = { x: 0, y: -1 }; // Completely independent aim direction
 		this.currentInput = { x: 0, y: 0 };
 		this.isMoving = false;
 		this.effects = {
@@ -37,7 +37,9 @@ class Player {
 		this.isMoving = inputMagnitude > 0.1;
 		if (this.isMoving) {
 			this.facingDirection = { x, y };
-			this.aimDirection = { x, y };
+			// Don't update aim direction from movement input
+			// Aim direction is controlled separately
+			console.log(`[Player ${this.id}] Movement direction updated:`, this.facingDirection);
 		}
 	}
 
@@ -47,6 +49,7 @@ class Player {
 		const magnitude = Math.sqrt(x * x + y * y);
 		if (magnitude > 0.1) {
 			this.aimDirection = { x, y };
+			console.log(`[Player ${this.id}] Aim direction updated:`, this.aimDirection);
 		}
 	}
 
@@ -112,15 +115,9 @@ class Player {
 			shootDirection.x * shootDirection.x + shootDirection.y * shootDirection.y
 		);
 
+		// If no aim direction set, use default upward direction
 		if (magnitude < 0.1) {
-			shootDirection = { ...this.facingDirection };
-			const facingMagnitude = Math.sqrt(
-				shootDirection.x * shootDirection.x +
-					shootDirection.y * shootDirection.y
-			);
-			if (facingMagnitude < 0.1) {
-				shootDirection = { x: 0, y: -1 };
-			}
+			shootDirection = { x: 0, y: -1 };
 		}
 
 		const length = Math.sqrt(
@@ -149,21 +146,16 @@ class Player {
 			return false;
 		}
 		
-		this.lives--;
+		this.health = 0; // Set health to 0 when taking damage
+		this.alive = false;
 		this.deaths++;
 		this.effects.speedBoost.active = false;
 		this.effects.shield.active = false;
 		
-		if (this.lives <= 0) {
-			this.alive = false;
-			this.gameOver = true;
-			this.finalScore = this.kills + this.botKills;
-			return true;
-		} else {
-			// Still has lives, respawn after delay
-			this.alive = false;
-			return true;
-		}
+		// Start respawn timer (10 seconds)
+		this.respawnTime = Date.now() + 10000;
+		
+		return true;
 	}
 
 	respawn(worldWidth, worldHeight, playerSize) {
@@ -177,6 +169,25 @@ class Player {
 		this.aimDirection = { x: 0, y: -1 };
 		this.currentInput = { x: 0, y: 0 };
 		this.isMoving = false;
+		this.respawnTime = null; // Clear respawn timer
+	}
+
+	// Check if player should respawn based on timer
+	checkRespawn() {
+		if (!this.respawnTime || this.alive || this.gameOver) return false;
+		
+		const now = Date.now();
+		if (now >= this.respawnTime) {
+			return true; // Ready to respawn
+		}
+		return false;
+	}
+
+	// Get remaining respawn time in seconds
+	getRespawnTimeRemaining() {
+		if (!this.respawnTime || this.alive) return 0;
+		const now = Date.now();
+		return Math.max(0, Math.ceil((this.respawnTime - now) / 1000));
 	}
 
 	updateEffects() {
@@ -213,6 +224,7 @@ class Player {
 			isMoving: this.isMoving,
 			gameOver: this.gameOver,
 			finalScore: this.finalScore,
+			respawnTimeRemaining: this.getRespawnTimeRemaining(),
 		};
 	}
 }
@@ -490,26 +502,30 @@ export class ShooterGame extends BaseGame {
 		// Update players
 		for (const [, player] of this.players) {
 			player.updateEffects();
-			player.move(
-				deltaTime,
-				this.worldWidth,
-				this.worldHeight,
-				this.playerSize,
-				this.obstacles,
-				this.playerSpeed
-			);
+			
+			// Only update movement and interactions if alive
+			if (player.alive) {
+				player.move(
+					deltaTime,
+					this.worldWidth,
+					this.worldHeight,
+					this.playerSize,
+					this.obstacles,
+					this.playerSpeed
+				);
 
-			// Check interactive objects
-			const playerRect = {
-				x: player.x,
-				y: player.y,
-				width: this.playerSize,
-				height: this.playerSize,
-			};
+				// Check interactive objects
+				const playerRect = {
+					x: player.x,
+					y: player.y,
+					width: this.playerSize,
+					height: this.playerSize,
+				};
 
-			for (const obj of this.interactiveObjects) {
-				if (player.checkCollision(playerRect, obj)) {
-					this.handleObjectInteraction(player, obj, now);
+				for (const obj of this.interactiveObjects) {
+					if (player.checkCollision(playerRect, obj)) {
+						this.handleObjectInteraction(player, obj, now);
+					}
 				}
 			}
 		}
@@ -590,15 +606,6 @@ export class ShooterGame extends BaseGame {
 					if (damaged) {
 						const shooter = this.players.get(bullet.playerId);
 						if (shooter) shooter.kills++;
-
-						// Schedule respawn
-						setTimeout(() => {
-							player.respawn(
-								this.worldWidth,
-								this.worldHeight,
-								this.playerSize
-							);
-						}, this.respawnDelay);
 					}
 					return false;
 				}

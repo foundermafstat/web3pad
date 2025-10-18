@@ -28,8 +28,8 @@ export default function ShooterMobileController({
   onGameEnd 
 }: ShooterMobileControllerProps) {
   const { data: session, status } = useSession();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [walletAddress, setWalletAddress] = useState<string>('demo-player-' + Math.random().toString(36).substring(7));
   const [isConnected, setIsConnected] = useState(false);
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [playerStats, setPlayerStats] = useState({
@@ -47,11 +47,9 @@ export default function ShooterMobileController({
   const lastInputRef = useRef({ x: 0, y: 0 });
   const lastAimRef = useRef({ x: 0, y: 0 });
 
-  // Initialize WebSocket connection
+  // Initialize WebSocket connection immediately
   useEffect(() => {
-    if (isAuthenticated && walletAddress) {
-      connectToGame();
-    }
+    connectToGame();
     
     return () => {
       if (wsRef.current) {
@@ -61,11 +59,11 @@ export default function ShooterMobileController({
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [isAuthenticated, walletAddress]);
+  }, []);
 
   const connectToGame = () => {
     console.log('Connecting to shooter game with roomId:', roomId, 'walletAddress:', walletAddress);
-    const ws = new WebSocket(`ws://localhost:3001`);
+    const ws = new WebSocket(`ws://${window.location.hostname}:3001`);
     
     ws.onopen = () => {
       console.log('Connected to shooter game');
@@ -76,7 +74,7 @@ export default function ShooterMobileController({
         type: 'shooter:auth',
         roomId: roomId,
         walletAddress: walletAddress,
-        playerName: session?.user?.name || 'Player'
+        playerName: 'Player ' + walletAddress.slice(-4)
       };
       console.log('Sending auth data:', authData);
       ws.send(JSON.stringify(authData));
@@ -161,33 +159,10 @@ export default function ShooterMobileController({
     onGameEnd(data.finalScore, data.kills, data.deaths);
   };
 
-  const handleWalletAuth = async () => {
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      // Check if Leather wallet is available
-      if (typeof window !== 'undefined' && (window as any).leather) {
-        const response = await (window as any).leather.request('getAddresses', {});
-        
-        if (response.addresses && response.addresses.length > 0) {
-          const address = response.addresses[0].address;
-          setWalletAddress(address);
-          setIsAuthenticated(true);
-          onAuthSuccess(address);
-        } else {
-          setError('No wallet addresses found');
-        }
-      } else {
-        setError('Leather wallet not found. Please install Leather wallet.');
-      }
-    } catch (error) {
-      console.error('Wallet auth error:', error);
-      setError('Failed to connect wallet');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Auto-connect without wallet auth
+  useEffect(() => {
+    onAuthSuccess(walletAddress);
+  }, [walletAddress, onAuthSuccess]);
 
   const sendInput = (input: { x: number; y: number }) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
@@ -252,43 +227,25 @@ export default function ShooterMobileController({
     sendInput({ x: 0, y: 0 });
   };
 
-  if (!isAuthenticated) {
+  // Show loading screen while connecting
+  if (!isConnected) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2">
               <Gamepad2 className="w-6 h-6" />
-              Shooter Game Controller
+              Подключение к игре...
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <Alert>
-              <AlertDescription>
-                Connect wallet to play. Your address will be used to save results to blockchain.
-              </AlertDescription>
-            </Alert>
-            
+          <CardContent className="space-y-4 text-center">
+            <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-400" />
+            <p className="text-gray-300">Подключение к комнате: {roomId}</p>
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
-            <Button 
-              onClick={handleWalletAuth} 
-              disabled={isLoading}
-              className="w-full"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Connecting...
-                </>
-              ) : (
-                'Connect Wallet'
-              )}
-            </Button>
           </CardContent>
         </Card>
       </div>
@@ -336,7 +293,7 @@ export default function ShooterMobileController({
             </div>
           </div>
           <div className="text-sm opacity-75">
-            {walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}
+            {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
           </div>
         </div>
       </div>

@@ -207,6 +207,18 @@ export default function Home() {
 		console.log('[Home] Auth successful');
 	};
 
+	const handleTestShooterClick = () => {
+		router.push('/test-shooter');
+	};
+
+	const handleTestPlayClick = () => {
+		router.push('/test-play');
+	};
+
+	const handleTestQRClick = () => {
+		router.push('/test-qr');
+	};
+
 
 	if (loading) {
 		return (
@@ -306,6 +318,7 @@ export default function Home() {
 				games={games} 
 				onCreateRoomClick={handleCreateRoomClick}
 				onPlayGame={startGame}
+				onTestShooterClick={handleTestQRClick}
 			/>
 			{/* <GamesSection games={games} startGame={startGame} /> */}
 			

@@ -52,6 +52,20 @@ export const ENV_CONFIG = {
 	DEV_LOCAL_IP,
 
 	/**
+	 * Network configuration for Stacks blockchain
+	 */
+	NETWORK: process.env.NEXT_PUBLIC_NETWORK || 'testnet',
+
+	/**
+	 * IPFS configuration
+	 */
+	IPFS: {
+		API_KEY: process.env.NEXT_PUBLIC_IPFS_API_KEY || '',
+		ENDPOINT: 'https://rpc.filebase.io',
+		GATEWAY: 'https://ipfs.filebase.io/ipfs/',
+	},
+
+	/**
 	 * Base URL for the application
 	 *
 	 * Production: uses domain name
